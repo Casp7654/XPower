@@ -9,9 +9,8 @@ RUN curl -sSf https://install.surrealdb.com | sh
 WORKDIR /surreal
 RUN mkdir -p ./bin ./datastore
 
-#& 4. Copy Source
-COPY ./datastore ./datastore
-RUN touch ./datastore/CUR
+#& 4. Copy Source / Data
+COPY ./backups ./datastore/backups
 
 #& 5. Create Virtal folder
 # Volume map point is set when running container
@@ -23,7 +22,7 @@ EXPOSE 8000
 #& 7. Compile / Setup Project
 RUN ln -s /usr/local/bin/surreal ./bin/surreal
 COPY ./img_cmd ./
-RUN chmod u+x serve dbtest sql
+RUN chmod u+x serve dbtest sql import export
 
 #& 8. Done
 #CMD [ "./bin/surreal", "start" ]

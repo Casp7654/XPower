@@ -1,1 +1,2 @@
-datastore/CUR
+backups/*_test.bak
+backups/test_*.bak
