@@ -1,0 +1,8 @@
+echo -e "Running..."
+./bin/surreal start \
+    --log debug \
+    --user root \
+    --pass root \
+    --bind 127.0.0.1:8000 \
+    || echo -e "\$ERR!" & \
+    ./dbtest
