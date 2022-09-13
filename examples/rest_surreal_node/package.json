@@ -1,5 +1,5 @@
 {
-  "name": "rest_surreal_node",
+  "name": "node_restapi_for_surrealdb",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
