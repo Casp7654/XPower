@@ -4,5 +4,6 @@ echo -e "Running..."
     --user root \
     --pass root \
     --bind 127.0.0.1:8000 \
+    file://surreal/store/CUR \
     || echo -e "\$ERR!" & \
-    ./dbtest
+    sleep 1 && ./dbtest

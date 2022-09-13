@@ -5,5 +5,5 @@
 docker run --rm -itd \
     --name surreal-be \
     -p 8000:8000 \
-    --mount type=bind,src=$(pwd)/app,dst=/usr/src/app \
+    --mount type=bind,src=$(pwd)/datastore,dst=/surreal/datastore \
     surrealdb

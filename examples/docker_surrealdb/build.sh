@@ -1,1 +1,1 @@
-docker build -t surrealdb .
+./setup.sh && docker build -t surrealdb .

@@ -6,15 +6,16 @@ RUN apt-get update && apt-get install curl -y
 RUN curl -sSf https://install.surrealdb.com | sh
 
 #& 3. Working directory
-WORKDIR /usr/src
-RUN mkdir -p ./bin ./app
+WORKDIR /surreal
+RUN mkdir -p ./bin ./datastore
 
 #& 4. Copy Source
-COPY ./app ./app
+COPY ./datastore ./datastore
+RUN touch ./datastore/CUR
 
 #& 5. Create Virtal folder
 # Volume map point is set when running container
-VOLUME [ "/usr/src/app" ]
+VOLUME [ "/surreal/datastore" ]
 
 #& 6. Expose Ports in Container
 EXPOSE 8000
@@ -25,5 +26,4 @@ COPY ./img_cmd ./
 RUN chmod u+x serve dbtest sql
 
 #& 8. Done
-#RUN ./bin/surreal start --log debug --user root --pass root > ./logs/debug
-#CMD [ "./bin/surreal", "start", "--log", "debug", "--user", "root", "--pass", "root" , "&"]
+#CMD [ "./bin/surreal", "start" ]
