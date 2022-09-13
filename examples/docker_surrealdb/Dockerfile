@@ -22,7 +22,7 @@ EXPOSE 8000
 #& 7. Compile / Setup Project
 RUN ln -s /usr/local/bin/surreal ./bin/surreal
 COPY ./img_cmd ./
-RUN chmod u+x serve dbtest
+RUN chmod u+x serve dbtest sql
 
 #& 8. Done
 #RUN ./bin/surreal start --log debug --user root --pass root > ./logs/debug
