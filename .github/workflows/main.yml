@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Python unit test
 
 # Controls when the workflow will run
 on:
@@ -15,7 +15,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  setup-versions-from-manifest:
   name: Setup ${{ matrix.python }} ${{ matrix.os }}
     setup-versions-from-manifest:
     name: Setup ${{ matrix.python }} ${{ matrix.os }}
