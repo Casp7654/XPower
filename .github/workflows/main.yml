@@ -48,9 +48,10 @@ jobs:
         run: |
              cd source/cloudserver/iot-handler/XPowerIoTHandler
              dotnet test
+      - name: Show current dir #test
+        run: ls
+        
       - name: Running webapi unit tests
         run: |
-            cd ..
-            cd ..
-            cd webapi
+            cd source/cloudserver/webapi/XPowerApi
             dotnet test
