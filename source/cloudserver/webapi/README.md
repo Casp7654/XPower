@@ -1,7 +1,7 @@
-# XPower WebApi
+# XPower CloudServer - WebApi
 
-- Architechure:
-- OperativSystem:
+- Architechure: Linux(amd64)
+- OperativSystem: Debian11
 - Language: C#
 - Type: Rest API
 - Dependencies: ``
