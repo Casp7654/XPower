@@ -36,4 +36,4 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Running example unit test
-        run: python ./examples/unittest_python/exmaple.py
+        run: python ./examples/unittest_python/example.py
