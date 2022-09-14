@@ -15,7 +15,7 @@ requirements.txt    Development dependencies.
 Makefile            Generic management tasks.
 src/__init__.py     Program entrypoint
 src/core.py         Program core
-src/hepers.py       Includefile
-test/test_.py       Test Examplefile
+src/hepers.py       Include file
+test/test_.py       Test example file
 .gitignore          Specific ignores
 ```
