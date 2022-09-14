@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPowerApi", "XPowerApi\XPowerApi.csproj", "{989CFC2D-4D7B-4929-94FD-7305962CBCAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPowerApiTEST", "XPowerApiTEST\XPowerApiTEST.csproj", "{EF81FF32-303A-45EF-BBB9-92A17A96963F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{989CFC2D-4D7B-4929-94FD-7305962CBCAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{989CFC2D-4D7B-4929-94FD-7305962CBCAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{989CFC2D-4D7B-4929-94FD-7305962CBCAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF81FF32-303A-45EF-BBB9-92A17A96963F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF81FF32-303A-45EF-BBB9-92A17A96963F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF81FF32-303A-45EF-BBB9-92A17A96963F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF81FF32-303A-45EF-BBB9-92A17A96963F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

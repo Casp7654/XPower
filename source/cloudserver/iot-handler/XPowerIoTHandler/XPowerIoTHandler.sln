@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPowerIoTHandler", "XPowerIoTHandler\XPowerIoTHandler.csproj", "{6031C1EF-E474-4DE7-A06C-0FD5AF9BB9FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPowerIoTHandlerTEST", "XPowerIoTHandlerTEST\XPowerIoTHandlerTEST.csproj", "{360D263A-90EF-459B-97C7-E2E30EFFCFAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6031C1EF-E474-4DE7-A06C-0FD5AF9BB9FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6031C1EF-E474-4DE7-A06C-0FD5AF9BB9FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6031C1EF-E474-4DE7-A06C-0FD5AF9BB9FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{360D263A-90EF-459B-97C7-E2E30EFFCFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{360D263A-90EF-459B-97C7-E2E30EFFCFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{360D263A-90EF-459B-97C7-E2E30EFFCFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{360D263A-90EF-459B-97C7-E2E30EFFCFAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
