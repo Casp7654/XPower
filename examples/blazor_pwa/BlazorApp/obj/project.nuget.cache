@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "F1pt+YJHIkrfWtAjTwNn29GQHk8MrCaK7sqST6uOU7+THZJFdqVOAH8XwySx/KP98smEKRkHtMq2/eDmHRuTEg==",
+  "success": true,
+  "projectFilePath": "/home/k4nt/repos/github/xpower/examples/blazor_pwa/BlazorApp/BlazorApp.csproj",
+  "expectedPackageFiles": [
+    "/home/k4nt/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.8/microsoft.aspnetcore.app.ref.6.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}
