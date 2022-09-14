@@ -97,3 +97,15 @@ C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPo
 C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\obj\Debug\net6.0\XPowerApiTEST.pdb
 C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\obj\Debug\net6.0\XPowerApiTEST.genruntimeconfig.cache
 C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\obj\Debug\net6.0\ref\XPowerApiTEST.dll
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\CoverletSourceRootsMapping
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\XPowerApi.deps.json
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\XPowerApi.runtimeconfig.json
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\appsettings.json
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\XPowerApi.exe
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\XPowerApi.dll
+C:\Users\PeterCholub\source\repos\XPower\source\cloudserver\webapi\XPowerApi\XPowerApiTEST\bin\Debug\net6.0\XPowerApi.pdb

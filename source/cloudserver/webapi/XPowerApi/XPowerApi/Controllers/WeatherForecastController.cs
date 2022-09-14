@@ -21,13 +21,21 @@ namespace XPowerApi.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return new List<WeatherForecast>()
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now.AddDays(Random.Shared.Next(0, 30)),
+                    TemperatureC = Random.Shared.Next(-20, 55),
+                    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now.AddDays(Random.Shared.Next(0, 30)),
+                    TemperatureC = Random.Shared.Next(-20, 55),
+                    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+                }
+            };
         }
     }
 }
