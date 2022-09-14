@@ -8,6 +8,6 @@ def main(test_path, test_pattern):
 
 if __name__ == '__main__':
     root_path = os.path.abspath('.')
-    test_path = os.path.join(root_path, 'tests/')
+    test_path = os.path.join(root_path, 'source/hub/tests/')
     test_pattern = 'test_*'
     main(test_path, test_pattern)
