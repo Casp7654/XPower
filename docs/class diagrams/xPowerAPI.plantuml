@@ -2,109 +2,103 @@
 
 interface IGetPrice
 {
-    Getprice(Datetime from, Datetime to, Company company) : T
+    +GetPrice(period : Period) : Price
+    +GetPriceBetweendays(from : Datetime,to : Datetime, company : Company) : Price
 }
 
-class PriceController 
+class PriceController
 {
-
+    -priceService : IGetPrice
 }
 
 class Price
 {
-    Amount : double
+    +Amount : double
 }
 
-enum Company{
-    Unknown,
-    ElCompany1,
+enum Company
+{
+    Unknown
+    ElCompany1
     ElCompany2
+}
+
+enum Period
+{
+    Today
+    Week
+    2Weeks
+    Month
+    Q1
+    Q2
+    Year
 }
 
 interface IUserCrud
 {
-    CreateUser(UserCreate : UserCreateDTO) : T  
-    GetUser(userID : int ) : T
-    GetUserHubs(userID : int) : List<T>
-    GetHomeUserHubs(homeUserID : int) : List<T>
-    UpdateUser(userID : int, username : string) : T
-    DeleteUser(userID : int ) : void
+    +CreateUser(UserCreate : UserCreateDTO) : T  
+    +GetUser(userID : int ) : T
+    +UpdateUser(userID : int, username : string) : T
+    +DeleteUser(userID : int ) : void
 }
 
 class UserController
 {
-
-}
-
-class UserService
-{
-
+    -userService : IUserCrud
 }
 
 class UserCreateDTO
 {
-    Username : string
-    Password : string
+    +Username : string
+    +Password : string
 }
 
 class User
 {
-    Username : string,
-    ID : int
+    +Username : string,
+    +ID : int
 }
-
 
 interface IHubCrud
 {
-    CreateHub(hubCreate : HubCreate) : T  
-    GetHub(hubID : int ) : T
-    UpdateHub(hubID : int, displayname : string) : T
-    DeleteUser(hubID : int ) : void
+    +CreateHub(hubCreate : HubCreate) : T  
+    +GetHub(hubID : int ) : T
+    +GetUserHubs(userID : int) : List<T>
+    +GetHomeUserHubs(homeUserID : int) : List<T>
+    +UpdateHub(hubID : int, displayname : string) : T
+    +DeleteUser(hubID : int ) : void
 }
 
 class HubController
 {
-
-}
-
-class HubService
-{
-
-}
-
-class HubProvider
-{
-
+    -hubService : IGetPrice
 }
 
 class HubCreate
 {
-    UID : string
+    +UID : string
 }
 
 class Hub
 {
-    ID : int
-    UID : string
-    DisplayName : string
-    HomeID : int
+    +ID : int
+    +UID : string
+    +DisplayName : string
+    +HomeID : int
 }
 
-PriceController <|.. IGetPrice
-IGetPrice <|-- Price
-IGetPrice <|-- Company
+PriceController *-- IGetPrice
+IGetPrice --> Price
+IGetPrice --> Company
+IGetPrice --> Period
 
-UserController <|.. IUserCrud
-UserService <|.. IUserCrud
-UserProvider <|.. IUserCrud
-UserService <|-- User
-UserController <|-- UserCreateDTO
+UserController *.. IUserCrud
+IUserCrud --> UserCreateDTO
+IUserCrud --> User
 
+HubController *.. IHubCrud
+IHubCrud --> HubCreate
+IHubCrud --> Hub
 
-HubController <|.. IHubCrud
-HubService <|.. IHubCrud
-HubProvider <|.. IHubCrud
-HubService <|-- Hub
-HubController <|-- HubCreate
 
 @enduml
