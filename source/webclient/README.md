@@ -4,24 +4,26 @@
 - OperativSystem: Crossplatform
 - Language: TypeScript
 - Type: Progressive Web App
-- Dependencies: ``
+- Dependencies: `nodejs npm`
+
+
+## Setup
+
+- Install: `npm cache verify && npm install -g @angular/cli@latest`
+- New Angular app: `ng new AngularApp`
+- Localhost development dependencies: `npm install http-server --save-dev`
+- Add PWA Service Worker `ng add @angular/pwa --project AngularApp && ng build`
+- run Debug: `ng build && ng serve`
+- run Live: `ng build && npx http-server -p 8080 -c-1 dist/xpower-web-client`
 
 ## Directory Structure
 ```
-README.md           This file.
-LICENSE             Lawyering up.
-.env.example        Enviroment file example
-jest.config.js      Javascript test config
-package.json        Node packages
-tsconfig.json       Typescript configuration file
-tsconfig.tests.json Typescript test configuration file
+../README.md        This file.
+.vscode/            Editor Extensions
 dist/               Distribution folder (shipped)
-src/config          Program configuration (middleware)
-src/controllers     Program controllers
-src/models          Program models (needed??)
-src/public          Program resources (assets)
-src/types           Program types (.d.ts)
-src/index.ts        Program Entrypoint
-tests/test_.ts      Test example file
-.gitignore          Specific ignores
+node_modules/       Application Dependencies
+src/                Source root
+package.json        Node packages
+angular.json        Angular configuration file
+ngsw-config.json    Angular Service Worker configuration file
 ```
