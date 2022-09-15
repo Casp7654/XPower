@@ -1,0 +1,26 @@
+@startuml SystemExtension
+left to right direction
+skinparam packageStyle rectangle
+
+:Klient: as cl
+:IoT Handler: as handler
+
+rectangle System {
+    usecase "Tænd / sluk IoT enhed" as wuc1
+    usecase "Sæt timer pr. enhed" as wuc2
+    usecase "Se overblik for IoT enhed" as wuc3
+    usecase "Sæt tænd / sluk ud fra forbrugsmønster" as wuc4
+}
+
+cl --> wuc1
+cl --> wuc2
+cl --> wuc3
+cl --> wuc4
+
+wuc1 -- handler : extends
+wuc2 -- handler : extends
+wuc3 -- handler : extends
+wuc4 -- handler : extends
+
+
+@enduml
