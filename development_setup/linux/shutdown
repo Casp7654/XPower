@@ -1,0 +1,20 @@
+#!/bin/bash
+echo -e "\nStopping IoT Devices"
+docker stop xpower-iot
+docker stop xpower-iot1
+docker stop xpower-iot2
+docker stop xpower-iot3
+
+echo -e "\nStopping Hubs"
+docker stop xpower-hub
+docker stop xpower-hub1
+docker stop xpower-hub2
+
+echo -e "\nStopping Hosted PWA"
+docker stop xpower-hosted_pwa
+
+echo -e "\nStopping IoT Handler"
+docker stop xpower-iot_handler
+
+echo -e "\nStopping WebApi"
+docker stop xpower-webapi

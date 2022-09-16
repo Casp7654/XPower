@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Run Image Functions (RAW DOCKERFILES)
+
+run_webapi() {
+    echo -e "\nStarting WebApi Container"
+    docker run --rm -itd \
+        --mount type=bind,src="$(pwd)/resource/symblnk/webapi/",dst=/root/source/webapi \
+        --mount type=bind,src="$(pwd)/resource/volumes/webapi/backups/",dst=/root/backups \
+        --name xpower-webapi \
+        xpower-webapi
+}
+
+run_iothandler() {
+    echo -e "\nStarting IoTHandler Container"
+    docker run --rm -itd \
+        --mount type=bind,src="$(pwd)/resource/symblnk/handler/",dst=/root/source/handler \
+        --name xpower-iot_handler \
+        xpower-iot_handler
+    #    --mount type=bind,src="$(pwd)/volumes/handler/backups",dst=/root/backups \
+}
+
+run_pwa() {
+    echo -e "\nStarting Hosted PWA Container"
+    docker run --rm -itd \
+        --mount type=bind,src="$(pwd)/resource/symblnk/pwa/",dst=/root/source/pwa \
+        --name xpower-hosted_pwa \
+        xpower-hosted_pwa
+    #    --mount type=bind,src="$(pwd)/volumes/pwa/backups",dst=/root/backups \
+}
+
+run_hub() {
+    echo -e "\nStarting HUB Container [id:$1]"
+    docker run --rm -itd \
+        --mount type=bind,src="$(pwd)/resource/symblnk/hub/",dst=/root/source/hub \
+        --mount type=bind,src="$(pwd)/resource/volumes/hub/backups/",dst=/root/backups \
+        --name xpower-hub$1 \
+        xpower-hub
+}
+
+run_iot() {
+    echo -e "\nStarting IoT Device Container [id:$1]"
+    docker run --rm -itd \
+        --mount type=bind,src="$(pwd)/resource/symblnk/iot/",dst=/root/source/iot \
+        --mount type=bind,src="$(pwd)/resource/volumes/iot/backups/",dst=/root/backups \
+        --name xpower-iot$1 \
+        xpower-iot
+}
+
+if [ ! "$1" == "" ]; then
+    if [ "$1" == "webapi" ]; then
+        run_webapi
+    elif [ "$1" == "handler" ]; then
+        run_iothandler
+    elif [ "$1" == "pwa" ]; then
+        run_pwa
+    elif [ "$1" == "hub" ]; then
+        run_hub "$2"
+    elif [ "$1" == "iot" ]; then
+        run_iot "$2"
+    else
+        echo $(pwd)
+        echo -e "\tNothing to start\n"
+        exit 1
+    fi
+else
+    run_webapi
+    run_iothandler
+    run_pwa
+    run_hub 1
+    run_iot 1
+    run_iot 2
+fi

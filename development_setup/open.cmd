@@ -1,0 +1,1 @@
+docker exec -it $(docker container ls --filter NAME=$1 -q) /bin/bash

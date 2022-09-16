@@ -1,0 +1,31 @@
+-- ------------------------------
+-- OPTION
+-- ------------------------------
+
+OPTION IMPORT;
+
+-- ------------------------------
+-- TABLE: ttable
+-- ------------------------------
+
+DEFINE TABLE ttable SCHEMALESS PERMISSIONS NONE;
+
+-- ------------------------------
+-- TRANSACTION
+-- ------------------------------
+
+BEGIN TRANSACTION;
+
+-- ------------------------------
+-- TABLE DATA: ttable
+-- ------------------------------
+
+UPDATE ttable:1 CONTENT { id: ttable:1, name: "test1" };
+UPDATE ttable:2 CONTENT { id: ttable:2, name: "test2" };
+
+-- ------------------------------
+-- TRANSACTION
+-- ------------------------------
+
+COMMIT TRANSACTION;
+
