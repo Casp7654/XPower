@@ -1,0 +1,30 @@
+@startuml APPLICATION
+
+interface ICaller
+{
+    #hosturl : string
+}
+
+interface ApiCaller
+{
+    +GetPrice()
+}
+
+class GrpcCaller 
+{
+    -hubControllSerivce : HubControllSerive
+    +TurnOnOff(uid : string) : void
+}
+
+class HubControllSerive
+{
+    +Search() : void
+    +Connect(uid : string) : void
+}
+
+ApiCaller <|-- ICaller
+GrpcCaller <|-- ICaller
+GrpcCaller *-- HubControllSerive
+
+
+@enduml

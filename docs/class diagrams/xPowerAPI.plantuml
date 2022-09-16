@@ -1,0 +1,104 @@
+@startuml API
+
+interface IGetPrice
+{
+    +GetPrice(period : Period) : Price
+    +GetPriceBetweendays(from : Datetime,to : Datetime, company : Company) : Price
+}
+
+class PriceController
+{
+    -priceService : IGetPrice
+}
+
+class Price
+{
+    +Amount : double
+}
+
+enum Company
+{
+    Unknown
+    ElCompany1
+    ElCompany2
+}
+
+enum Period
+{
+    Today
+    Week
+    2Weeks
+    Month
+    Q1
+    Q2
+    Year
+}
+
+interface IUserCrud
+{
+    +CreateUser(UserCreate : UserCreateDTO) : T  
+    +GetUser(userID : int ) : T
+    +UpdateUser(userID : int, username : string) : T
+    +DeleteUser(userID : int ) : void
+}
+
+class UserController
+{
+    -userService : IUserCrud
+}
+
+class UserCreateDTO
+{
+    +Username : string
+    +Password : string
+}
+
+class User
+{
+    +Username : string,
+    +ID : int
+}
+
+interface IHubCrud
+{
+    +CreateHub(hubCreate : HubCreate) : T  
+    +GetHub(hubID : int ) : T
+    +GetUserHubs(userID : int) : List<T>
+    +GetHomeUserHubs(homeUserID : int) : List<T>
+    +UpdateHub(hubID : int, displayname : string) : T
+    +DeleteUser(hubID : int ) : void
+}
+
+class HubController
+{
+    -hubService : IGetPrice
+}
+
+class HubCreate
+{
+    +UID : string
+}
+
+class Hub
+{
+    +ID : int
+    +UID : string
+    +DisplayName : string
+    +HomeID : int
+}
+
+PriceController *-- IGetPrice
+IGetPrice --> Price
+IGetPrice --> Company
+IGetPrice --> Period
+
+UserController *.. IUserCrud
+IUserCrud --> UserCreateDTO
+IUserCrud --> User
+
+HubController *.. IHubCrud
+IHubCrud --> HubCreate
+IHubCrud --> Hub
+
+
+@enduml
