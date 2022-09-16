@@ -1,28 +1,35 @@
 #& 1. Base Image
 FROM debian:bullseye
 
-#& 2. Config Image
-RUN apt-get update && apt-get install curl -y
+#& 2. Set User
+USER root
+
+#& 3. Set Working directory
+WORKDIR /root
+RUN mkdir -p ./datastore ./bin
+
+#& 4. Install Dependencies
+RUN apt-get update
+RUN apt-get install curl -y
 RUN curl -sSf https://install.surrealdb.com | sh
 
-#& 3. Working directory
-WORKDIR /surreal
-RUN mkdir -p ./bin ./datastore
-
-#& 4. Copy Source / Data
-COPY ./backups ./datastore/backups
-
-#& 5. Create Virtal folder
-# Volume map point is set when running container
-VOLUME [ "/surreal/datastore" ]
-
-#& 6. Expose Ports in Container
+#& 5. Expose Ports in Container
 EXPOSE 8000
 
-#& 7. Compile / Setup Project
-RUN ln -s /usr/local/bin/surreal ./bin/surreal
-COPY ./img_cmd ./
-RUN chmod u+x serve dbtest sql import export
+#& 6. Create Virtal folder
+# Volume map point is set when running container
+VOLUME [ "/root/backups" ]
 
-#& 8. Done
-#CMD [ "./bin/surreal", "start" ]
+#& 7. Copy Source / Data
+COPY ./backups ./backups
+
+#& 8. Add Custom Executables / Scripts
+COPY ./img_cmd /root/bin
+# Remember to make them executable for the user
+RUN chmod u+x /root/bin/*
+
+#& 9. Compile / Setup Project
+
+#& 10. Done
+# Only needed if image is not a complete machine eg. gcc or c# image
+#CMD [ "./bin/", "start" ]
