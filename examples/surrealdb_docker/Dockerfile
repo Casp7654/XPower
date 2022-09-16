@@ -22,11 +22,13 @@ VOLUME [ "/root/backups" ]
 
 #& 7. Copy Source / Data
 COPY ./backups ./backups
+#RUN touch datastore/CUR
 
 #& 8. Add Custom Executables / Scripts
-COPY ./img_cmd /root/bin
+COPY ./img_cmd ./
+RUN ln -s /usr/local/bin/surreal ./bin
 # Remember to make them executable for the user
-RUN chmod u+x /root/bin/*
+RUN chmod u+x ./* ./bin/* 
 
 #& 9. Compile / Setup Project
 

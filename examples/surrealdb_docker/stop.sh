@@ -1,3 +1,0 @@
-echo -e "stopping container..."
-docker stop surreal-be
-echo "done...!"

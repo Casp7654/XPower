@@ -1,7 +1,5 @@
 # SurrealDB Docker Example
 
-This guide is running `.sh` files as if the host was a Linux machine running Docker v20.10 . Though most on the commands used, has either an equivelent on Windows or could be run directly on the host.
-
 [Link to the SurrealDB Documentation](https://surrealdb.com/docs)
 
 ---
@@ -13,12 +11,11 @@ In this example the BASEIMAGE used is the `debian:bullseye` to utilize a complet
 To build the container there is a couple of thing to be done, all of which have been simplified in the files:
 
 - Dockerfile
-- build.sh
-- run.sh
-- stop.sh
+- build.bat
+- run.bat
+- stop.bat
 
-_note¹: the `rebuild.sh` is just a quick chain of the other bash files_<br>
-_note²: theese files could be optimized_
+_note¹: the `rebuild.bat` is just a quick chain of the other bash files_
 
 ---
 
@@ -26,7 +23,7 @@ _note²: theese files could be optimized_
 
 **If using the docker image:**
 
-Run the `$ ./interact.sh`, or the Windows equivelent, to gain access to the running Docker container.
+Run the `$ ./interact.bat`, or the Windows equivelent, to gain access to the running Docker container.
 Then run the sql REPL by typing `$ ./sql`
 
 **if NOT using the docker image:**
