@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Function
+image_rm() {
+    docker image rm $1
+}
+
+# Remove Docker Images
+echo -e "\nRemoving WebApi Image"
+image_rm "xpower-webapi"
+
+echo -e "\nRemoving Hosted PWA Image"
+image_rm "xpower-hosted_pwa"
+
+echo -e "\nRemoving IoTHandler Image"
+image_rm "xpower-iot_handler"
+
+echo -e "\nRemoving Hub Image"
+image_rm "xpower-hub"
+
+echo -e "\nRemoving IoT Device Image"
+image_rm "xpower-iot"
+
+# Done
+echo -e "\n\tDone...!"
