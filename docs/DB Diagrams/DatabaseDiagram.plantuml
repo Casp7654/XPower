@@ -4,7 +4,6 @@ object User
 object Home
 object HomeUser
 object Hub
-object Token
 
 User : id int
 User : username varchar
@@ -21,8 +20,6 @@ Hub : homeId int
 
 HomeUser : homeId int
 HomeUser : userId int
-
-Token : tbd
 
 User::id"*" -- "*"HomeUser::userId
 Home::id"*" -- "*"HomeUser::homeId
