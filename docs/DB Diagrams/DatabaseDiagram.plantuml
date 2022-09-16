@@ -1,0 +1,27 @@
+@startuml Database Diagram
+left to right direction
+object User
+object Home
+object HomeUser
+object Hub
+
+User : id int
+User : username varchar
+User : passwordHash varchar
+User : salt varchar
+
+Home : id int
+Home : displayName varchar
+
+Hub : id int
+Hub : uid int
+Hub : displayName varchar
+Hub : homeId int
+
+HomeUser : homeId int
+HomeUser : userId int
+
+User::id"*" -- "*"HomeUser::userId
+Home::id"*" -- "*"HomeUser::homeId
+Hub::homeId"*" -- "1"Home::id
+@enduml
