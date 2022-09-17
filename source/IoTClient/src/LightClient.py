@@ -1,4 +1,5 @@
 from __future__ import annotations
+from os import stat
 import paho.mqtt.client as mqtt
 from gpiozero import LED
 import json
@@ -10,7 +11,7 @@ class LedCommandPackage:
 
     @staticmethod
     def convert(json_data : str) -> LedCommandPackage:
-        json_obj = json.load(json_data)
+        json_obj = json.loads(json_data)
         return LedCommandPackage(json_obj["device_id"], json_obj["should_turn_on"])
         
 
@@ -54,6 +55,12 @@ class LightClient:
 
     def get_running(self) -> bool:
         return self.__is_running
+
+    def get_ip(self) -> str:
+        return self.__ip
+
+    def get_port(self) -> int:
+        return self.__port
         
     def run(self) -> None:
         self.__client.connect(self.__ip, self.__port, self.__keep_alive)
@@ -63,3 +70,19 @@ class LightClient:
     def stop(self) -> None:
         self.__client.loop_stop()
         self.__is_running = False
+
+class LightClientJson(json.JSONEncoder):
+    def default(self, client):
+        return {
+            "client_id": client.get_device_id(),
+            "ip": client.get_ip(),
+            "port": client.get_port(),
+            "gpio": client.get_gpio() 
+        }
+
+    @staticmethod
+    def from_json(json_dict : dict) -> LightClient:
+        client = LightClient(json_dict["client_id"])
+        client.set_server_info(json_dict["ip"], json_dict["port"])
+        client.set_gpio(json_dict["gpio"])
+        return client
