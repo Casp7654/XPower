@@ -20,5 +20,5 @@ echo -e "\nStopping WebApi"
 docker stop xpower-webapi
 
 echo -e "\nRemoving Networks"
-docker networm rm xpower-cloud
-docker networm rm xpower-home
+docker network rm xpower-cloud
+docker Network rm xpower-home

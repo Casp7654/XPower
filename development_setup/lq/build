@@ -26,10 +26,10 @@ docker image prune --force
 docker rmi $(docker images --format "{{.ID}}\t{{.Tag}}" | grep "<none>" | awk '{print $1}')
 
 #Global Network
-docker network create --driver bridge --subnet 172.32.0.0/24 --gateway 172.32.0.1 xpower-global
+docker network create --driver bridge --subnet 172.34.0.0/24 --gateway 172.34.0.1 xpower-global
 #Custom Bridges
 docker network create --driver bridge --subnet 172.32.0.0/24 --gateway 172.32.0.1 xpower-cloud
-docker network create --driver bridge --subnet 172.32.0.0/24 --gateway 172.64.0.1 xpower-home
+docker network create --driver bridge --subnet 172.64.0.0/24 --gateway 172.64.0.1 xpower-home
 
 # Done
 echo -e "\n\tDone...!"
