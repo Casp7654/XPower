@@ -21,5 +21,10 @@ image_rm "xpower-hub"
 echo -e "\nRemoving IoT Device Image"
 image_rm "xpower-iot"
 
+echo -e "\nRemoving Networks"
+docker network rm xpower-global
+docker network rm xpower-cloud
+docker network rm xpower-home
+
 # Done
 echo -e "\n\tDone...!"
