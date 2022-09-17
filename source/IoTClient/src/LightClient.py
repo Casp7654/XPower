@@ -1,5 +1,6 @@
 from __future__ import annotations
 import paho.mqtt.client as mqtt
+from gpiozero import LED
 import json
 
 class LedCommandPackage:
@@ -24,10 +25,12 @@ class LedStatusPackage:
           
 
 class LightClient:
-    def __init__(self) -> None:
-        self.__client = mqtt.Client()
+    def __init__(self, client_id : str) -> None:
+        self.__client_id = client_id
+        self.__client = mqtt.Client(client_id=self.__client_id, clean_session=True, userdata=None, protocol=mqtt.MQTTv311, transport="tcp")
         self.__client.on_connect = self.__on_connect
         self.__topic_name = "Led"
+        self.__is_running = False
 
     def __on_connect(self, client : mqtt.Client, userdata : any, flags : int, rc : int) -> None:
         client.subscribe(self.__topic_name)
@@ -44,16 +47,19 @@ class LightClient:
         self.__gpio = gpio
 
     def get_device_id(self) -> str:
-        return self.__client._client_id
+        return self.__client_id
 
     def get_gpio(self) -> int:
         return self.__gpio
+
+    def get_running(self) -> bool:
+        return self.__is_running
         
     def run(self) -> None:
         self.__client.connect(self.__ip, self.__port, self.__keep_alive)
         self.__client.loop_start()
+        self.__is_running = True
 
     def stop(self) -> None:
         self.__client.loop_stop()
-
-    
+        self.__is_running = False
