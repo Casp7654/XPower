@@ -83,6 +83,7 @@ class ClientManager:
         Args:
             index (int): The index in the clients list
         """
+        if index < 0 or index >= len(self.__clients): return
         cur_gpio = self.__clients[index].get_gpio()
         self.set_client_gpio(index, cur_gpio + 1)
 
@@ -92,6 +93,7 @@ class ClientManager:
         Args:
             index (int): The index in the clients list
         """
+        if index < 0 or index >= len(self.__clients): return
         cur_gpio = self.__clients[index].get_gpio()
         self.set_client_gpio(index, cur_gpio - 1)
 
