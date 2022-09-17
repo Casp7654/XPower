@@ -3,10 +3,16 @@ from BasePage import BasePage, backcolors
 
 class DevicePage(BasePage):
     def __init__(self, clientManager : ClientManager) -> None:
+        """The constructor of the device page.
+
+        Args:
+            clientManager (ClientManager): The manager to hold clients
+        """
         self.__cursor_pos = 0
         self.__clientManager = clientManager
 
     def __create_client(self) -> None:
+        """Ui to create a client"""
         name = input("device id: ")
         server = input("ip: ")
         port = input("port: ")
@@ -14,6 +20,7 @@ class DevicePage(BasePage):
         self.__clientManager.add_client(name, server, port, gpio)
 
     def _show_controls(self) -> None:
+        """Ui to show controls."""
         print("W S - Up / Down in selection")
         print("Space - Turn On / Off")
         print("A D - Increase / Decrease pin")
@@ -21,6 +28,7 @@ class DevicePage(BasePage):
         print("------------------------------")
 
     def _show_page(self) -> None:
+        """Ui for The main page content """
         clients = self.__clientManager.get_clients()
         print("[Running] [Name] [Pin]")
         for idx, c in enumerate(clients):
@@ -30,6 +38,12 @@ class DevicePage(BasePage):
             print(dev_str)
 
     def _on_key_pressed(self, key : str) -> None:
+        """The callback for when a key has been pressed
+        main logic
+
+        Args:
+            key (str): The key which was pressed.
+        """
         if key == "w":
             self.__cursor_pos -= 1
         elif key == "s":
