@@ -1,4 +1,3 @@
-from tkinter.messagebox import NO
 from LightClient import LightClient
 from LightClientJson import LightClientJson
 
