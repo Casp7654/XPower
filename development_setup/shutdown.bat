@@ -10,10 +10,11 @@ docker stop xpower-hub2
 docker stop xpower-hub3
 echo "Stopping Hosted PWA"
 docker stop xpower-hosted_pwa
+docker stop xpower-pwa
 echo "Stopping IoT Handler"
 docker stop xpower-iot_handler
 echo "Stopping WebApi"
 docker stop xpower-webapi
 echo "Removing networks"
-docker networm rm xpower-cloud
-docker networm rm xpower-home
+docker network rm xpower-cloud
+docker network rm xpower-home
