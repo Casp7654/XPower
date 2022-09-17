@@ -4,3 +4,6 @@ docker image rm xpower-iot_handler
 docker image rm xpower-hub
 docker image rm xpower-iot
 docker image prune --force
+docker network rm xpower-global
+docker network rm xpower-cloud
+docker network rm xpower-home

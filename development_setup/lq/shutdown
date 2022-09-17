@@ -18,7 +18,3 @@ docker stop xpower-iot_handler
 
 echo -e "\nStopping WebApi"
 docker stop xpower-webapi
-
-echo -e "\nRemoving Networks"
-docker network rm xpower-cloud
-docker Network rm xpower-home
