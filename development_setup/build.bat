@@ -18,5 +18,5 @@ echo "Building IoT Device"
 docker build . --tag xpower-iot --file "%cd%\resource\dockerfiles\iot.Dockerfile"
 
 wsl --exec "docker rmi $(docker images --format '{{.ID\t{{.Tag}}' | grep '<none>' | awk '{print $1}')"
-docker builder prune
-docker image prune
+docker builder prune --force
+docker image prune --force
