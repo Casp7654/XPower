@@ -5,6 +5,7 @@
 run_webapi() {
     echo -e "\nStarting WebApi Container"
     docker run --rm -itd \
+        --network xpower-cloud --ip 172.32.0.2 \
         --mount type=bind,src="$(pwd)/resource/symblnk/webapi/",dst=/root/source/webapi \
         --mount type=bind,src="$(pwd)/resource/volumes/webapi/backups/",dst=/root/backups \
         --name xpower-webapi \
@@ -14,6 +15,7 @@ run_webapi() {
 run_iothandler() {
     echo -e "\nStarting IoTHandler Container"
     docker run --rm -itd \
+        --network xpower-cloud --ip 172.32.0.3 \
         --mount type=bind,src="$(pwd)/resource/symblnk/handler/",dst=/root/source/handler \
         --name xpower-iot_handler \
         xpower-iot_handler
@@ -23,6 +25,7 @@ run_iothandler() {
 run_pwa() {
     echo -e "\nStarting Hosted PWA Container"
     docker run --rm -itd \
+        --network xpower-cloud --ip 172.32.0.4 \
         --mount type=bind,src="$(pwd)/resource/symblnk/pwa/",dst=/root/source/pwa \
         --name xpower-hosted_pwa \
         xpower-hosted_pwa
@@ -32,15 +35,17 @@ run_pwa() {
 run_hub() {
     echo -e "\nStarting HUB Container [id:$1]"
     docker run --rm -itd \
+        --network xpower-home --ip 172.64.0.254 \
         --mount type=bind,src="$(pwd)/resource/symblnk/hub/",dst=/root/source/hub \
         --mount type=bind,src="$(pwd)/resource/volumes/hub/backups/",dst=/root/backups \
-        --name xpower-hub$1 \
+        --name xpower-hub \
         xpower-hub
 }
 
 run_iot() {
     echo -e "\nStarting IoT Device Container [id:$1]"
     docker run --rm -itd \
+    --network xpower-home \
         --mount type=bind,src="$(pwd)/resource/symblnk/iot/",dst=/root/source/iot \
         --mount type=bind,src="$(pwd)/resource/volumes/iot/backups/",dst=/root/backups \
         --name xpower-iot$1 \

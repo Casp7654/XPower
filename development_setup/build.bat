@@ -23,4 +23,4 @@ docker image prune --force
 
 echo "Setting up networks"
 docker network create --driver bridge --subnet 172.32.0.0/24 --gateway 172.32.0.1 xpower-cloud
-docker network create --driver bridge --subnet 172.32.0.0/24 --gateway 172.64.0.1 xpower-home
+docker network create --driver bridge --subnet 172.64.0.0/24 --gateway 172.64.0.1 xpower-home
