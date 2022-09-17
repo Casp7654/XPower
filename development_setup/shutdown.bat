@@ -14,3 +14,6 @@ echo "Stopping IoT Handler"
 docker stop xpower-iot_handler
 echo "Stopping WebApi"
 docker stop xpower-webapi
+echo "Removing networks"
+docker networm rm xpower-cloud
+docker networm rm xpower-home
