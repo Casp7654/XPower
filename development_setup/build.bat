@@ -20,3 +20,7 @@ docker build . --tag xpower-iot --file "%cd%\resource\dockerfiles\iot.Dockerfile
 wsl --exec "docker rmi $(docker images --format '{{.ID\t{{.Tag}}' | grep '<none>' | awk '{print $1}')"
 docker builder prune --force
 docker image prune --force
+
+echo "Setting up networks"
+docker network create --driver bridge --subnet 172.32.0.0/24 --gateway 172.32.0.1 xpower-cloud
+docker network create --driver bridge --subnet 172.32.0.0/24 --gateway 172.64.0.1 xpower-home
