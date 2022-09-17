@@ -52,7 +52,9 @@ class BasePage:
     def show_page(self) -> None:
         """Clears earlier content and shows current page."""
         self.__clear_console()
+        print(backcolors.OKCYAN, end="")
         self._show_controls()
+        print(backcolors.ENDC, end="")
         self._show_page()
 
     def wait_for_key(self) -> None:
