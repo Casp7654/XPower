@@ -28,7 +28,7 @@ COPY ./backups ./backups
 COPY ./img_cmd ./
 RUN ln -s /usr/local/bin/surreal ./bin
 # Remember to make them executable for the user
-RUN chmod u+x ./* ./bin/* 
+RUN chmod u+x ./* ./bin/*
 
 #& 9. Compile / Setup Project
 
