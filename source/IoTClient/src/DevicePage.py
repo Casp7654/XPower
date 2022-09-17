@@ -1,5 +1,5 @@
 from ClientManager import ClientManager
-from BasePage import BasePage, bcolors
+from BasePage import BasePage, backcolors
 
 class DevicePage(BasePage):
     def __init__(self, clientManager : ClientManager) -> None:
@@ -26,7 +26,7 @@ class DevicePage(BasePage):
         for idx, c in enumerate(clients):
             dev_str = self.__clientManager.client_status(idx)
             if (idx == self.__cursor_pos):
-                dev_str = bcolors.OKBLUE + dev_str + bcolors.ENDC
+                dev_str = backcolors.OKBLUE + dev_str + backcolors.ENDC
             print(dev_str)
 
     def _on_key_pressed(self, key : str) -> None:
