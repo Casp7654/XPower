@@ -1,0 +1,59 @@
+from __future__ import annotations
+import paho.mqtt.client as mqtt
+import json
+
+class LedCommandPackage:
+    def __init__(self, device_id : str, should_turn_on : bool) -> None:
+        self.device_id = device_id
+        self.should_turn_on = should_turn_on
+
+    @staticmethod
+    def convert(json_data : str) -> LedCommandPackage:
+        json_obj = json.load(json_data)
+        return LedCommandPackage(json_obj["device_id"], json_obj["should_turn_on"])
+        
+
+class LedStatusPackage:
+    def __init__(self, device_id : str, is_turned_on : bool) -> None:
+        self.device_id = device_id
+        self.is_turned_on = is_turned_on
+
+    @staticmethod
+    def convert(package : LedStatusPackage) -> str:
+        return json.dumps({ "device_id": package.device_id, "is_turned_on" : package.is_turned_on })
+          
+
+class LightClient:
+    def __init__(self) -> None:
+        self.__client = mqtt.Client()
+        self.__client.on_connect = self.__on_connect
+        self.__topic_name = "Led"
+
+    def __on_connect(self, client : mqtt.Client, userdata : any, flags : int, rc : int) -> None:
+        client.subscribe(self.__topic_name)
+
+    def __on_message(self, client : mqtt.Client, userdata : any, msg : mqtt.MQTTMessage) -> None:
+        pass
+
+    def set_server_info(self, ip : str, port : int) -> None:
+        self.__ip = ip
+        self.__port = port
+        self.__keep_alive = 60
+
+    def set_gpio(self, gpio : int) -> None:
+        self.__gpio = gpio
+
+    def get_device_id(self) -> str:
+        return self.__client._client_id
+
+    def get_gpio(self) -> int:
+        return self.__gpio
+        
+    def run(self) -> None:
+        self.__client.connect(self.__ip, self.__port, self.__keep_alive)
+        self.__client.loop_start()
+
+    def stop(self) -> None:
+        self.__client.loop_stop()
+
+    
