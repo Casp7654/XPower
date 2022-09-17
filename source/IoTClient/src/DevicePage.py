@@ -25,6 +25,7 @@ class DevicePage(BasePage):
         print("Space - Turn On / Off")
         print("A D - Increase / Decrease pin")
         print("CTRL - Create new client")
+        print("O - Removes selected client")
         print("------------------------------")
 
     def _show_page(self) -> None:
@@ -52,3 +53,9 @@ class DevicePage(BasePage):
             self.__clientManager.toggle_client(self.__cursor_pos)
         elif key == "ctrl":
             self.__create_client()
+        elif key == 'o':
+            self.__clientManager.remove_client(self.__cursor_pos)
+        elif key == "a":
+            self.__clientManager.decrease_client_gpio(self.__cursor_pos)
+        elif key == "d":
+            self.__clientManager.increase_client_gpio(self.__cursor_pos)

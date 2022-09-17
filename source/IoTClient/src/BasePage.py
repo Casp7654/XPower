@@ -3,6 +3,7 @@ import keyboard
 from abc import abstractmethod
 
 class backcolors:
+    """Background colors for the terminal"""
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
@@ -15,8 +16,7 @@ class backcolors:
 
 class BasePage:
     def __clear_console(self) -> None:
-        """Used to clear the console both linux and windows
-        """
+        """Used to clear the console both linux and windows"""
         if (os.name == "posix"):
             os.system("clear")
         else:
@@ -50,8 +50,7 @@ class BasePage:
         pass
 
     def show_page(self) -> None:
-        """Clears earlier content and shows current page.
-        """
+        """Clears earlier content and shows current page."""
         self.__clear_console()
         self._show_controls()
         self._show_page()

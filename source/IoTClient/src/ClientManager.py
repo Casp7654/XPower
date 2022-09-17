@@ -35,6 +35,16 @@ class ClientManager:
         client.set_gpio(gpio)
         self.__clients.append(client)
         self.__save_clients()
+
+    def remove_client(self, index : int) -> None:
+        """Removes the client at the given index, and saves the client list
+
+        Args:
+            index (int): The index where the client should be removed.
+        """
+        if index < 0 or index >= len(self.__clients): return
+        self.__clients.pop(index)
+        self.__save_clients()
     
     def get_clients(self) -> list[LightClient]:
         """
@@ -45,6 +55,7 @@ class ClientManager:
 
     def set_client_gpio(self, index : int, gpio : int) -> None:
         """Sets the clients gpio at the given index 
+        and saves the clients
 
         Args:
             index (int): The index into the clients list
@@ -52,6 +63,7 @@ class ClientManager:
         """
         if index < 0 or index >= len(self.__clients): return
         self.__clients[index].set_gpio(gpio)
+        self.__save_clients()
 
     def toggle_client(self, index : int) -> None:
         """Toggles the client to on / off at the given index.
@@ -64,6 +76,24 @@ class ClientManager:
             self.__clients[index].stop()
         else:
             self.__clients[index].run()
+
+    def increase_client_gpio(self, index : int) -> None:
+        """Increases the gpio of the client at the given index.
+
+        Args:
+            index (int): The index in the clients list
+        """
+        cur_gpio = self.__clients[index].get_gpio()
+        self.set_client_gpio(index, cur_gpio + 1)
+
+    def decrease_client_gpio(self, index : int) -> None:
+        """decreases the gpio of the client at the given index.
+
+        Args:
+            index (int): The index in the clients list
+        """
+        cur_gpio = self.__clients[index].get_gpio()
+        self.set_client_gpio(index, cur_gpio - 1)
 
     def client_status(self, index : int) -> str:
         """The client status at the given index in string format.
