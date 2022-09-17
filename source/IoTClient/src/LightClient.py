@@ -5,6 +5,11 @@ from gpiozero import LED
 
 class LightClient:
     def __init__(self, client_id : str) -> None:
+        """Creates the lightclient with a client id
+
+        Args:
+            client_id (str): The device id / client id used in the mqtt connection
+        """
         self.__client_id = client_id
         self.__client = mqtt.Client(client_id=self.__client_id, clean_session=True, userdata=None, protocol=mqtt.MQTTv311, transport="tcp")
         self.__client.on_connect = self.__on_connect
