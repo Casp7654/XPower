@@ -1,5 +1,6 @@
-from ClientManager import ClientManager
 from BasePage import BasePage, backcolors
+from ClientManager import ClientManager
+from readchar import key
 
 class DevicePage(BasePage):
     def __init__(self, clientManager : ClientManager) -> None:
@@ -24,8 +25,9 @@ class DevicePage(BasePage):
         print("W S - Up / Down in selection")
         print("Space - Turn On / Off")
         print("A D - Increase / Decrease pin")
-        print("CTRL - Create new client")
+        print("Z - Create new client")
         print("O - Removes selected client")
+        print("L - Go to logging")
         print("------------------------------")
 
     def _show_page(self) -> None:
@@ -38,24 +40,26 @@ class DevicePage(BasePage):
                 dev_str = backcolors.OKBLUE + dev_str + backcolors.ENDC
             print(dev_str)
 
-    def _on_key_pressed(self, key : str) -> None:
+    def _on_key_pressed(self, k : str) -> None:
         """The callback for when a key has been pressed
         main logic
 
         Args:
             key (str): The key which was pressed.
         """
-        if key == "w":
+        if k == "w":
             self.__cursor_pos -= 1
-        elif key == "s":
+        elif k == "s":
             self.__cursor_pos += 1
-        elif key == "space":
+        elif k == key.SPACE:
             self.__clientManager.toggle_client(self.__cursor_pos)
-        elif key == "ctrl":
+        elif k == "z":
             self.__create_client()
-        elif key == 'o':
+        elif k == 'o':
             self.__clientManager.remove_client(self.__cursor_pos)
-        elif key == "a":
+        elif k == "a":
             self.__clientManager.decrease_client_gpio(self.__cursor_pos)
-        elif key == "d":
+        elif k == "d":
             self.__clientManager.increase_client_gpio(self.__cursor_pos)
+        elif k == "l":
+            BasePage.change_page("logging_page")

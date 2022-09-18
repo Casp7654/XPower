@@ -4,16 +4,16 @@ class LogEntry:
     def __init__(self, type : str, msg : str) -> None:
         self.__type = type
         self.__message = msg
-        self.__date_time = datetime.now
+        self.__date_time = datetime.now()
     
     def get_time(self) -> datetime:
-        self.__date_time 
+        return self.__date_time
 
     def get_type(self) -> str:
-        self.__type 
+        return self.__type 
 
     def get_message(self) -> str:
-        self.__message 
+        return self.__message 
 
 class ConsoleLogger:
     def __init__(self, name : str) -> None:

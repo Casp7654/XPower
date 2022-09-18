@@ -1,5 +1,6 @@
+from __future__ import annotations
 import os
-import keyboard
+from readchar import readkey, key
 from abc import abstractmethod
 
 class backcolors:
@@ -15,6 +16,37 @@ class backcolors:
     UNDERLINE = '\033[4m'
 
 class BasePage:
+    __current_page : BasePage = None
+    __registered_pages = {}
+
+    @staticmethod
+    def register_pages(pageDict):
+        """Registers classes by dictionary
+
+        Args:
+            pageDict (_type_): The dictionary with pages related.
+        """
+        BasePage.__registered_pages = pageDict
+
+    @staticmethod
+    def change_page(page : str) -> None:
+        """Changes the current page to the one given in string
+
+        Args:
+            page (str): The page name to change to
+        """
+        new_page = BasePage.__registered_pages.get(page)
+        if new_page:
+            BasePage.__current_page = new_page
+
+    @staticmethod
+    def get_page() -> BasePage:
+        """
+        Returns:
+            BasePage: The current page
+        """
+        return BasePage.__current_page
+
     def __clear_console(self) -> None:
         """Used to clear the console both linux and windows"""
         if (os.name == "posix"):
@@ -28,7 +60,7 @@ class BasePage:
         Returns:
             str: The key which was pressed.
         """
-        return keyboard.read_key()
+        return readkey()
 
     @abstractmethod
     def _show_controls(self) -> None:

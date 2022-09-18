@@ -1,25 +1,37 @@
 from LightClient import LightClient
 from LightClientJson import LightClientJson
+from ConsoleLogger import ConsoleLogger
 
 class ClientManager:
-    def __init__(self, clients_file : str) -> None:
+    def __init__(self, clients_file : str, logger : ConsoleLogger) -> None:
         """Constructor for client manager
 
         Args:
             clients_file (str): The client file where clients should be loaded / saved
         """
         self.__clients_file = clients_file
+        self.__logger = logger
         self.__load_clients()
+        for c in self.__clients:
+            self.__set_logging_events(c)
 
     def __load_clients(self) -> None:
-        """Loads the clients from the clients_file
-        """
+        """Loads the clients from the clients_file"""
         self.__clients = LightClientJson.load_clients(self.__clients_file)
 
     def __save_clients(self) -> None:
-        """Saves the current clients into the clients_file
-        """
+        """Saves the current clients into the clients_file"""
         LightClientJson.save_clients(self.__clients_file, self.__clients)
+
+    def __set_logging_events(self, client : LightClient) -> None:
+        """Sets logging for the clients events
+
+        Args:
+            client (LightClient): _description_
+        """
+        client.on_connected = lambda id, ip, port: self.__logger.info(f"{id} -> Connected to {ip}:{port}")
+        client.on_subscribed = lambda id, topic: self.__logger.info(f"{id} -> subscribed to {topic}")
+        client.on_message_received = lambda id, topic, payload: self.__logger.info(f"{id} -> received message {topic}:{payload}")
 
     def add_client(self, id : str, ip : str, port : int, gpio : int) -> None:
         """Adds a client to the list of current clients, and saves the clients.
@@ -33,8 +45,10 @@ class ClientManager:
         client = LightClient(id)
         client.set_server_info(ip, port)
         client.set_gpio(gpio)
+        self.__set_logging_events(client)
         self.__clients.append(client)
         self.__save_clients()
+        
 
     def remove_client(self, index : int) -> None:
         """Removes the client at the given index, and saves the client list
@@ -62,7 +76,10 @@ class ClientManager:
             gpio (int): The new value
         """
         if index < 0 or index >= len(self.__clients): return
-        self.__clients[index].set_gpio(gpio)
+        cur = self.__clients[index]
+        old_val = cur.get_gpio()
+        cur.set_gpio(gpio)
+        self.__logger.info(f"{cur.get_device_id()} -> GPIO changed from {old_val}:{gpio}")
         self.__save_clients()
 
     def toggle_client(self, index : int) -> None:
