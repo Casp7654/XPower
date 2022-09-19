@@ -1,0 +1,35 @@
+#!/bin/bash
+# Setup Linux Host
+mkdir -p ./resource/volumes/webapi/backups
+mkdir -p ./resource/volumes/hub/backups
+mkdir -p ./resource/volumes/iot/backups
+
+# Build Docker Images
+echo -e "\nBuilding WebApi"
+docker build . --tag xpower-webapi --file "./resource/dockerfiles/webapi.Dockerfile"
+
+echo -e "\nBuilding IoT Handler"
+docker build . --tag xpower-iot_handler --file "./resource/dockerfiles/iot_handler.Dockerfile"
+
+echo -e "\nBuilding Hosted PWA"
+docker build . --tag xpower-hosted_pwa --file "./resource/dockerfiles/hosted_pwa.Dockerfile"
+
+echo -e "\nBuilding Hub"
+docker build . --tag xpower-hub --file "./resource/dockerfiles/hub.Dockerfile"
+
+echo -e "\nBuilding IoT Device"
+docker build . --tag xpower-iot --file "./resource/dockerfiles/iot.Dockerfile"
+
+# Cleanup Docker Images and Builder
+docker builder prune --force
+docker image prune --force
+docker rmi $(docker images --format "{{.ID}}\t{{.Tag}}" | grep "<none>" | awk '{print $1}')
+
+#Global Network
+#docker network create --driver bridge --subnet 172.34.0.0/24 --gateway 172.34.0.1 xpower-global
+#Custom Bridges
+docker network create --driver bridge --subnet 172.32.0.0/24 --gateway 172.32.0.1 xpower-cloud
+docker network create --driver bridge --subnet 172.64.0.0/24 --gateway 172.64.0.1 xpower-home
+
+# Done
+echo -e "\n\tDone...!"
