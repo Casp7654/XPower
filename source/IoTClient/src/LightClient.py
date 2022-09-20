@@ -40,6 +40,7 @@ class LightClient:
         self.__subscribe(self.__topic_group_name)
 
     def __subscribe(self, topic_name : str) -> None:
+        """Subscribes to the given topic name"""
         self.__client.subscribe(topic_name)
 
         if (self.on_subscribed):
