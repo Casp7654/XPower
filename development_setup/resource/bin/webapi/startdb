@@ -6,4 +6,4 @@ surreal start \
     --bind 127.0.0.1:8000 \
     file://./datastore/CUR \
     || echo -e "\$ERR!" & \
-    sleep 1 && ./dbtest
+    sleep 1 && /usr/local/bin/dbtest
