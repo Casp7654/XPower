@@ -1,6 +1,7 @@
 from __future__ import annotations
 import paho.mqtt.client as mqtt
-from gpiozero import LED
+from Led import Led
+import json
           
 
 class LightClient:
@@ -14,9 +15,10 @@ class LightClient:
         self.__client = mqtt.Client(client_id=self.__client_id, clean_session=True, userdata=None, protocol=mqtt.MQTTv311, transport="tcp")
         self.__client.on_connect = self.__on_connect
         self.__client.on_message = self.__on_message
-        self.__topic_name = "Led"
+        self.__topic_name = f"Led/{self.__client_id}"
+        self.__topic_group_name = "Led/All"
         self.__is_running = False
-        self.__gpio = 0
+        self.__gpio = Led(0)
 
         self.on_connected = None
         self.on_subscribed = None
@@ -34,10 +36,14 @@ class LightClient:
         if (self.on_connected):
             self.on_connected(self.__client_id, self.__ip, self.__port)
 
-        client.subscribe(self.__topic_name)
+        self.__subscribe(self.__topic_name)
+        self.__subscribe(self.__topic_group_name)
+
+    def __subscribe(self, topic_name : str) -> None:
+        self.__client.subscribe(topic_name)
 
         if (self.on_subscribed):
-            self.on_subscribed(self.__client_id, self.__topic_name)
+            self.on_subscribed(self.__client_id, topic_name)
 
     def __on_message(self, client : mqtt.Client, userdata : any, msg : mqtt.MQTTMessage) -> None:
         """Called when the client recieves a message
@@ -47,6 +53,13 @@ class LightClient:
             userdata (any): The data which is defined by the user before going into the method
             msg (mqtt.MQTTMessage): The message recieved
         """
+        appData = json.loads(msg.payload)
+
+        if appData["cmd"] == "on":
+            self.__gpio.set_state(True)
+        elif appData["cmd"] == "off":
+            self.__gpio.set_state(False)
+
         if (self.on_message_received):
             self.on_message_received(self.__client_id, msg.topic, msg.payload)
 
@@ -67,9 +80,9 @@ class LightClient:
         Args:
             gpio (int): The number pin. ref: https://gpiozero.readthedocs.io/en/stable/_images/pin_layout.svg
         """
-        old_gpio = self.__gpio
         gpio = int(gpio)
-        self.__gpio = gpio if gpio > 0 else 0 # only assign value if bigger than 0
+        gpio = gpio if gpio > 0 else 0 # only assign value if bigger than 0
+        self.__gpio = Led(gpio)
 
     def get_device_id(self) -> str:
         """
@@ -83,7 +96,7 @@ class LightClient:
         Returns:
             int: returns the devices current gpio
         """
-        return self.__gpio
+        return self.__gpio.get_pin()
 
     def get_running(self) -> bool:
         """_summary_
