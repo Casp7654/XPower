@@ -1,5 +1,5 @@
 echo -e "Running..."
-./bin/surreal start \
+surreal start \
     --log debug \
     --user root \
     --pass root \

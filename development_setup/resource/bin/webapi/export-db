@@ -1,8 +1,8 @@
 if [ ! "$1" == "" ]; then
     if [ ! "$2" == "" ]; then
         if [ ! "$3" == "" ]; then
-        echo -e "\nImporting $(pwd)/datastore/backups/$3.bak > NS:$1,DB:$2"
-            ./bin/surreal import \
+        echo -e "\nExporting NS:$1,DB:$2 > $(pwd)/datastore/backups/$3.bak"
+            surreal export \
                 --conn http://127.0.0.1:8000 \
                 --user root \
                 --pass root \
