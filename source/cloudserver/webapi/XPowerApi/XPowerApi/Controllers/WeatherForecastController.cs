@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using XPowerApi.Models;
 
 namespace XPowerApi.Controllers
 {
