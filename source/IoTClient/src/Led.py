@@ -1,4 +1,5 @@
 from gpiozero import LED
+import os
 
 class Led:
     def __init__(self, gpio : int) -> None:
@@ -11,10 +12,13 @@ class Led:
         Args:
             gpio (int): The gpio pin number
         """
+
         if gpio < 0: return
         self.__pin = gpio
-        self.__gpio = LED(gpio)
         self.__turned_on = False
+        
+        if os.name != "posix": return
+        self.__gpio = LED(gpio)
 
     def get_pin(self) -> int:
         """
@@ -29,6 +33,8 @@ class Led:
         Args:
             turn_on (bool): The new state
         """
+        if os.name != "posix": return
+        
         if turn_on:
             self.__gpio.on()
         else:
