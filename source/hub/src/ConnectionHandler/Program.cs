@@ -9,9 +9,13 @@ var options = new MqttServerOptionsBuilder()
 .Build();
 
 var mqtt = mqttFactory.CreateMqttServer(options);
-
 var server = new MqttServerHandler(mqtt);
-server.MessageEventHandler += (cl, t, p) => {System.Console.WriteLine($"{cl}: {t} {p}");};
+
+var actions = new List<IMessageAction> {
+    new Hej(),
+    new TestAction()
+};
+var serverController = new ServerController(actions, server);
 await server.StartAsync();
 
 using (var mqttClient = mqttFactory.CreateMqttClient())
