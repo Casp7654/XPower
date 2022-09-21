@@ -1,0 +1,6 @@
+wget https://download.visualstudio.microsoft.com/download/pr/a567a07f-af9d-451a-834c-a746ac299e6b/1d9d74b54cf580f93cad71a6bf7b32be/dotnet-sdk-6.0.401-linux-arm64.tar.gz
+mkdir -p $HOME/dotnet && tar zxf dotnet-sdk-6.0.401-linux-arm64.tar.gz -C $HOME/dotnet
+export DOTNET_ROOT=$HOME/dotnet
+export PATH=$PATH:$HOME/dotnet
+rm dotnet-sdk-*
+echo "export PATH=\"\$PATH:\$HOME/dotnet\""" >> .bashrc
