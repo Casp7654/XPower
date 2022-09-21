@@ -6,8 +6,8 @@ run_webapi() {
     echo -e "\nStarting WebApi Container"
     docker run --rm -itd \
         --network xpower-cloud --ip 172.32.0.2 \
-        --mount type=bind,src="$(pwd)/resource/symblnk/webapi/",dst=/root/source/webapi \
-        --mount type=bind,src="$(pwd)/resource/volumes/webapi/backups/",dst=/root/backups \
+        --mount type=bind,src="$(pwd)/resource/symblnk/webapi",dst=/root/source \
+        --mount type=bind,src="$(pwd)/resource/volumes/webapi/backups",dst=/root/backups \
         --name xpower-webapi \
         xpower-webapi
 }
@@ -63,16 +63,20 @@ if [ ! "$1" == "" ]; then
         run_hub "$2"
     elif [ "$1" == "iot" ]; then
         run_iot "$2"
-    else
-        echo $(pwd)
-        echo -e "\tNothing to start\n"
-        exit 1
-    fi
-else
+    elif [ "$1" == "all" ]; then
     run_webapi
     run_iothandler
     run_pwa
     run_hub 1
     run_iot 1
     run_iot 2
+    else
+        echo $(pwd)
+        echo -e "\tNothing to start\n"
+        exit 1
+    fi
+else
+    echo $(pwd)
+    echo -e "\tNothing to start\n"
+    exit 1
 fi
