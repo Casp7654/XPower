@@ -1,7 +1,6 @@
 ﻿using MQTTnet;
+using MQTTnet.Client;
 using MQTTnet.Server;
-
-var t = new BrokerServerHandler();
 
 var mqttFactory = new MqttFactory();
 
@@ -9,7 +8,32 @@ var options = new MqttServerOptionsBuilder()
 .WithDefaultEndpoint()
 .Build();
 
-using (var server = mqttFactory.CreateMqttServer(options)) 
+var mqtt = mqttFactory.CreateMqttServer(options);
+
+var server = new MqttServerHandler(mqtt);
+server.MessageEventHandler += (cl, t, p) => {System.Console.WriteLine($"{cl}: {t} {p}");};
+await server.StartAsync();
+
+using (var mqttClient = mqttFactory.CreateMqttClient())
+{
+    var mqttClientOptions = new MqttClientOptionsBuilder()
+        .WithTcpServer("127.0.0.1")
+        .Build();
+
+    await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+
+    var applicationMessage = new MqttApplicationMessageBuilder()
+        .WithTopic("test")
+        .WithPayload("hejsa")
+        .Build();
+
+    await mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
+}
+
+Console.ReadKey();
+
+
+/* using (var server = mqttFactory.CreateMqttServer(options)) 
 {
     await server.StartAsync();
 
@@ -38,4 +62,4 @@ using (var server = mqttFactory.CreateMqttServer(options))
     }
 
     await server.StopAsync();
-}
+} */
