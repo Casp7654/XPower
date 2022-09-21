@@ -1,16 +1,27 @@
-﻿using XPowerApi.Interfaces;
+﻿using System;
+using System.Net.Http;
+using XPowerApi.Interfaces;
 using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Providers
 {
     public class UserProvider : IUserProvider
     {
-        List<User> users = new List<User>()
+        private IConfiguration _configuration;
+        private HttpClient _httpClient;
+        private List<User> users = new List<User>();
+
+        public UserProvider(IConfiguration configuration)
         {
-            new User() { Id = 0, UserName = "Jon"},
-            new User() { Id = 1, UserName = "Tron"},
-            new User() { Id = 2, UserName = "Aaron"},
-        };
+            _configuration = configuration;
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri(_configuration["SurrealDB"]["ConnStr"]);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.User.Add("root:root");
+            _httpClient.DefaultRequestHeaders.Add("NS: xpower");
+            _httpClient.DefaultRequestHeaders.Add("DB: webapi");
+        }
 
         public Task<User> CreateUser(UserCreate userCreate)
         {
@@ -30,8 +41,13 @@ namespace XPowerApi.Providers
             return Task.Run(() => users.Remove(user));
         }
 
-        public Task<User> GetUserByID(int id)
+        public async Task<User> GetUserByID(int id)
         {
+            HttpRequestMessage request = new HttpRequestMessage();
+            request.Content = "select * from user";
+            HttpResponseMessage response = await _httpClient.SendAs(request);
+            Console.WriteLine(response.Content.ToString());
+
             return Task.Run(() => users.Find(x => x.Id == id));
         }
 
