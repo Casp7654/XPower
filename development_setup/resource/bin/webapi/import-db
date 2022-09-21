@@ -1,14 +1,14 @@
 if [ ! "$1" == "" ]; then
     if [ ! "$2" == "" ]; then
         if [ ! "$3" == "" ]; then
-        echo -e "\nImporting $(pwd)/datastore/backups/$3.bak > NS:$1,DB:$2"
-            ./bin/surreal import \
+        echo -e "\nImporting $(pwd)/backups/$3.bak > NS:$1,DB:$2"
+            surreal import \
                 --conn http://127.0.0.1:8000 \
                 --user root \
                 --pass root \
                 --ns $1 \
                 --db $2 \
-                $(pwd)/datastore/backups/$3.bak && echo "...Done!" || echo "$!ERR¡"
+                $(pwd)/backups/$3.bak && echo "...Done!" || echo "$!ERR¡"
         else
             echo "please provide name for the OUTPUT FILE as \$3"
         fi
