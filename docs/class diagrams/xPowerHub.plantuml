@@ -1,0 +1,27 @@
+@startuml XPowerHub
+
+IoTCommandRequest --> IoTTypes
+IoTCommandRequest --> IoTCommandType
+
+enum IoTTypes {
+    LED
+}
+
+class IoTCommandType {
+    + Name : string
+    + Arguments : list<string>
+}
+
+class IoTCommandRequest {
+    + ClientId : string
+    + Type : IoTTypes
+    + Command : IoTCommandType
+}
+
+interface LedCommandHandler {
+    + TurnOn() : void
+    + TurnOff() : void
+}
+
+
+@enduml
