@@ -9,3 +9,6 @@ $linear-component-background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgb
   border-radius: 20%;
   background: $linear-component-background;
 }
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
