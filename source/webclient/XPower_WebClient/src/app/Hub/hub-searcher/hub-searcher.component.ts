@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, Inject } from '@angular/core';
 import { HubConnServiceService  } from './hub-conn-service.service';
 import { BluetoothCore } from '@manekinekko/angular-web-bluetooth';
 
@@ -20,7 +20,14 @@ export class HubSearcherComponent implements OnInit {
   }
   //Show battery level
   connected(value: BluetoothRemoteGATTCharacteristic){
-    value.addEventListener("characteristicvaluechanged", (this, this.yeet), false)
+    //value.addEventListener("characteristicvaluechanged", (this, this.yeet), false)
+
+    value.addEventListener(
+      "characteristicvaluechanged",
+      async (event) => {
+        console.log(`notified: ${event?.target}`);
+      }
+    );
   }
 
   yeet(a : any){
@@ -56,6 +63,7 @@ export class HubSearcherComponent implements OnInit {
     let encodedString = encoder.encode(jStr);
     console.log('writing to character: ' + jStr);
 
+   // Try with response, but after it changes the ip
     await this._hubConnService.getCharacter().writeValueWithoutResponse(encodedString);
   }
 

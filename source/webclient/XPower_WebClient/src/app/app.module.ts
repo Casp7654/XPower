@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HubSearcherComponent } from './Hub/hub-searcher/hub-searcher.component';
 import { BrowserWebBluetooth} from '@manekinekko/angular-web-bluetooth'
 import {MatGridListModule} from '@angular/material/grid-list';
-//import {MatDialogModule} from "@angular/material";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
