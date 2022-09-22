@@ -12,6 +12,7 @@ import { HubSearcherComponent } from './Hub/hub-searcher/hub-searcher.component'
 
 import { IotComponent } from './IoT/iot/iot.component';
 import { IotControllerComponent } from './IoT/iot-controller/iot-controller.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { IotControllerComponent } from './IoT/iot-controller/iot-controller.comp
       registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
