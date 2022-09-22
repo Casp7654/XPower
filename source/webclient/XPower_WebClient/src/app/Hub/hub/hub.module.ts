@@ -5,7 +5,8 @@ import { Device } from 'src/app/Models/Device';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule
   ]
