@@ -12,7 +12,7 @@
     "XPowerApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       //"applicationUrl": "https://172.32.0.2:443;http://172.32.0.2:80", /* Docker Development */
       "applicationUrl": "https://localhost:7083;http://localhost:5083", /* Localhost Development */

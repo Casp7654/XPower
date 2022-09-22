@@ -46,6 +46,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
+//builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
@@ -56,6 +57,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(policyBuilder =>
+{
+    policyBuilder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyOrigin();
+});
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
