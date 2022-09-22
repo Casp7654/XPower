@@ -3,6 +3,8 @@ $linear-background: linear-gradient(144deg, rgba(0,138,219,0.65) 39%, rgba(27,40
 $linear-component-background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgba(242,244,255,1) 100%);
 .custom-app-background {
   background: $linear-background;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .device {
@@ -11,6 +13,11 @@ $linear-component-background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgb
   height: 80%;
   width: 80%; 
 }
-
+html{
+  background: $linear-background;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/dist/css/bootstrap.css"
