@@ -1,4 +1,4 @@
-@startuml Hub SD diagrams
+@startuml Hub SSD diagrams
 title Receive data action interception
 
 Client -> MqttServer: Receives data
