@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IotModule } from './iot.module';
 
 @Component({
   selector: 'app-iot',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./iot.component.scss']
 })
 export class IotComponent implements OnInit {
-
+  @Input() iot! : IotModule;
   constructor() { }
 
   ngOnInit(): void {
