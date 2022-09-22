@@ -1,0 +1,16 @@
+@startuml Hub SD diagrams
+title Receive data action interception
+
+Client -> MqttServer: Receives data
+MqttServer -> ServerController: OnMessageReceived
+loop IMessagesActions.count
+    ServerController -> IMessagesActions: CanExecute
+    IMessagesActions --> ServerController: Return whether can execute
+
+    alt CanExecute : True
+        ServerController -> IMessagesActions: Execute
+    end
+    
+end
+
+@enduml
