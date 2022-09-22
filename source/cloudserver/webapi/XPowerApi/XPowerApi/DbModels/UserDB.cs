@@ -1,19 +1,28 @@
-﻿namespace XPowerApi.DbModels
+﻿using XPowerApi.Models.UserModels;
+
+namespace XPowerApi.DbModels
 {
-    public class UserDB
+    public class UserDb
     {
-        public int Id { get; set; }
+        public string id { get; set; }
+        public string email { get; set; }
+        public string firstname { get; set; }
+        public string lastname { get; set; }
+        public string username { get; set; }
+        public string hashedPassword { get; set; }
+        public string salt { get; set; }
+        
 
-        public string Email { get; set; }
-
-        public string Firstname { get; set; }
-
-        public string Lastname { get; set; }
-
-        public string UserName { get; set; }
-
-        public string HashedPassword { get; set; }
-
-        public string Salt { get; set; }
+        public User ConvertToUser()
+        {
+            return new User
+            {
+                Id = int.Parse(id.Split(':')[1]),
+                Email = email,
+                Firstname = firstname,
+                Lastname = lastname,
+                UserName = username
+            };
+        }
     }
 }

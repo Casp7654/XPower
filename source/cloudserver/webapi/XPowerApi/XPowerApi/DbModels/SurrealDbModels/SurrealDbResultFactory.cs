@@ -1,20 +1,26 @@
 using System.Text.Json;
-using XPowerApi.DbModels;
 
-
-namespace XPowerApi.Models.SurrealDbModels;
+namespace XPowerApi.DbModels.SurrealDbModels;
 
 public static class SurrealDbResultFactory
 {
-    public static SurrealDbResult MakeRawResult(string responseJson)
+    private static SurrealDbResult MakeRawResult(string jsonData)
     {
-        List<SurrealDbResult> dbresult = JsonSerializer.Deserialize<List<SurrealDbResult>>(responseJson)!; 
-        return dbresult[0];
+        List<SurrealDbResult> dbResult = JsonSerializer.Deserialize<List<SurrealDbResult>>(jsonData)!; 
+        return dbResult[0];
     }
-    public static T MakeOne<T>(string responseJson)
+    public static T MakeOne<T>(string jsonData)
     {
-        SurrealDbResult dbResult = MakeRawResult(responseJson);
+        SurrealDbResult dbResult = MakeRawResult(jsonData);
         T t = JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(dbResult.result[0]))!;
         return t;
     }
+
+    //public static List<T> MakeAll<T>(string jsonData)
+    //{
+        //SurrealDbResult dbResult = MakeRawResult(jsonData);
+        //List<T> tList = new List<T>();
+        //foreach??=>!!JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(dbResult.result[i]))!;
+        //return tList;
+    //}
 }

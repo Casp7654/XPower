@@ -22,9 +22,9 @@ namespace XPowerApi.Managers
             return Task.Run(() => _userProvider.DeleteUser(id));
         }
 
-        public Task<User> GetUserByID(int id)
+        public Task<User> GetUserById(int id)
         {
-            return Task.Run(() => _userProvider.GetUserByID(id));
+            return Task.Run(() => _userProvider.GetUserById(id));
         }
 
         public Task<User> UpdateUserUsername(int id, string username)
