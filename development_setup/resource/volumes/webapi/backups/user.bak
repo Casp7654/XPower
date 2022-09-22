@@ -11,10 +11,9 @@ OPTION IMPORT;
 DEFINE TABLE user SCHEMAFULL;
 
 DEFINE FIELD email ON user TYPE string;
+DEFINE FIELD firstname ON user TYPE string;
 DEFINE FIELD hashed_password ON user TYPE string;
-DEFINE FIELD name ON user TYPE object;
-DEFINE FIELD name.first ON user TYPE string;
-DEFINE FIELD name.last ON user TYPE string;
+DEFINE FIELD lastname ON user TYPE string;
 DEFINE FIELD salt ON user TYPE string;
 DEFINE FIELD username ON user TYPE string;
 

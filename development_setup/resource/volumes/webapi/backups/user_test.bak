@@ -11,10 +11,9 @@ OPTION IMPORT;
 DEFINE TABLE user SCHEMAFULL;
 
 DEFINE FIELD email ON user TYPE string;
+DEFINE FIELD firstname ON user TYPE string;
 DEFINE FIELD hashed_password ON user TYPE string;
-DEFINE FIELD name ON user TYPE object;
-DEFINE FIELD name.first ON user TYPE string;
-DEFINE FIELD name.last ON user TYPE string;
+DEFINE FIELD lastname ON user TYPE string;
 DEFINE FIELD salt ON user TYPE string;
 DEFINE FIELD username ON user TYPE string;
 
@@ -28,8 +27,8 @@ BEGIN TRANSACTION;
 -- TABLE DATA: user
 -- ------------------------------
 
-UPDATE user:1 CONTENT { email: "heste@test.dk", hashed_password: "NONE", id: user:1, name: { first: "john", last: "doe" }, salt: "NONE", username: "johnboi" };
-UPDATE user:2 CONTENT { email: "heste@test.dk", hashed_password: "NONE", id: user:2, name: { first: "jane", last: "doe" }, salt: "NONE", username: "janegurl" };
+UPDATE user:1 CONTENT { email: "heste@test.dk", firstname: "john", hashed_password: "NONE", id: user:1, lastname: "doe", salt: "NONE", username: "johnboi" };
+UPDATE user:2 CONTENT { email: "heste@test.dk", firstname: "jane", hashed_password: "NONE", id: user:2, lastname: "doe", salt: "NONE", username: "janegurl" };
 
 -- ------------------------------
 -- TRANSACTION
