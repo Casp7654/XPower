@@ -1,7 +1,7 @@
 if [ ! "$1" == "" ]; then
     echo -e "\nImporting $(pwd)/backups/$1.bak > NS:xpower,DB:webapi"
     surreal import \
-        --conn http://127.0.0.1:8000 \
+        --conn http://172.32.0.2:8000 \
         --user root \
         --pass root \
         --ns xpower \
