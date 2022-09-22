@@ -1,4 +1,4 @@
-interface IServerHandler {
+public interface IServerHandler {
 
     /// <summary>
     /// Event for when the server receives data.

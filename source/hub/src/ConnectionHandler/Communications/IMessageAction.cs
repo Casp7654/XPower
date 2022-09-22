@@ -1,4 +1,4 @@
-interface IMessageAction 
+public interface IMessageAction 
 {
     /// <summary>
     /// The action related to the 

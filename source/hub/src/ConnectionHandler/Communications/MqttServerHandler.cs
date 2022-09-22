@@ -1,7 +1,7 @@
 using MQTTnet;
 using MQTTnet.Server;
 
-class MqttServerHandler : IServerHandler
+public class MqttServerHandler : IServerHandler
 {
     /// <summary>
     /// The id of the server used to identify the machine in the mqtt connections

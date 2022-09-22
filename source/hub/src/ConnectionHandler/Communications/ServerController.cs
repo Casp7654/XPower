@@ -1,4 +1,4 @@
-class ServerController {
+public class ServerController {
 
     /// <summary>
     /// The actions which will be called if they match execution pattern.
