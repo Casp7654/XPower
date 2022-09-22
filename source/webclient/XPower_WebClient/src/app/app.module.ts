@@ -9,9 +9,9 @@ import { HubComponent } from './Hub/hub/hub.component';
 import { HubControllerComponent } from './Hub/hub-controller/hub-controller.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HubSearcherComponent } from './Hub/hub-searcher/hub-searcher.component';
-
+import { BrowserWebBluetooth} from '@manekinekko/angular-web-bluetooth'
 import {MatGridListModule} from '@angular/material/grid-list';
-
+//import {MatDialogModule} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [BrowserWebBluetooth],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
