@@ -1,5 +1,7 @@
-<div *ngFor="let currentHub of hubs">
-    <app-hub-component [hub]="currentHub">
-  
-    </app-hub-component>
+<mat-grid-list cols="2" rowHeight="2:1">
+  <div *ngFor="let currentHub of hubs">
+    <mat-grid-tile>
+      <app-hub [hub]="currentHub">
+      </app-hub></mat-grid-tile>
   </div>
+</mat-grid-list> 
