@@ -5,10 +5,12 @@ $linear-component-background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgb
   background: $linear-background;
 }
 
-.rcorners2 {
+.device {
   border-radius: 20%;
   background: $linear-component-background;
+  height: 80%;
+  width: 80%; 
 }
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/dist/css/bootstrap.css"
