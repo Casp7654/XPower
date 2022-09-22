@@ -2,6 +2,7 @@
 define table hub Schemafull;
 
 -- Set Fields in table
+define field uid on table user type string;
 define field id on table hub type int;
 define field name on table hub type string;
 define field network on table hub type object;

@@ -11,19 +11,11 @@ curl -X POST \
 ```
 
 ## Get Users
-```bash
+```sql
+-- Get all
 SELECT * FROM user;
-```
-## Get Hubs
-```bash
-SELECT * FROM hub;
-```
-## Get UserHubs
-```bash
-SELECT * FROM user;
-```
-
-## Get PowerCops
-```bash
-SELECT * FROM user;
+-- get specifik
+select * from user:1;
+-- syntax select [FIELDS] from [TABLE]:[ID];
+select * from user:1;
 ```
