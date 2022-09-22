@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HubModule } from '../hub/hub.module';
 
+
 @Component({
   selector: 'app-hub-controller',
   templateUrl: './hub-controller.component.html',
@@ -18,7 +19,9 @@ public hubs! : HubModule[];
 
     //Do some api call to fetch all the hubs from home 
     let hub = new HubModule("123", "Hub 1");
-    let hubArray : HubModule[] = [hub];
+    let hub2 = new HubModule("123", "Hub 3");
+    let hub3 = new HubModule("123", "Hub 3");
+    let hubArray : HubModule[] = [hub, hub2, hub3];
 
     return hubArray;
   }
