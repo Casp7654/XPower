@@ -1,21 +1,19 @@
 using System.Text;
-using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace XPowerApi.Models;
+namespace XPowerApi.DbModels.SurrealDbModels;
 
-public class SurrealDBHttpClient: HttpClient
+public class SurrealDbHttpClient: HttpClient
 {
 
-    public SurrealDBHttpClient(IConfiguration configuration) : base()
+    public SurrealDbHttpClient(IConfiguration configuration) : base()
     {
-        this.BaseAddress = new Uri(configuration["SurrealDB:ConnStr"]);
-        AuthenticationHeaderValue auth = new AuthenticationHeaderValue("Basic",
-            Convert.ToBase64String(Encoding.UTF8.GetBytes(configuration["SurrealDB:User"])));
-        this.DefaultRequestHeaders.Clear();
-        this.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        this.DefaultRequestHeaders.Authorization = auth;
-        this.DefaultRequestHeaders.Add("NS", configuration["SurrealDB:Namespace"]);
-        this.DefaultRequestHeaders.Add("DB", configuration["SurrealDB:Database"]);
+        BaseAddress = new Uri(configuration["SurrealDB:ConnStr"]);
+        DefaultRequestHeaders.Clear();
+        DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        string authBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(configuration["SurrealDB:User"]));
+        DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",authBase64);
+        DefaultRequestHeaders.Add("NS", configuration["SurrealDB:Namespace"]);
+        DefaultRequestHeaders.Add("DB", configuration["SurrealDB:Database"]);
     }
 }

@@ -1,6 +1,4 @@
-using System.Text.Json;
-
-namespace XPowerApi.Models;
+namespace XPowerApi.DbModels.SurrealDbModels;
 
 public class SurrealDbResult
 {

@@ -6,7 +6,7 @@ namespace XPowerApi.Interfaces
     {
         public Task<User> CreateUser(UserCreate userCreate);
         public Task<User> UpdateUserUsername(int id, string username);
-        public Task<User> GetUserByID(int id);
+        public Task<User> GetUserById(int id);
         public Task<bool> DeleteUser(int id);
     }
 }

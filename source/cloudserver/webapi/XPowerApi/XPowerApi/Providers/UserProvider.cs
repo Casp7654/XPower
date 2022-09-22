@@ -1,19 +1,18 @@
-﻿using System.Net.Http.Headers;
-using System.Text.Json;
-using XPowerApi.Interfaces;
-using XPowerApi.Models;
+﻿using XPowerApi.Interfaces;
+using XPowerApi.DbModels;
+using XPowerApi.DbModels.SurrealDbModels;
 using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Providers
 {
     public class UserProvider : IUserProvider
     {
-        private SurrealDBHttpClient _httpClient;
+        private SurrealDbHttpClient _httpClient;
         private List<User> _users = new List<User>();
 
         public UserProvider(IConfiguration configuration)
         {
-            _httpClient = new SurrealDBHttpClient(configuration);
+            _httpClient = new SurrealDbHttpClient(configuration);
         }
 
         public Task<User> CreateUser(UserCreate userCreate)
@@ -34,7 +33,7 @@ namespace XPowerApi.Providers
             return Task.Run(() => _users.Remove(user));
         }
 
-        public async Task<User> GetUserByID(int id)
+        public async Task<User> GetUserById(int id)
         {
             // Set SQL string
             string sqlString = $"select * from user where id = user:{id};";
@@ -44,15 +43,13 @@ namespace XPowerApi.Providers
             HttpResponseMessage response = await _httpClient.SendAsync(request);
             string responseJson = await response.Content.ReadAsStringAsync();
             // Debug response
-            Console.WriteLine(responseJson);
+            //Console.WriteLine(responseJson);
             // ERR
             if (!response.IsSuccessStatusCode)
                 throw new Exception("Could not get data");
-
-            // Create Object
-            SurrealDbResult dbResult = SurrealDbResultFactory.MakeResult(responseJson);
-            User user = JsonSerializer.Deserialize<User>(JsonSerializer.Serialize(dbResult.result[0]));
             
+            // Create Object
+            User user = SurrealDbResultFactory.MakeOne<UserDb>(responseJson).ConvertToUser();
             return user;
         }
 

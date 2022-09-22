@@ -29,12 +29,12 @@ namespace XPowerApi.Controllers
         /// <param name="id">ID of the user</param>
         [HttpGet]
         [Route("GetUserByID")]
-        public async Task<ActionResult<User>> GetUserByID(int id)
+        public async Task<ActionResult<User>> GetUserById(int id)
         {
             try
             {
                 //Checking if the user exists
-                var user = await _userManager.GetUserByID(id);
+                var user = await _userManager.GetUserById(id);
 
                 // User with that id was not found
                 if(user == null)
