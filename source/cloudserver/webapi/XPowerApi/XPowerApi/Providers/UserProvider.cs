@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using XPowerApi.Interfaces;
+using XPowerApi.Models;
 using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Providers
@@ -12,11 +13,12 @@ namespace XPowerApi.Providers
         public UserProvider(IConfiguration configuration)
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(configuration["SurrealDBConnStr"]);
+            _httpClient.BaseAddress = new Uri(configuration["SurrealDB:ConnStr"]);
+            _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse("root:root");
-            _httpClient.DefaultRequestHeaders.Add("NS:","xpower");
-            _httpClient.DefaultRequestHeaders.Add("DB:","webapi");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Basic", Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(configuration["SurrealDB:User"])));
+            _httpClient.DefaultRequestHeaders.Add("NS",configuration["SurrealDB:Namespace"]);
+            _httpClient.DefaultRequestHeaders.Add("DB",configuration["SurrealDB:Database"]);
         }
 
         public Task<User> CreateUser(UserCreate userCreate)
@@ -39,12 +41,18 @@ namespace XPowerApi.Providers
 
         public async Task<User> GetUserByID(int id)
         {
-            HttpRequestMessage request = new HttpRequestMessage();
-            request.Method = HttpMethod.Post;
-            request.Content = new StringContent("select * from user");
+            // Set SQL string   
+            string sqlString = $"select * from user where id = user:{id};";
+            // Create RequestMessage
+            SurrealDbHttpRequestMessage request = new SurrealDbHttpRequestMessage(sqlString);
+            // Get Response
             HttpResponseMessage response = await _httpClient.SendAsync(request);
-            Console.WriteLine(response.Content.ToString());
-
+            // Debug response
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
+            // ERR
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Could not get data");
+            
             return await Task.Run(() => _users.Find(x => x.Id == id));
         }
 
