@@ -63,7 +63,7 @@ app.UseCors(policyBuilder =>
     policyBuilder
         .AllowAnyOrigin()
         .AllowAnyMethod()
-        .AllowAnyOrigin();
+        .AllowAnyHeader();
 });
 
 app.UseHttpsRedirection();
