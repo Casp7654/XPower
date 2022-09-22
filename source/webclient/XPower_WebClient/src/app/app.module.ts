@@ -11,6 +11,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { HubSearcherComponent } from './Hub/hub-searcher/hub-searcher.component';
 
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import { IotComponent } from './IoT/iot/iot.component';
+import { IotControllerComponent } from './IoT/iot-controller/iot-controller.component';
 
 
 @NgModule({
@@ -18,11 +22,15 @@ import {MatGridListModule} from '@angular/material/grid-list';
     AppComponent,
     HubComponent,
     HubControllerComponent,
-    HubSearcherComponent
+    HubSearcherComponent,
+    IotComponent,
+    IotControllerComponent
   ],
   imports: [
     BrowserModule,
     MatGridListModule,
+    MatToolbarModule,
+    MatIconModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
