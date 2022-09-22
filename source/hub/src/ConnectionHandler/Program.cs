@@ -12,8 +12,7 @@ var mqtt = mqttFactory.CreateMqttServer(options);
 var server = new MqttServerHandler(mqtt);
 
 var actions = new List<IMessageAction> {
-    new Hej(),
-    new TestAction()
+    new SampleAction()
 };
 var serverController = new ServerController(actions, server);
 await server.StartAsync();
@@ -35,35 +34,3 @@ using (var mqttClient = mqttFactory.CreateMqttClient())
 }
 
 Console.ReadKey();
-
-
-/* using (var server = mqttFactory.CreateMqttServer(options)) 
-{
-    await server.StartAsync();
-
-    bool quit = false;
-    while(!quit) 
-    {
-        System.Console.Write("Should turn on? y/n: ");
-        var key = Console.ReadLine();
-
-        string turn_on = "off";
-        if (key == "y")
-            turn_on = "on";
-
-        var jsonMessage = System.Text.Json.JsonSerializer.Serialize(new {cmd = turn_on});
-
-        var message = new MqttApplicationMessageBuilder()
-        .WithTopic("Led/All")
-        .WithPayload(jsonMessage)
-        .Build();
-
-        await server.InjectApplicationMessage(
-            new InjectedMqttApplicationMessage(message) {
-                SenderClientId = "Broker"
-            }
-        );
-    }
-
-    await server.StopAsync();
-} */
