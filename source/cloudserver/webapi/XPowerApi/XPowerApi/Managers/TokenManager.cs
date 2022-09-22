@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Web;
 
 using XPowerApi.Interfaces;
@@ -16,11 +17,11 @@ namespace XPowerApi.Managers
     public class TokenManager : ITokenManager<UserToken>
     {
         private readonly IConfiguration _configuration;
-        string secret = "";
+        private readonly string _secret = "";
         public TokenManager(IConfiguration configuration)
         {
             _configuration = configuration;
-            secret = _configuration["JWT:Key"];
+            _secret = _configuration["JWT:Key"];
         }
 
         public Task<UserToken> FromTokenString(string token)
@@ -53,27 +54,33 @@ namespace XPowerApi.Managers
 
         public Task<UserToken> GenerateToken(User user)
         {
- 
-            byte[] key = Convert.FromBase64String(secret);
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
-            SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
             {
-                Subject = new ClaimsIdentity(new[] {
-                      new Claim(ClaimTypes.Name, user.UserName),
-                      new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(30),
-                SigningCredentials = new SigningCredentials(securityKey,
-                SecurityAlgorithms.HmacSha256Signature)
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.GivenName, user.Firstname),
+                new Claim(ClaimTypes.Surname, user.Lastname),
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            JwtSecurityToken token = handler.CreateJwtSecurityToken(descriptor);
+            var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: credentials
+            );
 
             UserToken t = new UserToken();
-            t.Token = handler.WriteToken(token);
+            t.Token = new JwtSecurityTokenHandler().WriteToken(token);
             t.UserName = user.UserName;
             t.Id = user.Id;
+            t.Email = user.Email;
+            t.Firstname = user.Firstname;
+            t.Lastname = user.Lastname;
 
             return Task.Run(() => t);
         }
@@ -86,7 +93,7 @@ namespace XPowerApi.Managers
                 JwtSecurityToken jwtToken = (JwtSecurityToken)tokenHandler.ReadToken(token);
                 if (jwtToken == null)
                     return null;
-                byte[] key = Convert.FromBase64String(secret);
+                byte[] key = Convert.FromBase64String(_secret);
                 TokenValidationParameters parameters = new TokenValidationParameters()
                 {
                     RequireExpirationTime = true,
