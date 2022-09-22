@@ -20,8 +20,9 @@ RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod
 RUN apt-get update && apt-get install -y dotnet-sdk-6.0 dotnet-runtime-6.0 aspnetcore-runtime-6.0
 
 #& 5. Expose Ports in Container
-EXPOSE 5083
-EXPOSE 7083
+EXPOSE 80
+EXPOSE 433
+EXPOSE 8000
 
 #& 6. Create Volume Paths
 # Volume map point is set when running container

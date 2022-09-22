@@ -4,5 +4,5 @@ curl -X POST \
 	-H "db: webapi" \
 	-H "Content-Type: application/json" \
 	-d "$1" \
-	http://127.0.0.1:8000/sql
+	http://172.32.0.2:8000/sql
 echo ""

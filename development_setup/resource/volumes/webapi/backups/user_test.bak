@@ -28,6 +28,8 @@ BEGIN TRANSACTION;
 -- TABLE DATA: user
 -- ------------------------------
 
+UPDATE user:1 CONTENT { email: "heste@test.dk", hashed_password: "NONE", id: user:1, name: { first: "john", last: "doe" }, salt: "NONE", username: "johnboi" };
+UPDATE user:2 CONTENT { email: "heste@test.dk", hashed_password: "NONE", id: user:2, name: { first: "jane", last: "doe" }, salt: "NONE", username: "janegurl" };
 
 -- ------------------------------
 -- TRANSACTION

@@ -1,1 +1,1 @@
-lq/shutdown && lq/build && lq/start webapi && lq/open webapi
+lq/shutdown ; lq/build && lq/start webapi && lq/open webapi
