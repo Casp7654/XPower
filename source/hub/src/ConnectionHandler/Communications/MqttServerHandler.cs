@@ -31,7 +31,7 @@ class MqttServerHandler : IServerHandler
     /// <param name="topic">The topic the message should be delivered on.</param>
     /// <param name="data">The application data to send.</param>
     /// <returns>A task which can be awaited</returns>
-    public async Task Publish(string topic, string data)
+    public async Task PublishAsync(string topic, string data)
     {
         var message = new MqttApplicationMessageBuilder()
         .WithTopic(topic)

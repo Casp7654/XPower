@@ -1,27 +1,33 @@
 @startuml XPowerHub
 
-IoTCommandRequest --> IoTTypes
-IoTCommandRequest --> IoTCommandType
-
-enum IoTTypes {
-    LED
+interface IMessageAction {
+    +Action(clientId : string, topic : string, payload : string) : void
+    +CanExecute(clientId : string, topic : string, payload : string) : bool
 }
 
-class IoTCommandType {
-    + Name : string
-    + Arguments : list<string>
+interface IServerHandler {
+    +MessageEventHandler {+get; +set;} : Action<string, string, string>
+    +StartAsync() : Task
+    +PublishAsync(topic : string, payload : string) : Task
+    +StopAsync() : Task
 }
 
-class IoTCommandRequest {
-    + ClientId : string
-    + Type : IoTTypes
-    + Command : IoTCommandType
+class MqttServerHandler {
+    +ServerId {+get; -set} : string
+    +MessageEventHandler {+get; +set} : Action<string, string, string>
+    -mqttServer {readonly} : MqttServer
+    +MqttServerHandler(mqttServer : MqttServer)
+    -OnMessageNotConsumedAsync(packet : ApplicationMessageNotConsumedEventArgs) : Task
 }
 
-interface LedCommandHandler {
-    + TurnOn() : void
-    + TurnOff() : void
+class ServerController {
+    +Actions {+get; +set;} : list<IMessageAction>
+    -serverHandler {readonly} : IServerHandler
+    +ServerController(actions : list<IMessageAction>, serverHandler : IServerHandler)
+    -OnMessageReceived(clientId : string, topic : string, payload : string) : void
 }
 
-
+MqttServerHandler ..|> IServerHandler
+ServerController o.. IServerHandler
+ServerController o.. IMessageAction
 @enduml

@@ -18,7 +18,7 @@ interface IServerHandler {
     /// <param name="topic">The channel to publish to</param>
     /// <param name="data">The data to publish</param>
     /// <returns>A task which can be awaited</returns>
-    Task Publish(string topic, string data);
+    Task PublishAsync(string topic, string data);
 
     /// <summary>
     /// Stops the server
