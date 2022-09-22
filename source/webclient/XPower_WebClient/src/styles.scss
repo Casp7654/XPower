@@ -1,17 +1,17 @@
 @use '@angular/material' as mat;
 @use 'palette-helper';
+@include mat.core();
 
+$primary-palette: mat.define-palette(mat.$indigo-palette, 900);
+$accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$warn-palette: mat.define-palette(mat.$red-palette);
 $linear-background: linear-gradient(144deg, rgba(0,138,219,0.65) 39%, rgba(27,40,69,1) 57%);
 $linear-component-background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgba(242,244,255,1) 100%);
 .custom-app-background {
   background: $linear-background;
 }
 
-@include mat.core();
 
-$primary-palette: mat.define-palette(mat.$indigo-palette, 500);
-$accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$warn-palette: mat.define-palette(mat.$red-palette);
 
 $my-theme: mat.define-light-theme((
   color: (
@@ -20,15 +20,14 @@ $my-theme: mat.define-light-theme((
     warn: $warn-palette,
   )
 ));
+
 $my-theme: palette-helper.modify-background($my-theme, $linear-background);
 
 @include mat.all-component-themes($my-theme);
-
+.rcorners2 {
+  border-radius: 20%;
+  background: $linear-component-background;
+}
 .mat-raised-button.mat-warn, .mat-fab.mat-warn, .mat-mini-fab.mat-warn, .mat-flat-button, .mat-raised-button, .mat-fab, .mat-mini-fab {
   background: $linear-background;
-}
-
-html, body {
-  margin: 0;
-  height: 100%;
 }
