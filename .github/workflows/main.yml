@@ -48,6 +48,11 @@ jobs:
         run: |
              cd source/cloudserver/iot-handler/XPowerIoTHandler
              dotnet test
+
+      - name: Running Hub CSharp tests
+        run: |
+            cd source/hub/tests/CSharpTests
+            dotnet test
         
       - name: Running webapi unit tests
         run: |
