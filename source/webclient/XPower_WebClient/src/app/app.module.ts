@@ -8,12 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HubComponentComponent } from './Hub/hub-component/hub-component.component';
 import { HubControllerComponent } from './Hub/hub-controller/hub-controller.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HubSearcherComponent } from './Hub/hub-searcher/hub-searcher.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HubComponentComponent,
-    HubControllerComponent
+    HubControllerComponent,
+    HubSearcherComponent
   ],
   imports: [
     BrowserModule,
