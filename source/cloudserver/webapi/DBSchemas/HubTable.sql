@@ -2,12 +2,10 @@
 define table hub Schemafull;
 
 -- Set Fields in table
-define field uid on table user type string;
-define field id on table hub type int;
 define field name on table hub type string;
-define field network on table hub type object;
-define field network.private_addr on table hub type string;
-define field network.public_addr on table hub type string;
+define field private_addr on table hub type string;
+define field public_addr on table hub type string;
 
--- Set Unique ID
-define index uid on table hub columns uid unique;
+-- Test Data
+insert into hub {id:1, name:"hub1", private_addr:"172.64.0.3", public_addr:"172.32.0.2" };
+insert into hub {id:2, name:"hub2", private_addr:"172.64.0.15", public_addr:"172.32.0.2" };

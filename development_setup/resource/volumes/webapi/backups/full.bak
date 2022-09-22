@@ -5,6 +5,22 @@
 OPTION IMPORT;
 
 -- ------------------------------
+-- TABLE: homegroup
+-- ------------------------------
+
+DEFINE TABLE homegroup SCHEMAFULL;
+
+-- ------------------------------
+-- TABLE: hub
+-- ------------------------------
+
+DEFINE TABLE hub SCHEMAFULL;
+
+DEFINE FIELD name ON hub TYPE string;
+DEFINE FIELD private_addr ON hub TYPE string;
+DEFINE FIELD public_addr ON hub TYPE string;
+
+-- ------------------------------
 -- TABLE: user
 -- ------------------------------
 
@@ -22,6 +38,16 @@ DEFINE FIELD username ON user TYPE string;
 -- ------------------------------
 
 BEGIN TRANSACTION;
+
+-- ------------------------------
+-- TABLE DATA: homegroup
+-- ------------------------------
+
+
+-- ------------------------------
+-- TABLE DATA: hub
+-- ------------------------------
+
 
 -- ------------------------------
 -- TABLE DATA: user

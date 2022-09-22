@@ -1,10 +1,6 @@
--- Create Schemafull Table
-define table userhubs Schemafull;
+-- Test Data
+relate user:1->userhubs->hub:1;
+relate user:2->userhubs->hub:2;
 
--- Set Fields in table
-define field uid on table user type string;
-define field user_id on table hub type int;
-define field hub_id on table hub type int;
-
--- Set Unique ID
-define index uid on table hub columns uid unique;
+-- select example
+select id, ->userhubs->hub as hubs from user;
