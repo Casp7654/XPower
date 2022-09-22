@@ -15,12 +15,33 @@ namespace XPowerApi.Providers
             _httpClient = new SurrealDbHttpClient(configuration);
         }
 
-        public Task<User> CreateUser(UserCreate userCreate)
+        public async Task<int> GetNextUserId()
         {
-            var createdUser = new User() { Id = Random.Shared.Next(4, 150), UserName = userCreate.UserName };
-            _users.Add(createdUser);
+            // Set SQL string
+            string sqlString = $"select id from user order by id desc limit 1;";
+            // Create RequestMessage
+            SurrealDbHttpRequestMessage request = new SurrealDbHttpRequestMessage(sqlString);
+            // Get Response
+            HttpResponseMessage response = await _httpClient.SendAsync(request);
+            string responseJson = await response.Content.ReadAsStringAsync();
+            // Debug response
+            //Console.WriteLine(responseJson);
+            // ERR
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Could not get data");
 
-            return Task.Run(() => createdUser);
+            // Create Object
+            int id = SurrealDbResultFactory.GetIdFromResult(responseJson);
+            return (id != 0) ? id + 1 : -1;
+        }
+
+        public async Task<User> CreateUser(UserCreate userCreate)
+        {
+            int id = await GetNextUserId();
+            string sqlString =
+                $"insert into user {{id:{id},username:\"{userCreate.UserName}\",hashed_password:\"{userCreate.Password}\"}}";
+
+            return new User();
         }
 
         public Task<bool> DeleteUser(int id)
@@ -47,7 +68,7 @@ namespace XPowerApi.Providers
             // ERR
             if (!response.IsSuccessStatusCode)
                 throw new Exception("Could not get data");
-            
+
             // Create Object
             User user = SurrealDbResultFactory.MakeOne<UserDb>(responseJson).ConvertToUser();
             return user;
