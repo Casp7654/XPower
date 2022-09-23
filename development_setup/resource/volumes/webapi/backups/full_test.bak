@@ -10,6 +10,8 @@ OPTION IMPORT;
 
 DEFINE TABLE homegroup SCHEMAFULL;
 
+DEFINE FIELD name ON homegroup TYPE string;
+
 -- ------------------------------
 -- TABLE: hub
 -- ------------------------------
@@ -34,18 +36,6 @@ DEFINE FIELD salt ON user TYPE string;
 DEFINE FIELD username ON user TYPE string;
 
 -- ------------------------------
--- TABLE: usergroups
--- ------------------------------
-
-DEFINE TABLE usergroups SCHEMALESS PERMISSIONS NONE;
-
--- ------------------------------
--- TABLE: userhubs
--- ------------------------------
-
-DEFINE TABLE userhubs SCHEMALESS PERMISSIONS NONE;
-
--- ------------------------------
 -- TRANSACTION
 -- ------------------------------
 
@@ -55,35 +45,16 @@ BEGIN TRANSACTION;
 -- TABLE DATA: homegroup
 -- ------------------------------
 
-UPDATE homegroup:1 CONTENT { id: homegroup:1 };
 
 -- ------------------------------
 -- TABLE DATA: hub
 -- ------------------------------
 
-UPDATE hub:1 CONTENT { id: hub:1, name: "hub1", private_addr: "172.64.0.3", public_addr: "172.32.0.2" };
-UPDATE hub:2 CONTENT { id: hub:2, name: "hub2", private_addr: "172.64.0.15", public_addr: "172.32.0.2" };
 
 -- ------------------------------
 -- TABLE DATA: user
 -- ------------------------------
 
-UPDATE user:1 CONTENT { email: "heste@test.dk", firstname: "john", hashed_password: "NONE", id: user:1, lastname: "doe", salt: "NONE", username: "johnboi" };
-UPDATE user:2 CONTENT { email: "heste@test.dk", firstname: "jane", hashed_password: "NONE", id: user:2, lastname: "doe", salt: "NONE", username: "janegurl" };
-
--- ------------------------------
--- TABLE DATA: usergroups
--- ------------------------------
-
-UPDATE usergroups:jzirrwpv3lkjpd9rrcsa CONTENT { id: usergroups:jzirrwpv3lkjpd9rrcsa, in: user:1, out: homegroup:1 };
-UPDATE usergroups:llhii4qc62099zrn5c8c CONTENT { id: usergroups:llhii4qc62099zrn5c8c, in: user:2, out: homegroup:1 };
-
--- ------------------------------
--- TABLE DATA: userhubs
--- ------------------------------
-
-UPDATE userhubs:gcmoqwpb95t5kglyealk CONTENT { id: userhubs:gcmoqwpb95t5kglyealk, in: user:2, out: hub:2 };
-UPDATE userhubs:gn5jdozyp5zj38y51z47 CONTENT { id: userhubs:gn5jdozyp5zj38y51z47, in: user:1, out: hub:1 };
 
 -- ------------------------------
 -- TRANSACTION
