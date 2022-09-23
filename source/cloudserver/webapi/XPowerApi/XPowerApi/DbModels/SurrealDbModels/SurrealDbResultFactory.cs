@@ -10,7 +10,7 @@ public static class SurrealDbResultFactory
         return dbResult[0];
     }
     
-    public static T MakeOne<T>(string jsonData)
+    public static T GetOne<T>(string jsonData)
     {
         SurrealDbResult dbResult = MakeRawResult(jsonData);
         T t = JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(dbResult.result[0]))!;
