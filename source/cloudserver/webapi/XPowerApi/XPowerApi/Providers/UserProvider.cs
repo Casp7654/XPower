@@ -1,6 +1,8 @@
-﻿using XPowerApi.Interfaces;
+﻿using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using XPowerApi.Interfaces;
 using XPowerApi.DbModels;
-using XPowerApi.DbModels.SurrealDbModels;
 using XPowerApi.Managers;
 using XPowerApi.Models.UserModels;
 
@@ -17,14 +19,21 @@ namespace XPowerApi.Providers
 
         public async Task<User> CreateUser(UserCreate userCreate)
         {
-            // Generate Salt
-            string salt = "hestepest"; // TODO: Make Salt
+            // TODO: Generate Salt
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); // divide by 8 to convert bits to bytes
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: userCreate.Password!,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 2,
+                numBytesRequested: 256 / 8));
+            
             // Create DB Object
             Dictionary<string, string> dataArray = new Dictionary<string, string>()
             {
-                {"hashed_password", userCreate.Password},
+                {"hashed_password", hashed},
                 {"username",userCreate.UserName},
-                {"salt",salt}
+                {"salt",System.Text.Encoding.UTF8.GetString(salt)}
             };
             // Create Dbobject and Convert to User on success
             User user = (await _dbManager.Create<UserDb>("user", dataArray)).ConvertToUser();
