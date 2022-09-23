@@ -1,7 +1,16 @@
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 $linear-background: linear-gradient(144deg, rgba(0,138,219,0.65) 39%, rgba(27,40,69,1) 57%);
 $linear-component-background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgba(242,244,255,1) 100%);
 
+.mat-card {
+  background-image: $linear-component-background;
+}
+
+.secondary-background-color {
+  background: $linear-component-background;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .device {
   border-radius: 20%;

@@ -1,0 +1,13 @@
+<mat-card [class.opacity]="!device.status">
+    <mat-card-header class="socket-bottom-margin">
+        <div mat-card-avatar>
+            <mat-icon [ngClass]="device.turned_on ? 'online' : 'offline'">electrical_services</mat-icon>
+        </div>
+        <mat-card-title>{{device.name}}</mat-card-title>
+        <mat-card-subtitle>{{device.parent.name}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="socket-top-margin">
+        <p>{{device.group}}</p>
+    </mat-card-content>
+</mat-card>
