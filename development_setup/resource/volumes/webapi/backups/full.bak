@@ -10,6 +10,8 @@ OPTION IMPORT;
 
 DEFINE TABLE homegroup SCHEMAFULL;
 
+DEFINE FIELD name ON homegroup TYPE string;
+
 -- ------------------------------
 -- TABLE: hub
 -- ------------------------------
