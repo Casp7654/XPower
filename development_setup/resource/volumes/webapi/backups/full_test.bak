@@ -5,6 +5,12 @@
 OPTION IMPORT;
 
 -- ------------------------------
+-- TABLE: grouphubs
+-- ------------------------------
+
+DEFINE TABLE grouphubs SCHEMALESS PERMISSIONS NONE;
+
+-- ------------------------------
 -- TABLE: homegroup
 -- ------------------------------
 
@@ -18,6 +24,7 @@ DEFINE FIELD name ON homegroup TYPE string;
 
 DEFINE TABLE hub SCHEMAFULL;
 
+DEFINE FIELD mac ON hub TYPE string;
 DEFINE FIELD name ON hub TYPE string;
 DEFINE FIELD private_addr ON hub TYPE string;
 DEFINE FIELD public_addr ON hub TYPE string;
@@ -36,25 +43,55 @@ DEFINE FIELD salt ON user TYPE string;
 DEFINE FIELD username ON user TYPE string;
 
 -- ------------------------------
+-- TABLE: usergroups
+-- ------------------------------
+
+DEFINE TABLE usergroups SCHEMALESS PERMISSIONS NONE;
+
+-- ------------------------------
 -- TRANSACTION
 -- ------------------------------
 
 BEGIN TRANSACTION;
 
 -- ------------------------------
+-- TABLE DATA: grouphubs
+-- ------------------------------
+
+UPDATE grouphubs:1ita8n18n8o6ucgaieys CONTENT { id: grouphubs:1ita8n18n8o6ucgaieys, in: homegroup:1, out: hub:2 };
+UPDATE grouphubs:2oz9hbhgu0ccijvxy2mo CONTENT { id: grouphubs:2oz9hbhgu0ccijvxy2mo, in: homegroup:2, out: hub:4 };
+UPDATE grouphubs:i3z9bkmgtaxhfo26flfb CONTENT { id: grouphubs:i3z9bkmgtaxhfo26flfb, in: homegroup:2, out: hub:3 };
+UPDATE grouphubs:z6xchfsys9e3jie6tij6 CONTENT { id: grouphubs:z6xchfsys9e3jie6tij6, in: homegroup:1, out: hub:1 };
+
+-- ------------------------------
 -- TABLE DATA: homegroup
 -- ------------------------------
 
+UPDATE homegroup:1 CONTENT { id: homegroup:1, name: "default" };
+UPDATE homegroup:2 CONTENT { id: homegroup:2, name: "default" };
 
 -- ------------------------------
 -- TABLE DATA: hub
 -- ------------------------------
 
+UPDATE hub:1 CONTENT { id: hub:1, mac: "NONE", name: "hub1", private_addr: "172.64.0.11", public_addr: "172.32.0.2" };
+UPDATE hub:2 CONTENT { id: hub:2, mac: "NONE", name: "hub2", private_addr: "172.64.0.12", public_addr: "172.32.0.2" };
+UPDATE hub:3 CONTENT { id: hub:3, mac: "NONE", name: "hub3", private_addr: "172.64.0.13", public_addr: "172.32.0.2" };
+UPDATE hub:4 CONTENT { id: hub:4, mac: "NONE", name: "hub4", private_addr: "172.64.0.14", public_addr: "172.32.0.2" };
 
 -- ------------------------------
 -- TABLE DATA: user
 -- ------------------------------
 
+UPDATE user:1 CONTENT { email: "heste@test.dk", firstname: "john", hashed_password: "NONE", id: user:1, lastname: "doe", salt: "NONE", username: "johnboi" };
+UPDATE user:2 CONTENT { email: "heste@test.dk", firstname: "jane", hashed_password: "NONE", id: user:2, lastname: "doe", salt: "NONE", username: "janegurl" };
+
+-- ------------------------------
+-- TABLE DATA: usergroups
+-- ------------------------------
+
+UPDATE usergroups:j22nvlvc61yx4cm1l4ei CONTENT { id: usergroups:j22nvlvc61yx4cm1l4ei, in: user:1, out: homegroup:1 };
+UPDATE usergroups:j8p3kwu00gi2ljc6viz6 CONTENT { id: usergroups:j8p3kwu00gi2ljc6viz6, in: user:2, out: homegroup:2 };
 
 -- ------------------------------
 -- TRANSACTION
