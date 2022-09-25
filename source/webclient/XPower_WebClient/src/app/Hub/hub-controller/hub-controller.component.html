@@ -1,0 +1,22 @@
+ <mat-toolbar color="primary">
+   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="example-spacer"></span>
+  <span>My App</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon search-icon" aria-label="Example icon-button with search icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+   <mat-icon>share</mat-icon>
+ </button>
+</mat-toolbar>
+<mat-grid-list cols="2" rowHeight="2:1">
+  <div *ngFor="let currentHub of hubs">
+    <mat-grid-tile>
+      <app-hub class="device" [hub]="currentHub">
+      </app-hub>
+      </mat-grid-tile>
+  </div>
+</mat-grid-list>
