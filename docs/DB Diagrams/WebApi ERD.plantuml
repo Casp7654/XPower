@@ -40,7 +40,7 @@ entity UserGroups <Relational Table> <<Relation>> {
 
 
 User::id"1" ||--{ "*"UserGroups::user_id
-UserGroups::home_id"1" ||--{ "*"Home::id
+UserGroups::home_id"*" }--|| "1"Home::id
 Home::id"1" ||--{ "*"Hub::home
 
 @enduml
