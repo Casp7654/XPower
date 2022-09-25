@@ -2,7 +2,7 @@ using XPowerApi.Models.HomeGroupModels;
 
 namespace XPowerApi.DbModels;
 
-public class HomegroupDb
+public class HomeGroupDb
 {
     public string id { get; set; }
     

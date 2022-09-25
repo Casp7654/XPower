@@ -1,5 +1,4 @@
 ﻿using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using XPowerApi.Interfaces;
 using XPowerApi.DbModels;
@@ -10,11 +9,11 @@ namespace XPowerApi.Providers
 {
     public class UserProvider : IUserProvider
     {
-        private SurrealDbManager _dbManager;
+        private SurrealDbProvider _dbProvider;
 
         public UserProvider(IConfiguration configuration)
         {
-            _dbManager = new SurrealDbManager(configuration);
+            _dbProvider = new SurrealDbProvider(configuration);
         }
 
         public async Task<User> CreateUser(UserCreate userCreate)
@@ -27,27 +26,22 @@ namespace XPowerApi.Providers
                 prf: KeyDerivationPrf.HMACSHA256,
                 iterationCount: 2,
                 numBytesRequested: 256 / 8));
-            
-            // Create DB Object
+
+            // Create User DB Object
             Dictionary<string, string> dataArray = new Dictionary<string, string>()
             {
-                {"hashed_password", hashed},
-                {"username",userCreate.UserName},
-                {"salt",System.Text.Encoding.UTF8.GetString(salt)}
+                { "hashed_password", hashed },
+                { "username", userCreate.UserName },
+                { "salt", System.Text.Encoding.UTF8.GetString(salt) }
             };
-            // Create Dbobject and Convert to User on success
-            User user = (await _dbManager.Create<UserDb>("user", dataArray)).ConvertToUser();
+            // Create Db object and Convert to User on success
+            User user = (await _dbProvider.Create<UserDb>("user", dataArray)).ConvertToUser();
             return user;
-        }
-
-        public Task<bool> DeleteUser(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<User> GetUserById(int id)
         {
-            User user = (await _dbManager.GetOneById<UserDb>("user", id)).ConvertToUser();
+            User user = (await _dbProvider.GetOneById<UserDb>("user", id)).ConvertToUser();
             return user;
         }
 
@@ -55,5 +49,11 @@ namespace XPowerApi.Providers
         {
             throw new NotImplementedException();
         }
+        
+        public Task<bool> DeleteUser(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
