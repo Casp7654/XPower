@@ -9,14 +9,14 @@ export class HubConnServiceService {
   
   static GATT_CHARACTERISTIC_CONNECTION = '0000180d-0000-1000-8000-00805f9b34fb';
   static GATT_PRIMARY_SERVICE = '0000180f-0000-1000-8000-00805f9b34fb';
-  chararacter : any = {}
+  chararacter!: BluetoothRemoteGATTCharacteristic
   constructor(public ble: BluetoothCore) {
   }
 
-  getCharConnect(){
+  getCharConnect() {
     console.log('Getting Conn Service...');
-    try {
-      return this.chararacter = this.ble
+
+      return this.ble
         .discover$({
           acceptAllDevices: true,
           optionalServices: [HubConnServiceService.GATT_PRIMARY_SERVICE],
@@ -27,16 +27,23 @@ export class HubConnServiceService {
               HubConnServiceService.GATT_PRIMARY_SERVICE
             );
           })).pipe(
-            mergeMap(primaryService => {
-            return this.ble.getCharacteristic$(
-              (primaryService as BluetoothRemoteGATTService),
-              HubConnServiceService.GATT_CHARACTERISTIC_CONNECTION
-            );
-          }));
-    } catch (e) {
-      console.error('Oops! can not read value from %s');
-    }  
-    return null;
+            mergeMap(primaryService => {             
+             
+            return this.ble.getCharacteristic$(primaryService,  HubConnServiceService.GATT_CHARACTERISTIC_CONNECTION); 
+          })).pipe(
+            mergeMap(characteristic => {
+              this.chararacter = characteristic as BluetoothRemoteGATTCharacteristic;
+              this.chararacter.oncharacteristicvaluechanged = event => {this.yeet(event)}
+              return this.ble.readValue$(this.chararacter);
+            })
+          ).pipe(
+            map((value: DataView) => value.getUint8(0))
+          );
+  }
+
+  yeet(a : any){
+    console.log("a yeet");
+    console.log(a);
   }
 
   getCharacter() {

@@ -19,31 +19,27 @@ export class HubSearcherComponent implements OnInit {
     this.getDeviceStatus();
   }
   //Show battery level
-  connected(value: BluetoothRemoteGATTCharacteristic){
+  connected(value: any){
     //value.addEventListener("characteristicvaluechanged", (this, this.yeet), false)
-
-    value.addEventListener(
-      "characteristicvaluechanged",
-      async (event) => {
-        console.log(`notified: ${event?.target}`);
-      }
-    );
+    // BluetoothRemoteGATTCharacteristic
+    console.log("Status: " + value);
+    // value.addEventListener("characteristicvaluechanged", this.yeet);
   }
 
-  yeet(a : any){
-    console.log(a);
+  yeet(event : any){
+    console.log("yeet called");
+    console.log(event.target.value);
   }
-  //get batterly lavel
+  //get batterly lavel, user click
   connect(){
-    this._hubConnService?.getCharConnect()?.subscribe(this.connect.bind(this));
+    this._hubConnService?.getCharConnect()?.subscribe(this.connected.bind(this));
   }
-
-
 
   getDeviceStatus() {
     this._hubConnService.getDevice().subscribe((device) => {
       if (device) {
         this.device = device;
+        // device.oncharacteristicvaluechanged
       } else {
         // device not connected or disconnected
         this.device = null;
@@ -61,7 +57,8 @@ export class HubSearcherComponent implements OnInit {
 
     var jStr = JSON.stringify(obj);
     let encodedString = encoder.encode(jStr);
-    console.log('writing to character: ' + jStr);
+    console.log('writing to character json: ' + jStr);
+    console.log('writing to character json: ' + encodedString);
 
    // Try with response, but after it changes the ip
     await this._hubConnService.getCharacter().writeValueWithoutResponse(encodedString);
