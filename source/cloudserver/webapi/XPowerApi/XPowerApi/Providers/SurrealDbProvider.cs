@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using XPowerApi.Interfaces;
 using XPowerApi.DbModels.SurrealDbModels;
 
@@ -36,22 +37,34 @@ public class SurrealDbManager : IDbManager
         // TODO: Fix Db Create
         // Get Next id in table
         int newId = await GetNextId(tableName);
-        dataArray.Add("id",$"{newId}");
+        dataArray.Add("id", $"{newId}");
         // Set Base SQL
         string sqlString = $"insert into {tableName} " + "{";
         // loop data array to add params
         foreach (KeyValuePair<string, string> dataIndex in dataArray)
         {
             sqlString += $"{dataIndex.Key}:";
-            sqlString += (int.TryParse(dataIndex.Value,out int irrelevant)) ? $"{dataIndex.Value}," : $"\"{dataIndex.Value}\"," ;
+            sqlString += (int.TryParse(dataIndex.Value, out int irrelevant))
+                ? $"{dataIndex.Value},"
+                : $"\"{dataIndex.Value}\",";
         }
+
         // trim last ,
         sqlString = sqlString.TrimEnd(',') + "};";
         // Make Request
         SurrealDbResult dbResult = await MakeRawResult(sqlString);
         // Return Created DB Object
-        T t =(dbResult.status == "OK") ?await GetOneById<T>(tableName, newId) : new T();
+        T t = (dbResult.status == "OK") ? await GetOneById<T>(tableName, newId) : new T();
         return t;
+    }
+
+    public async Task<RelateObject> Relate(string fromId, string toId, string byName)
+    {
+        string sqlString = $"relate {fromId}->{byName}->{toId};";
+        SurrealDbResult dbResult = await MakeRawResult(sqlString);
+        RelateObject relateObject =
+            JsonSerializer.Deserialize<RelateObject>(JsonSerializer.Serialize(dbResult.result[0]))!;
+        return relateObject;
     }
 
     public async Task<int> GetNextId(string tableName)
@@ -87,6 +100,17 @@ public class SurrealDbManager : IDbManager
     public async Task<T> GetAll<T>(string tableName)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<RelateObject> GetRelation(string subjectId, string relationName, string alias = "")
+    {
+        string sqlString = $"select id, ->{relationName} ";
+        sqlString += (!String.IsNullOrWhiteSpace(alias)) ? "" : $"as {alias} ";
+        sqlString += $" from {subjectId};";
+        SurrealDbResult dbResult = await MakeRawResult(sqlString);
+        Dictionary<string,string> jsonObject = JsonSerializer.Deserialize<Dictionary<string,string>>(JsonSerializer.Serialize(dbResult.result[0]))!;
+        RelateObject relateObject = new RelateObject(jsonObject["id"],jsonObject["in"],jsonObject["out"]);
+        return relateObject;
     }
 
     public async Task<T> Update<T>(string tableName, int id, T newT)

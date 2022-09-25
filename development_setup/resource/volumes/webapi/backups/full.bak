@@ -5,6 +5,12 @@
 OPTION IMPORT;
 
 -- ------------------------------
+-- TABLE: grouphubs
+-- ------------------------------
+
+DEFINE TABLE grouphubs SCHEMALESS PERMISSIONS NONE;
+
+-- ------------------------------
 -- TABLE: homegroup
 -- ------------------------------
 
@@ -37,10 +43,21 @@ DEFINE FIELD salt ON user TYPE string;
 DEFINE FIELD username ON user TYPE string;
 
 -- ------------------------------
+-- TABLE: usergroups
+-- ------------------------------
+
+DEFINE TABLE usergroups SCHEMALESS PERMISSIONS NONE;
+
+-- ------------------------------
 -- TRANSACTION
 -- ------------------------------
 
 BEGIN TRANSACTION;
+
+-- ------------------------------
+-- TABLE DATA: grouphubs
+-- ------------------------------
+
 
 -- ------------------------------
 -- TABLE DATA: homegroup
@@ -54,6 +71,11 @@ BEGIN TRANSACTION;
 
 -- ------------------------------
 -- TABLE DATA: user
+-- ------------------------------
+
+
+-- ------------------------------
+-- TABLE DATA: usergroups
 -- ------------------------------
 
 

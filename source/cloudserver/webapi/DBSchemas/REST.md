@@ -41,6 +41,15 @@ select id, ->grouphubs->hub as hubs from homegroup:1;
 -- Get Specifik User's Homegroups and their hubs
 -- Syntax: ->[RELATIONTABLE]->[TABLE](:[ID])->[RELATIONTABLE]->[TABLE](:[ID]);
 select id, ->usergroups->homegroup->grouphubs->hub as userhubs from user:1;
+
+-- Get Specifik User's(all columns) homgroups(all columns) and their hubs (all columns)
+select *, ->usergroups->homegroup.* as usergroups, ->usergroups->homegroup.*->grouphubs->hub.* as userhubs from user:1;
+
+-- Get homegroups from specifik hub
+select id, <-grouphubs<-homegroup as hubgroups from hub:1;
+
+-- Get users from specifik hub
+select id, <-grouphubs<-homegroup<-usergroups<-user as hubusers from hub:1;
 ```
 
 ## Test Data

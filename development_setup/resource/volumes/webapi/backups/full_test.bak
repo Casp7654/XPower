@@ -24,8 +24,8 @@ DEFINE FIELD name ON homegroup TYPE string;
 
 DEFINE TABLE hub SCHEMAFULL;
 
-DEFINE FIELD mac ON hub TYPE string;
 DEFINE FIELD name ON hub TYPE string;
+DEFINE FIELD mac ON hub TYPE string;
 DEFINE FIELD private_addr ON hub TYPE string;
 DEFINE FIELD public_addr ON hub TYPE string;
 
