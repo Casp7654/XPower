@@ -29,11 +29,11 @@ builder.Services.AddSwaggerGen(c =>
 
 
 builder.Services.AddScoped<IUserManager, UserManager>();
-builder.Services.AddScoped<IHomeGroupManager, HomeGroupManager>();
+builder.Services.AddScoped<IHomeManager, HomeManager>();
 //builder.Services.AddScoped<IHubManager, HubManager>();
 builder.Services.AddScoped<ITokenManager<UserToken>, TokenManager>();
 builder.Services.AddScoped<IUserProvider, UserProvider>();
-builder.Services.AddScoped<IHomeGroupProvider, HomeGroupProvider>();
+builder.Services.AddScoped<IHomeProvider, HomeProvider>();
 //builder.Services.AddScoped<IHubProvider, HubProvider>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

@@ -1,16 +1,16 @@
-using XPowerApi.Models.HomeGroupModels;
+using XPowerApi.Models.HomeModels;
 
 namespace XPowerApi.DbModels;
 
-public class HomeGroupDb
+public class HomeDb
 {
     public string id { get; set; }
     
     public string name { get; set; }
         
-    public HomeGroup ConvertToHomeGroup()
+    public Home ConvertToHome()
     {
-        return new HomeGroup
+        return new Home
         {
             Id = int.Parse(id.Split(':')[1]),
             Name = name,
