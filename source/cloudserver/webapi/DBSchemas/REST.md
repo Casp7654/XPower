@@ -38,14 +38,17 @@ select * from homeusers where in outside (select ->homeusers as homeusers from u
 insert into hub {id:1, name:"hub1", private_addr:"172.64.0.3", public_addr:"172.32.0.2", home:home:1};
 -- OR add later with
 update hub:1 set home = home:1;
--- this is a one to many relation
-
+-- This is a one to many relation
 -- Get Specifik Hub data
 select * from hub:1;
--- get specifik Hub's Home data
+-- Get specifik Hub's Home data
 select home.* from hub:1;
+
+-- Get Hubs based on home
+select * from hub where home inside (select id from home:1);
+
 -- Get All Hubs from a specifik User's homes
-select * from hub where home outside (select ->homeusers->home from user:1 )
+ select * from hub where home inside (select out as id from homeusers where in is user:1);
 -- This is a bit tricky to explain....
 
 ```
@@ -57,10 +60,11 @@ insert into user {id:1, firstname:'john', lastname:'doe', email:'heste@test.dk',
 insert into user {id:2, firstname:'jane', lastname:'doe', email:'heste@test.dk', username:"janegurl"};
 insert into home {id:1, name:"default"};
 insert into home {id:2, name:"default"};
-relate user:1->usergroups->home:1;
-relate user:2->usergroups->home:2;
+relate user:1->homeusers->home:1;
+relate user:2->homeusers->home:2;
 insert into hub {id:1, name:"hub1", private_addr:"172.64.0.11", public_addr:"172.32.0.2", home:home:1};
 insert into hub {id:2, name:"hub2", private_addr:"172.64.0.12", public_addr:"172.32.0.2", home:home:1 };
 insert into hub {id:3, name:"hub3", private_addr:"172.64.0.13", public_addr:"172.32.0.2", home:home:2 };
 insert into hub {id:4, name:"hub4", private_addr:"172.64.0.14", public_addr:"172.32.0.2", home:home:2 };
+ select * from hub where home inside (select out as id from homeusers where in is user:1);
 ```
