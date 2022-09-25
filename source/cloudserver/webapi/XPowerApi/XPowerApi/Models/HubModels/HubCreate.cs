@@ -1,6 +1,12 @@
-namespace XPowerApi.Models.HomeGroupModels;
+namespace XPowerApi.Models.HubModels;
 
-public class HomeGroupCreate
+public class HubCreate
 {
-        public string Name { get; set; }
+    public string Name { get; set; }
+
+    public string Mac { get; set; }
+
+    public string PrivateAddress { get; set; }
+
+    public string PublicAddress { get; set; }
 }
