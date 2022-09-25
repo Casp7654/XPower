@@ -3,13 +3,13 @@ using System.Text.Json.Nodes;
 using XPowerApi.Interfaces;
 using XPowerApi.DbModels.SurrealDbModels;
 
-namespace XPowerApi.Managers;
+namespace XPowerApi.Providers;
 
-public class SurrealDbManager : IDbManager
+public class SurrealDbProvider : IDbManager
 {
     private SurrealDbHttpClient _httpClient;
 
-    public SurrealDbManager(IConfiguration configuration)
+    public SurrealDbProvider(IConfiguration configuration)
     {
         _httpClient = new SurrealDbHttpClient(configuration);
     }
@@ -69,7 +69,7 @@ public class SurrealDbManager : IDbManager
 
     public async Task<int> GetNextId(string tableName)
     {
-        int id = 0;
+        int id = 1;
         // Set SQL string
         string sqlString = $"select id from {tableName} order by id desc limit 1;";
         SurrealDbResult dbResult = await MakeRawResult(sqlString);

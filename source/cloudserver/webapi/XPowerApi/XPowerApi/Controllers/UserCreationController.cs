@@ -5,6 +5,7 @@ using XPowerApi.Models.UserModels;
 using XPowerApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using XPowerApi.Models.HomeGroupModels;
 
 namespace XPowerApi.Controllers
 {
@@ -14,16 +15,21 @@ namespace XPowerApi.Controllers
     {
         private readonly ILogger<UserCreationController> _logger;
         private readonly IUserManager _userManager;
+        private readonly IHomeGroupManager _homeGroupManager;
         private readonly ITokenManager<UserToken> _tokenManager;
 
-        public UserCreationController(ILogger<UserCreationController> logger, IUserManager userManager, ITokenManager<UserToken> tokenManager)
+        public UserCreationController(
+            ILogger<UserCreationController> logger,
+            IUserManager userManager,
+            IHomeGroupManager homeGroupManager,
+            ITokenManager<UserToken> tokenManager
+        )
         {
             _logger = logger;
             _userManager = userManager;
+            _homeGroupManager = homeGroupManager;
             _tokenManager = tokenManager;
         }
-
-
 
         /// <summary>
         /// Create user
@@ -44,6 +50,10 @@ namespace XPowerApi.Controllers
             {
                 //Checking the user
                 var user = await _userManager.CreateUser(userCreateInfo);
+                //Checking the homegroup
+                var homeGroup = await _homeGroupManager.CreateHomeGroup(new HomeGroupCreate() { Name = "Default" });
+                //make relation
+                var related = await _homeGroupManager.RelateUserToHomeGroup(user.Id, homeGroup.Id);
 
                 //  Return a created usertoken
                 return Ok(_tokenManager.GenerateToken(user));
