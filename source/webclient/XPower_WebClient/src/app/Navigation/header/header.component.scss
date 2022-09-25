@@ -1,0 +1,23 @@
+a {
+    text-decoration: none;
+    color: #F2F4FF;
+}
+a:hover, a:active{
+    color:lightgray; 
+}
+
+mat-toolbar{
+    border-radius: 3px;
+}
+.spacer {
+    flex: 1 1 auto;
+  }
+
+mat-icon{
+    color: #F2F4FF;
+}
+@media(max-width: 959px){
+    mat-toolbar {
+        border-radius: 0px;
+    }
+}

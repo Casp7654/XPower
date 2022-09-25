@@ -13,12 +13,16 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider';
 import { IotComponent } from './IoT/iot/iot.component';
 import { IotControllerComponent } from './IoT/iot-controller/iot-controller.component';
 import { IotDevicesComponent } from './Pages/iot-devices/iot-devices.component';
 import { SocketComponent } from './Components/socket/socket.component';
-
+import { HeaderComponent } from './Navigation/header/header.component';
+import { MatListModule } from '@angular/material/list';
+import { SidenavListComponent } from './Navigation/sidenav-list/sidenav-list.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +32,9 @@ import { SocketComponent } from './Components/socket/socket.component';
     IotComponent,
     IotControllerComponent,
     IotDevicesComponent,
-    SocketComponent
+    SocketComponent,
+    HeaderComponent,
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +43,9 @@ import { SocketComponent } from './Components/socket/socket.component';
     MatIconModule,
     MatCardModule,
     MatDividerModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatListModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
