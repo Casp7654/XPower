@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone, Inject } from '@angular/core';
 import { HubConnServiceService  } from './hub-conn-service.service';
 import { BluetoothCore } from '@manekinekko/angular-web-bluetooth';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-hub-searcher',
@@ -8,29 +9,41 @@ import { BluetoothCore } from '@manekinekko/angular-web-bluetooth';
   styleUrls: ['./hub-searcher.component.scss']
 })
 export class HubSearcherComponent implements OnInit {
-  ssid : string = ""
-  passphrase : string = ""
   device: any = {};
-  
-  constructor( public _zone: NgZone,
-    public _hubConnService: HubConnServiceService) { }
+  credentials: FormGroup;
+  isConnected : boolean = false
+  connectedField = this.isConnected ? "block" : "none";
+
+  constructor(public _hubConnService: HubConnServiceService,
+    fb: FormBuilder)
+    {
+      this.credentials = fb.group({
+        hideRequired: false,
+        floatLabel: 'auto',
+        apariencia: 'fill',
+        fbssid : '',
+        fbpassphrase : ''
+      });
+    }
 
   ngOnInit(): void {
     this.getDeviceStatus();
   }
-  //Show battery level
+
   connected(value: any){
-    //value.addEventListener("characteristicvaluechanged", (this, this.yeet), false)
-    // BluetoothRemoteGATTCharacteristic
     console.log("Status: " + value);
-    // value.addEventListener("characteristicvaluechanged", this.yeet);
+    this.isConnected = true;
   }
 
   yeet(event : any){
     console.log("yeet called");
     console.log(event.target.value);
+
+    // handle wrong input here
+
+    // show alert or something
   }
-  //get batterly lavel, user click
+
   connect(){
     this._hubConnService?.getCharConnect()?.subscribe(this.connected.bind(this));
   }
@@ -39,10 +52,12 @@ export class HubSearcherComponent implements OnInit {
     this._hubConnService.getDevice().subscribe((device) => {
       if (device) {
         this.device = device;
-        // device.oncharacteristicvaluechanged
-      } else {
+      }
+      else
+      {
         // device not connected or disconnected
         this.device = null;
+        this.isConnected = false;
       }
     });
   }
@@ -52,22 +67,13 @@ export class HubSearcherComponent implements OnInit {
     // json convert to ssid and password
     var obj:any = {}
     obj.ID = 0;
-    obj.SSID = this.ssid;
-    obj.PassPhrase = this.passphrase;
+    obj.SSID = this.credentials.value.fbssid;
+    obj.PassPhrase =  this.credentials.value.fbpassphrase;
 
     var jStr = JSON.stringify(obj);
     let encodedString = encoder.encode(jStr);
-    console.log('writing to character json: ' + jStr);
-    console.log('writing to character json: ' + encodedString);
 
    // Try with response, but after it changes the ip
     await this._hubConnService.getCharacter().writeValueWithoutResponse(encodedString);
-  }
-
-  onSsidKey(event: any) { // without type info
-    this.ssid = event.target.value;
-  }
-  onPassPhraseKey(event: any) { // without type info
-    this.passphrase = event.target.value;
   }
 }

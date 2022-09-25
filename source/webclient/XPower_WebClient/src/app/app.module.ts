@@ -12,7 +12,11 @@ import { HubSearcherComponent } from './Hub/hub-searcher/hub-searcher.component'
 import { BrowserWebBluetooth} from '@manekinekko/angular-web-bluetooth'
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input'
+import { FormBuilder, FormGroup,ReactiveFormsModule  } from '@angular/forms';
 
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +27,9 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
   imports: [
     BrowserModule,
     MatGridListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
@@ -32,7 +39,9 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  providers: [BrowserWebBluetooth],
+  providers: [
+    BrowserWebBluetooth,
+     FormBuilder],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

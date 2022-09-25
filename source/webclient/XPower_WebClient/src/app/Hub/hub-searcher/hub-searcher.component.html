@@ -1,33 +1,25 @@
-<style>
-    a {
-  position: relative;
-  color: rgba(255,255,255,1);
-  text-decoration: none;
-  background-color: #CD2834;
-  font-family: monospace;
-  font-weight: 700;
-  font-size: 3em;
-  display: block;
-  padding: 4px;
-  border-radius: 8px;
-  box-shadow: 0px 9px 0px #B52231, 0px 9px 25px rgba(0,0,0,.7);
-  margin: 100px auto;
-  width: 410px;
-  text-align: center;
-  transition: all .1s ease;
-}
-a:active {
-  box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
-  position: relative;
-  top: 6px;
-}
-</style>
+<!-- Remove 1 when testing colors -->
+<div class="container" [ngStyle]="{'display' : !connectedField}">
+  <form class="formContainer" [formGroup]="credentials" (ngSubmit)="sendinput()">
+    <mat-form-field
+    [hideRequiredMarker]="credentials.value.hideRequired"
+    [appearance]="credentials.value.apariencia"
+    [floatLabel]="credentials.value.floatLabel">
+    <mat-label>SSID</mat-label>
+    <input formControlName="fbssid" matInput placeholder="">
+  </mat-form-field>   
+  <br>  
+  <mat-form-field 
+  [hideRequiredMarker]="credentials.value.hideRequired"
+  [appearance]="credentials.value.apariencia"
+  [floatLabel]="credentials.value.floatLabel">
+  <mat-label>PassPhrase</mat-label>
+  <input formControlName="fbpassphrase" matInput placeholder="">
+</mat-form-field> 
+<br>
+<button id="okBtn" mat-button color="primary">OK</button>
 
+</form>
+</div>
 
-<a href="#" (click)="connect()">Connect</a>
-<p>SSID:</p>
-<input (keyup)="onSsidKey($event)">
-<p>PassPhrase:</p>
-<input (keyup)="onPassPhraseKey($event)">
-
-<a href="#" (click)="sendinput()">Send input</a>
+<button (click)="connect()" id="ConnectButton" mat-button color="primary" [ngStyle]="{'display' : !connectedField}">+</button>
