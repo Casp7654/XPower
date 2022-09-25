@@ -22,6 +22,7 @@ HomeUser : homeId int
 HomeUser : userId int
 
 User::id"*" -- "*"HomeUser::userId
+
 Home::id"*" -- "*"HomeUser::homeId
 Hub::homeId"*" -- "1"Home::id
 @enduml
