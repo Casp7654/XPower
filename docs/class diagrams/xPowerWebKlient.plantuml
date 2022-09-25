@@ -1,30 +1,30 @@
 @startuml APPLICATION
 
-interface ICaller
-{
-    #hosturl : string
+class HubSearcherComponent{
+    ssid : string
+    passphrase : string
+    device : any
+
+    HubSearcherComponent(_zone: NgZone, _hubConnService: HubConnServiceService) : void
+    connected(value: BluetoothRemoteGATTCharacteristic) void
+    connect() : void
+    selectDevice() : void
+    sendinput() : void
+    onSsidKey(event : any) : void
+    onPassPhraseKey(event: any) : void
 }
 
-interface ApiCaller
-{
-    +GetPrice()
+class HubConnServiceService{
+    GATT_CHARACTERISTIC_CONNECTION : string
+    GATT_PRIMARY_SERVICE : string
+    character : any
+
+    HubConnServiceService(ble: BluetoothCore)
+    getCharConnect() : BluetoothRemoteGATTCharacteristic
+    getCharacter() : BluetoothRemoteGATTCharacteristic
+    getDevice() : BluetoothDevice
 }
 
-class GrpcCaller 
-{
-    -hubControllSerivce : HubControllSerive
-    +TurnOnOff(uid : string) : void
-}
-
-class HubControllSerive
-{
-    +Search() : void
-    +Connect(uid : string) : void
-}
-
-ApiCaller <|-- ICaller
-GrpcCaller <|-- ICaller
-GrpcCaller *-- HubControllSerive
-
+HubSearcherComponent *-- HubConnServiceService
 
 @enduml
