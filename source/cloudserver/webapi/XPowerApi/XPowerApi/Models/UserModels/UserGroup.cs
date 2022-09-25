@@ -1,4 +1,4 @@
-using XPowerApi.Models.HomeGroupModels;
+using XPowerApi.Models.HomeModels;
 
 namespace XPowerApi.Models.UserModels;
 
@@ -6,5 +6,5 @@ public class UserGroup
 {
     public int Id { get; set; }
 
-    public HomeGroup HomeGroup { get; set; }
+    public Home Home { get; set; }
 }

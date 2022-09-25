@@ -1,6 +1,6 @@
-﻿namespace XPowerApi.Models.HomeGroupModels
+﻿namespace XPowerApi.Models.HomeModels
 {
-    public class HomeGroup
+    public class Home
     {
         public int Id { get; set; }
 
