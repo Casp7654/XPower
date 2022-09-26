@@ -34,7 +34,7 @@ namespace XPowerApi.Providers
 
         public async Task<RelateObject> RelateUserToHome(int userId, int homeId)
         {
-            RelateObject createdRelation = (await _dbProvider.Relate($"user:{userId}", $"home:{homeId}", "usergroups"));
+            RelateObject createdRelation = (await _dbProvider.Relate($"user:{userId}", $"home:{homeId}", "homeusers"));
             return createdRelation;
         }
     }

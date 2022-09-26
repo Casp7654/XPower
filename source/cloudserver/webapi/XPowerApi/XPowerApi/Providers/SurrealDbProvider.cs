@@ -104,13 +104,29 @@ public class SurrealDbProvider : IDbManager
 
     public async Task<RelateObject> GetRelation(string subjectId, string relationName, string alias = "")
     {
-        string sqlString = $"select id, ->{relationName} ";
+        string sqlString = $"select ->{relationName} ";
         sqlString += (!String.IsNullOrWhiteSpace(alias)) ? "" : $"as {alias} ";
         sqlString += $" from {subjectId};";
         SurrealDbResult dbResult = await MakeRawResult(sqlString);
         Dictionary<string,string> jsonObject = JsonSerializer.Deserialize<Dictionary<string,string>>(JsonSerializer.Serialize(dbResult.result[0]))!;
         RelateObject relateObject = new RelateObject(jsonObject["id"],jsonObject["in"],jsonObject["out"]);
         return relateObject;
+    }
+
+    public async Task<List<T>> GetOneFromInsideAnother<T>(string tableName, string baseTable, string targetId)
+    {
+        string sqlString = $"select * from ${tableName} where ${baseTable} inside (select id from ${targetId});";
+        SurrealDbResult dbResult = await MakeRawResult(sqlString);
+        List<T> objectList = JsonSerializer.Deserialize<List<T>>(JsonSerializer.Serialize(dbResult.result[0]))!;
+        return objectList;
+    }
+    
+    public async Task<List<T>> GetOneFromInsideARelation<T>(string tableName, string baseTable, string relationTable, string targetId)
+    {
+        string sqlString = $"select * from ${tableName} where ${baseTable} inside (select out as id from ${relationTable} where in is ${targetId});";
+        SurrealDbResult dbResult = await MakeRawResult(sqlString);
+        List<T> objectList = JsonSerializer.Deserialize<List<T>>(JsonSerializer.Serialize(dbResult.result[0]))!;
+        return objectList;
     }
 
     public async Task<T> Update<T>(string tableName, int id, T newT)
