@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as mqtt from "mqtt"
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -7,11 +6,15 @@ import { environment } from 'src/environments/environment';
 })
 export class MqttClientService {
 
-  private client: mqtt.MqttClient;
+  private client: string;
   private brokerUrl: string;
 
   constructor() {
     this.brokerUrl = environment.brokerUrl;
-    this.client = mqtt.connect(this.brokerUrl);
+    this.client = ""
+  }
+
+  Publish(target: string, data: string) {
+    //this.client.publish(target, data);
   }
 }

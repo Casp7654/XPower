@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  brokerUrl: "127.0.0.1"
+  brokerUrl: "broker.emqx.io"
 };
 
 /*
