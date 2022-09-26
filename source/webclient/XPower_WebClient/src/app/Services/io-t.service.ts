@@ -26,7 +26,7 @@ export class IoTService {
     
     this.devices = [
       new SocketDevice("Device1", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device2", true, "MAC:18:1238:asd", false, "Hjemme", hub),
+      /* new SocketDevice("Device2", true, "MAC:18:1238:asd", false, "Hjemme", hub),
       new SocketDevice("Device3", false, "MAC:18:1238:asd", true, "Hjemme", hub),
       new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
       new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
@@ -36,7 +36,7 @@ export class IoTService {
       new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
       new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
       new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
+      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub), */
     ];
   }
 
