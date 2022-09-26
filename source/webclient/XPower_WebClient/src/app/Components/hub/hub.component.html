@@ -1,0 +1,13 @@
+<mat-card [class.opacity]="!device.status" (dblclick)="ondblclickevent($event)">
+    <mat-card-header class="socket-bottom-margin">
+        <div mat-card-avatar>
+            <mat-icon>device_hub</mat-icon>
+        </div>
+        <mat-card-title>{{device.name}}</mat-card-title>
+        <mat-card-subtitle>{{device.mac_address}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="socket-top-margin">
+        <p>{{device.status}}</p>
+    </mat-card-content>
+</mat-card>
