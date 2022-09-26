@@ -23,6 +23,9 @@ namespace XPowerApi.Managers
             {
                 { "hashed_password", hashed_password },
                 { "username", userCreate.UserName },
+                { "firstname", userCreate.FirstName},
+                { "lastname", userCreate.LastName},
+                { "email", userCreate.Email },
                 { "salt", System.Text.Encoding.UTF8.GetString(salt) }
             };
             return (await _userProvider.CreateUser(dataArray)).ConvertToUser();
