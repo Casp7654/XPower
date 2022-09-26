@@ -32,6 +32,23 @@ namespace XPowerApi.Providers
             Hub hub = (await _dbProvider.GetOneById<HubDb>("home", id)).ConvertToHub();
             return hub;
         }
-
+        
+        public async Task<List<Hub>> GetHubsByHomeId(int homeid)
+        {
+            List<Hub> hubs = new List<Hub>();
+            List<HubDb> dbHubList = (await _dbProvider.GetOneFromInsideAnother<HubDb>("hub", "home", $"home:{homeid}"));
+            foreach (var hubDb in dbHubList)
+                hubs.Add(hubDb.ConvertToHub());
+            return hubs;
+        }
+        
+        public async Task<List<Hub>> GetHubsByUserId(int userid)
+        {
+            List<Hub> hubs = new List<Hub>();
+            List<HubDb> dbHubList = (await _dbProvider.GetOneFromInsideARelation<HubDb>("hub", "home", "homeusers",$"user:{userid}"));
+            foreach (var hubDb in dbHubList)
+                hubs.Add(hubDb.ConvertToHub());
+            return hubs;
+        }
     }
 }

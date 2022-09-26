@@ -23,4 +23,13 @@ public class HubManager : IHubManager
         return Task.Run(() => _hubProvider.GetHubById(id));
     }
 
+    public Task<List<Hub>> GetHubsByHomeId(int homeId)
+    {
+        return Task.Run(() => _hubProvider.GetHubsByHomeId(homeId));
+    }
+
+    public Task<List<Hub>> GetHubsByUserId(int userId)
+    {
+        return Task.Run(() => _hubProvider.GetHubsByHomeId(userId));
+    }
 }

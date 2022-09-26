@@ -66,7 +66,7 @@ namespace XPowerApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError("Could not perform create user" + e.Message);
+                _logger.LogError("Could not perform create user " + e.Message);
                 return BadRequest(new { Message = "Missing parameter" });
             }
         }
