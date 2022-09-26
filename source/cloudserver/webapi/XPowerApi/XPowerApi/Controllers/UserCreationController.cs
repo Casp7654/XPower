@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Net;
-using XPowerApi.Interfaces;
-using XPowerApi.Models;
+﻿using XPowerApi.Interfaces;
 using XPowerApi.Models.UserModels;
 using XPowerApi.Models.HomeModels;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +47,7 @@ namespace XPowerApi.Controllers
                 string.IsNullOrEmpty(userCreateInfo.Email) ||
                 string.IsNullOrEmpty(userCreateInfo.FirstName) ||
                 string.IsNullOrEmpty(userCreateInfo.LastName)
-                )
+            )
                 return BadRequest(new { Message = "Username or Password is missing valid" });
 
             try
@@ -59,7 +56,7 @@ namespace XPowerApi.Controllers
                 var user = await _userManager.CreateUser(userCreateInfo);
                 //Checking the homegroup
                 var home = await _homeManager.CreateHome(new HomeCreate() { Name = "Default" }, user.Id);
-                
+
                 //  Return a created usertoken
                 return Ok(_tokenManager.GenerateToken(user));
             }

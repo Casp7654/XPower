@@ -13,7 +13,6 @@ namespace XPowerApi.Controllers
     [ApiController]
     public class UserController : Controller
     {
-
         private readonly ILogger<UserController> _logger;
         private readonly IUserManager _userManager;
 
@@ -37,7 +36,7 @@ namespace XPowerApi.Controllers
                 var user = await _userManager.GetUserById(id);
 
                 // User with that id was not found
-                if(user == null)
+                if (user == null)
                     return NoContent();
 
                 //  Return a found user
@@ -47,7 +46,7 @@ namespace XPowerApi.Controllers
             {
                 _logger.LogError("Bad request for get user " + e.Message);
                 return BadRequest(new { Message = e.Message });
-                }
+            }
             catch (Exception e)
             {
                 _logger.LogError("Could not perform get user" + e.Message);

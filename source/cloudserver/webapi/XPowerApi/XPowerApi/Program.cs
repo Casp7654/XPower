@@ -3,9 +3,7 @@ using System.Text;
 using XPowerApi.Interfaces;
 using XPowerApi.Managers;
 using XPowerApi.Providers;
-using System.Web.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -19,12 +17,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", //Name the security scheme
-     new OpenApiSecurityScheme
-     {
-         Description = "JWT Authorization header using the Bearer scheme.",
-         Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
-         Scheme = "Bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
-     });
+        new OpenApiSecurityScheme
+        {
+            Description = "JWT Authorization header using the Bearer scheme.",
+            Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
+            Scheme = "Bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
+        });
 });
 
 

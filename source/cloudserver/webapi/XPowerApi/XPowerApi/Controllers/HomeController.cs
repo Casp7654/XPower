@@ -9,7 +9,6 @@ namespace XPowerApi.Controllers
     [ApiController]
     public class HomeController : Controller
     {
-
         private readonly ILogger<HomeController> _logger;
         private readonly IHomeManager _homeManager;
 
@@ -33,7 +32,7 @@ namespace XPowerApi.Controllers
                 var home = await _homeManager.GetHomeById(id);
 
                 // User with that id was not found
-                if(home == null)
+                if (home == null)
                     return NoContent();
 
                 //  Return a found home

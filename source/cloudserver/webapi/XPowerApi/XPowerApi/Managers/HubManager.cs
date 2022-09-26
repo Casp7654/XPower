@@ -1,35 +1,46 @@
+using XPowerApi.DbModels;
 using XPowerApi.Interfaces;
 using XPowerApi.Models.HubModels;
-using XPowerApi.DbModels.SurrealDbModels;
 
-namespace XPowerApi.Managers;
-
-public class HubManager : IHubManager
+namespace XPowerApi.Managers
 {
-    IHubProvider _hubProvider;
-
-    public HubManager(IHubProvider hubProvider)
+    public class HubManager : IHubManager
     {
-        _hubProvider = hubProvider;
-    }
+        IHubProvider _hubProvider;
 
-    public Task<Hub> CreateHub(HubCreate hubCreate)
-    {
-        return Task.Run(() => _hubProvider.CreateHub(hubCreate));
-    }
+        public HubManager(IHubProvider hubProvider)
+        {
+            _hubProvider = hubProvider;
+        }
 
-    public Task<Hub> GetHubById(int id)
-    {
-        return Task.Run(() => _hubProvider.GetHubById(id));
-    }
+        public async Task<Hub> CreateHub(HubCreate hubCreate)
+        {
+            // Create HomeGroup DB Object
+            Dictionary<string, string> dataArray = new Dictionary<string, string>() { { "name", hubCreate.Name }, };
+            return (await _hubProvider.CreateHub(dataArray)).ConvertToHub();
+        }
 
-    public Task<List<Hub>> GetHubsByHomeId(int homeId)
-    {
-        return Task.Run(() => _hubProvider.GetHubsByHomeId(homeId));
-    }
+        public async Task<Hub> GetHubById(int id)
+        {
+            return (await _hubProvider.GetHubById(id)).ConvertToHub();
+        }
 
-    public Task<List<Hub>> GetHubsByUserId(int userId)
-    {
-        return Task.Run(() => _hubProvider.GetHubsByHomeId(userId));
+        public async Task<List<Hub>> GetHubsByHomeId(int homeId)
+        {
+            List<Hub> hubs = new List<Hub>();
+            List<HubDb> hubDbList = await _hubProvider.GetHubsByHomeId(homeId);
+            foreach (var hubDb in hubDbList)
+                hubs.Add(hubDb.ConvertToHub());
+            return hubs;
+        }
+
+        public async Task<List<Hub>> GetHubsByUserId(int userId)
+        {
+            List<Hub> hubs = new List<Hub>();
+            List<HubDb> hubDbList = await _hubProvider.GetHubsByUserId(userId);
+            foreach (var hubDb in hubDbList)
+                hubs.Add(hubDb.ConvertToHub());
+            return hubs;
+        }
     }
 }

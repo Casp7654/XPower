@@ -1,9 +1,6 @@
 using XPowerApi.Interfaces;
 using XPowerApi.DbModels;
 using XPowerApi.DbModels.SurrealDbModels;
-using XPowerApi.Managers;
-using XPowerApi.Models.HomeModels;
-using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Providers
 {
@@ -16,28 +13,23 @@ namespace XPowerApi.Providers
             _dbProvider = new SurrealDbProvider(configuration);
         }
 
-        public async Task<Home> CreateHome(HomeCreate homeCreate, int userId)
+        public async Task<HomeDb> CreateHome(Dictionary<string, string> dataArray, int userId)
         {
-            // Create HomeGroup DB Object
-            Dictionary<string, string> dataArray = new Dictionary<string, string>()
-                { { "name", homeCreate.Name }, };
-            // Create Db object and Convert to HomeGroup on success
-            Home home = (await _dbProvider.Create<HomeDb>("home", dataArray)).ConvertToHome();
-            RelateObject related = await this.RelateUserToHome(userId, home.Id);
-
+            // Create Home in DB
+            HomeDb home = await _dbProvider.Create<HomeDb>("home", dataArray);
+            // Create User Relation on created home
+            RelateObject related = await this.RelateUserToHome(userId, Int32.Parse(home.id.Split(':')[1]));
             return home;
         }
 
-        public async Task<Home> GetHomeById(int id)
+        public async Task<HomeDb> GetHomeById(int id)
         {
-            Home home = (await _dbProvider.GetOneById<HomeDb>("home", id)).ConvertToHome();
-            return home;
+            return (await _dbProvider.GetOneById<HomeDb>("home", id));
         }
 
         public async Task<RelateObject> RelateUserToHome(int userId, int homeId)
         {
-            RelateObject createdRelation = (await _dbProvider.Relate($"user:{userId}", $"home:{homeId}", "homeusers"));
-            return createdRelation;
+            return (await _dbProvider.Relate($"user:{userId}", $"home:{homeId}", "homeusers"));
         }
     }
 }

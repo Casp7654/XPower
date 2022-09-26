@@ -1,19 +1,20 @@
 using XPowerApi.Models.HomeModels;
 
-namespace XPowerApi.DbModels;
-
-public class HomeDb
+namespace XPowerApi.DbModels
 {
-    public string id { get; set; }
-    
-    public string name { get; set; }
-        
-    public Home ConvertToHome()
+    public class HomeDb
     {
-        return new Home
+        public string id { get; set; }
+
+        public string name { get; set; }
+
+        public Home ConvertToHome()
         {
-            Id = int.Parse(id.Split(':')[1]),
-            Name = name,
-        };
+            return new Home
+            {
+                Id = int.Parse(id.Split(':')[1]),
+                Name = name,
+            };
+        }
     }
 }

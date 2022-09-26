@@ -1,12 +1,13 @@
 using System.Net.Http.Headers;
 
-namespace XPowerApi.DbModels.SurrealDbModels;
-
-public class SurrealDbHttpRequestMessage: HttpRequestMessage
+namespace XPowerApi.DbModels.SurrealDbModels
 {
-    public SurrealDbHttpRequestMessage(string dataString): base(HttpMethod.Post, "sql")
+    public class SurrealDbHttpRequestMessage : HttpRequestMessage
     {
-        Content = new StringContent(dataString);
-        Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+        public SurrealDbHttpRequestMessage(string dataString) : base(HttpMethod.Post, "sql")
+        {
+            Content = new StringContent(dataString);
+            Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+        }
     }
 }

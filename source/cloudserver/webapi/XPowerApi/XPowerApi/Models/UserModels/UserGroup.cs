@@ -1,10 +1,11 @@
 using XPowerApi.Models.HomeModels;
 
-namespace XPowerApi.Models.UserModels;
-
-public class UserGroup
+namespace XPowerApi.Models.UserModels
 {
-    public int Id { get; set; }
+    public class UserGroup
+    {
+        public int Id { get; set; }
 
-    public Home Home { get; set; }
+        public Home Home { get; set; }
+    }
 }

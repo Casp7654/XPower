@@ -1,10 +1,11 @@
 ﻿using XPowerApi.DbModels;
-using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Interfaces
 {
-    public interface IUserProvider : IUserManager
+    public interface IUserProvider
     {
-        // TBD more methods
+        public Task<UserDb> CreateUser(Dictionary<string,string> dataArray);
+        
+        public Task<UserDb> GetUserById(int id);
     }
 }
