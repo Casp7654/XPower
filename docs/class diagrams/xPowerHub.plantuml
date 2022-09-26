@@ -1,0 +1,33 @@
+@startuml XPowerHub
+
+interface IMessageAction {
+    +Action(clientId : string, topic : string, payload : string) : void
+    +CanExecute(clientId : string, topic : string, payload : string) : bool
+}
+
+interface IServerHandler {
+    +MessageEventHandler {+get; +set;} : Action<string, string, string>
+    +StartAsync() : Task
+    +PublishAsync(topic : string, payload : string) : Task
+    +StopAsync() : Task
+}
+
+class MqttServerHandler {
+    +ServerId {+get; -set} : string
+    +MessageEventHandler {+get; +set} : Action<string, string, string>
+    -mqttServer {readonly} : MqttServer
+    +MqttServerHandler(mqttServer : MqttServer)
+    -OnMessageNotConsumedAsync(packet : ApplicationMessageNotConsumedEventArgs) : Task
+}
+
+class ServerController {
+    +Actions {+get; +set;} : list<IMessageAction>
+    -serverHandler {readonly} : IServerHandler
+    +ServerController(actions : list<IMessageAction>, serverHandler : IServerHandler)
+    -OnMessageReceived(clientId : string, topic : string, payload : string) : void
+}
+
+MqttServerHandler ..|> IServerHandler
+ServerController o.. IServerHandler
+ServerController o.. IMessageAction
+@enduml
