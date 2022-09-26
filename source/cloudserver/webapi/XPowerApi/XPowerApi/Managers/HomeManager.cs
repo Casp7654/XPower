@@ -13,9 +13,9 @@ public class HomeManager : IHomeManager
         _homeProvider = homeProvider;
     }
 
-    public Task<Home> CreateHome(HomeCreate homeCreate)
+    public Task<Home> CreateHome(HomeCreate homeCreate, int userId)
     {
-        return Task.Run(() => _homeProvider.CreateHome(homeCreate));
+        return Task.Run(() => _homeProvider.CreateHome(homeCreate, userId));
     }
 
     public Task<Home> GetHomeById(int id)

@@ -16,13 +16,15 @@ namespace XPowerApi.Providers
             _dbProvider = new SurrealDbProvider(configuration);
         }
 
-        public async Task<Home> CreateHome(HomeCreate homeCreate)
+        public async Task<Home> CreateHome(HomeCreate homeCreate, int userId)
         {
             // Create HomeGroup DB Object
             Dictionary<string, string> dataArray = new Dictionary<string, string>()
                 { { "name", homeCreate.Name }, };
             // Create Db object and Convert to HomeGroup on success
             Home home = (await _dbProvider.Create<HomeDb>("home", dataArray)).ConvertToHome();
+            RelateObject related = await this.RelateUserToHome(userId, home.Id);
+
             return home;
         }
 
