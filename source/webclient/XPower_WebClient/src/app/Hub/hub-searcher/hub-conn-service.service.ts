@@ -33,7 +33,7 @@ export class HubConnServiceService {
           })).pipe(
             mergeMap(characteristic => {
               this.chararacter = characteristic as BluetoothRemoteGATTCharacteristic;
-              this.chararacter.oncharacteristicvaluechanged = event => {this.yeet(event)}
+              this.chararacter.oncharacteristicvaluechanged = event => {this.characteristicChanged(event)}
               return this.ble.readValue$(this.chararacter);
             })
           ).pipe(
@@ -41,9 +41,10 @@ export class HubConnServiceService {
           );
   }
 
-  yeet(a : any){
-    console.log("a yeet");
-    console.log(a);
+  characteristicChanged(event : any){
+    
+    // int8Array with new ip adress
+    var newIP = event.target.value
   }
 
   getCharacter() {

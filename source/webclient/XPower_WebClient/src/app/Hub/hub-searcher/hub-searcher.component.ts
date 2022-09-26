@@ -31,17 +31,7 @@ export class HubSearcherComponent implements OnInit {
   }
 
   connected(value: any){
-    console.log("Status: " + value);
     this.isConnected = true;
-  }
-
-  yeet(event : any){
-    console.log("yeet called");
-    console.log(event.target.value);
-
-    // handle wrong input here
-
-    // show alert or something
   }
 
   connect(){
