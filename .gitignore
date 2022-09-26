@@ -1,5 +1,6 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/source/hub/src/ConnectionHandler
+﻿.vscode/
+**/.vscode/
+**/**/.vscode
+.idea/
+**/.idea/
+**/**/.idea
