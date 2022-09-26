@@ -25,7 +25,7 @@ namespace XPowerApi.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("CreateHome")]
-        public async Task<ActionResult<Home>> CreateHome(HomeCreate homeCreateInfo)
+        public async Task<ActionResult<Home>> CreateHome(HomeCreate homeCreateInfo, int userId)
         {
             if (homeCreateInfo == null)
                 return BadRequest(new { Message = "Missing parameter" });
@@ -37,7 +37,7 @@ namespace XPowerApi.Controllers
             try
             {
                 //Checking the home
-                var home = await _homeManager.CreateHome(homeCreateInfo);
+                var home = await _homeManager.CreateHome(homeCreateInfo, userId);
 
                 //  Return a created Home
                 return Ok(home);

@@ -44,7 +44,13 @@ namespace XPowerApi.Controllers
                 return BadRequest(new { Message = "Missing parameter" });
 
             //checking if username and password is not null or empty
-            if (string.IsNullOrEmpty(userCreateInfo.UserName) || string.IsNullOrEmpty(userCreateInfo.Password))
+            if (
+                string.IsNullOrEmpty(userCreateInfo.UserName) ||
+                string.IsNullOrEmpty(userCreateInfo.Password) ||
+                string.IsNullOrEmpty(userCreateInfo.Email) ||
+                string.IsNullOrEmpty(userCreateInfo.FirstName) ||
+                string.IsNullOrEmpty(userCreateInfo.LastName)
+                )
                 return BadRequest(new { Message = "Username or Password is missing valid" });
 
             try
@@ -52,10 +58,8 @@ namespace XPowerApi.Controllers
                 //Checking the user
                 var user = await _userManager.CreateUser(userCreateInfo);
                 //Checking the homegroup
-                var home = await _homeManager.CreateHome(new HomeCreate() { Name = "Default" });
-                //make relation
-                var related = await _homeManager.RelateUserToHome(user.Id, home.Id);
-
+                var home = await _homeManager.CreateHome(new HomeCreate() { Name = "Default" }, user.Id);
+                
                 //  Return a created usertoken
                 return Ok(_tokenManager.GenerateToken(user));
             }

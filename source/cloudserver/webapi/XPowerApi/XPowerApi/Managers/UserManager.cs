@@ -17,19 +17,10 @@ namespace XPowerApi.Managers
             return Task.Run(() => _userProvider.CreateUser(userCreate));
         }
 
-        public Task<bool> DeleteUser(int id)
-        {
-            return Task.Run(() => _userProvider.DeleteUser(id));
-        }
-
         public Task<User> GetUserById(int id)
         {
             return Task.Run(() => _userProvider.GetUserById(id));
         }
 
-        public Task<User> UpdateUserUsername(int id, string username)
-        {
-            return Task.Run(() => _userProvider.UpdateUserUsername(id, username));
-        }
     }
 }

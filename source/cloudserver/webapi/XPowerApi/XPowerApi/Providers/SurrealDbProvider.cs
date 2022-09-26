@@ -21,8 +21,6 @@ public class SurrealDbProvider : IDbManager
         // Get Response
         HttpResponseMessage response = await _httpClient.SendAsync(request);
         string jsonData = await response.Content.ReadAsStringAsync();
-        // Debug Raw Response 
-        //Console.WriteLine(responseJson);
         // ERR
         if (!response.IsSuccessStatusCode)
             throw new Exception("Could not get data");
@@ -92,16 +90,6 @@ public class SurrealDbProvider : IDbManager
         return t;
     }
 
-    public async Task<T> GetSpecific<T>(string tableName, string whereClause = "")
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<T> GetAll<T>(string tableName)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<RelateObject> GetRelation(string subjectId, string relationName, string alias = "")
     {
         string sqlString = $"select ->{relationName} ";
@@ -129,13 +117,4 @@ public class SurrealDbProvider : IDbManager
         return objectList;
     }
 
-    public async Task<T> Update<T>(string tableName, int id, T newT)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<T> Delete<T>(string tableName, T oldT)
-    {
-        throw new NotImplementedException();
-    }
 }
