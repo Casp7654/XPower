@@ -22,11 +22,16 @@ background-color: rgba(27,40,69,1);
   height: 95%;
   width: 60%;
 }
- .device-text{
-   padding: 5%;
-   text-align: center;
-   font-size: large;
-  } 
+.device-text{
+  padding: 5%;
+  text-align: center;
+  font-size: large;
+} 
+
+.content-wrapper{
+  height: 100vh;
+}
+
 html{
   background: $linear-background;
   min-height:100%;

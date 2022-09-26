@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone, Inject } from '@angular/core';
-import { HubConnServiceService  } from './hub-conn-service.service';
+import { HubConnServiceService  } from 'src/app/Services/hub-conn-service.service';
 import { BluetoothCore } from '@manekinekko/angular-web-bluetooth';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -28,6 +28,7 @@ export class HubSearcherComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDeviceStatus();
+    this.connect();
   }
 
   connected(value: any){

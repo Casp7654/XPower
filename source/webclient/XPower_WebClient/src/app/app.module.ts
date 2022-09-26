@@ -5,10 +5,8 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HubComponent } from './Hub/hub/hub.component';
-import { HubControllerComponent } from './Hub/hub-controller/hub-controller.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HubSearcherComponent } from './Hub/hub-searcher/hub-searcher.component';
+import { HubSearcherComponent } from './Pages/hub-searcher/hub-searcher.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,8 +14,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider';
-import { IotComponent } from './IoT/iot/iot.component';
-import { IotControllerComponent } from './IoT/iot-controller/iot-controller.component';
 import { IotDevicesComponent } from './Pages/iot-devices/iot-devices.component';
 import { SocketComponent } from './Components/socket/socket.component';
 import { HeaderComponent } from './Navigation/header/header.component';
@@ -28,20 +24,20 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { FormBuilder, FormGroup,ReactiveFormsModule  } from '@angular/forms';
+import { HubDevicesComponent } from './Pages/hub-devices/hub-devices.component';
+import { HubComponent } from './Components/hub/hub.component';
 
  
 @NgModule({
   declarations: [
     AppComponent,
-    HubComponent,
-    HubControllerComponent,
     HubSearcherComponent,
-    IotComponent,
-    IotControllerComponent,
     IotDevicesComponent,
     SocketComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    HubDevicesComponent,
+    HubComponent
   ],
   imports: [
     BrowserModule,
