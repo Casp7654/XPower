@@ -2,115 +2,116 @@ using Microsoft.AspNetCore.Mvc;
 using XPowerApi.Interfaces;
 using XPowerApi.Models.HubModels;
 
-namespace XPowerApi.Controllers;
-
-//[Authorize]
-[Route("api/hub")]
-[ApiController]
-public class HubController : Controller
+namespace XPowerApi.Controllers
 {
-    private readonly ILogger<HubController> _logger;
-    private readonly IHubManager _hubManager;
-
-    public HubController(ILogger<HubController> logger, IHubManager hubManager)
+//[Authorize]
+    [Route("api/hub")]
+    [ApiController]
+    public class HubController : Controller
     {
-        _logger = logger;
-        _hubManager = hubManager;
-    }
+        private readonly ILogger<HubController> _logger;
+        private readonly IHubManager _hubManager;
 
-    /// <summary>
-    /// Gets Hub by id
-    /// </summary>
-    /// <param name="id">ID of the hub</param>
-    [HttpGet]
-    [Route("GetHubByID")]
-    public async Task<ActionResult<Hub>> GetHubById(int id)
-    {
-        try
+        public HubController(ILogger<HubController> logger, IHubManager hubManager)
         {
-            //Checking if the hub exists
-            var hub = await _hubManager.GetHubById(id);
+            _logger = logger;
+            _hubManager = hubManager;
+        }
 
-            // Hub with that id was not found
-            if (hub == null)
-                return NoContent();
+        /// <summary>
+        /// Gets Hub by id
+        /// </summary>
+        /// <param name="id">ID of the hub</param>
+        [HttpGet]
+        [Route("GetHubByID")]
+        public async Task<ActionResult<Hub>> GetHubById(int id)
+        {
+            try
+            {
+                //Checking if the hub exists
+                var hub = await _hubManager.GetHubById(id);
 
-            //  Return a found hub
-            return Ok(hub);
-        }
-        catch (ArgumentException e)
-        {
-            _logger.LogError("Bad request for get hub " + e.Message);
-            return BadRequest(new { Message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Could not perform get hub " + e.Message);
-            return BadRequest(new { Message = e.Message });
-        }
-    }
-    
-    /// <summary>
-    /// Gets Hubs in home
-    /// </summary>
-    /// <param name="homeid">Id of the home</param>
-    [HttpGet]
-    [Route("GetHubsByHomeID")]
-    public async Task<ActionResult<List<Hub>>> GetHubsByHomeId(int homeid)
-    {
-        try
-        {
-            //Checking if the hub exists
-            List<Hub> hubs = await _hubManager.GetHubsByHomeId(homeid);
+                // Hub with that id was not found
+                if (hub == null)
+                    return NoContent();
 
-            // Hub with that id was not found
-            if (hubs.Count <= 0)
-                return NoContent();
+                //  Return a found hub
+                return Ok(hub);
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogError("Bad request for get hub " + e.Message);
+                return BadRequest(new { Message = e.Message });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Could not perform get hub " + e.Message);
+                return BadRequest(new { Message = e.Message });
+            }
+        }
 
-            //  Return a found hub
-            return Ok(hubs);
-        }
-        catch (ArgumentException e)
+        /// <summary>
+        /// Gets Hubs in home
+        /// </summary>
+        /// <param name="homeid">Id of the home</param>
+        [HttpGet]
+        [Route("GetHubsByHomeID")]
+        public async Task<ActionResult<List<Hub>>> GetHubsByHomeId(int homeid)
         {
-            _logger.LogError("Bad request for get hubs " + e.Message);
-            return BadRequest(new { Message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Could not perform get hubs " + e.Message);
-            return BadRequest(new { Message = e.Message });
-        }
-    }
-    
-    /// <summary>
-    /// Gets Hubs associated with user
-    /// </summary>
-    /// <param name="userid">Id of the user</param>
-    [HttpGet]
-    [Route("GetHubsByUserID")]
-    public async Task<ActionResult<List<Hub>>> GetHubsByUserId(int userid)
-    {
-        try
-        {
-            //Checking if the hub exists
-            List<Hub> hubs = await _hubManager.GetHubsByUserId(userid);
+            try
+            {
+                //Checking if the hub exists
+                List<Hub> hubs = await _hubManager.GetHubsByHomeId(homeid);
 
-            // Hub with that id was not found
-            if (hubs.Count <= 0)
-                return NoContent();
+                // Hub with that id was not found
+                if (hubs.Count <= 0)
+                    return NoContent();
 
-            //  Return a found hub
-            return Ok(hubs);
+                //  Return a found hub
+                return Ok(hubs);
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogError("Bad request for get hubs " + e.Message);
+                return BadRequest(new { Message = e.Message });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Could not perform get hubs " + e.Message);
+                return BadRequest(new { Message = e.Message });
+            }
         }
-        catch (ArgumentException e)
+
+        /// <summary>
+        /// Gets Hubs associated with user
+        /// </summary>
+        /// <param name="userid">Id of the user</param>
+        [HttpGet]
+        [Route("GetHubsByUserID")]
+        public async Task<ActionResult<List<Hub>>> GetHubsByUserId(int userid)
         {
-            _logger.LogError("Bad request for get hubs " + e.Message);
-            return BadRequest(new { Message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Could not perform get hubs " + e.Message);
-            return BadRequest(new { Message = e.Message });
+            try
+            {
+                //Checking if the hub exists
+                List<Hub> hubs = await _hubManager.GetHubsByUserId(userid);
+
+                // Hub with that id was not found
+                if (hubs.Count <= 0)
+                    return NoContent();
+
+                //  Return a found hub
+                return Ok(hubs);
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogError("Bad request for get hubs " + e.Message);
+                return BadRequest(new { Message = e.Message });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Could not perform get hubs " + e.Message);
+                return BadRequest(new { Message = e.Message });
+            }
         }
     }
 }

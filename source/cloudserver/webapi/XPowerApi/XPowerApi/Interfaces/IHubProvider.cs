@@ -1,9 +1,15 @@
 using XPowerApi.DbModels;
-using XPowerApi.Models.HubModels;
 
-namespace XPowerApi.Interfaces;
-
-public interface IHubProvider : IHubManager
+namespace XPowerApi.Interfaces
 {
-    // TBD more methods
+    public interface IHubProvider
+    {
+        public Task<HubDb> CreateHub(Dictionary<string, string> dataArray);
+
+        public Task<HubDb> GetHubById(int id);
+
+        public Task<List<HubDb>> GetHubsByHomeId(int homeid);
+
+        public Task<List<HubDb>> GetHubsByUserId(int userid);
+    }
 }

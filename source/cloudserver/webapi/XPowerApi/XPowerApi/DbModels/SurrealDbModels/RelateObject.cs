@@ -1,17 +1,18 @@
-namespace XPowerApi.DbModels.SurrealDbModels;
-
-public class RelateObject
+namespace XPowerApi.DbModels.SurrealDbModels
 {
-    public string Id { get; set; }
-    
-    public string In { get; set; }
-    
-    public string Out { get; set; }
-
-    public RelateObject(string Id, string In, string Out)
+    public class RelateObject
     {
-        this.Id = Id;
-        this.In = In;
-        this.Out = Out;
+        public string Id { get; set; }
+
+        public string In { get; set; }
+
+        public string Out { get; set; }
+
+        public RelateObject(string Id, string In, string Out)
+        {
+            this.Id = Id;
+            this.In = In;
+            this.Out = Out;
+        }
     }
 }

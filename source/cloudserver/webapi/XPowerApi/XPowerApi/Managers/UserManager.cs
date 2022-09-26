@@ -1,26 +1,36 @@
 ﻿using XPowerApi.Interfaces;
 using XPowerApi.Models.UserModels;
+using XPowerApi.Supporters;
 
 namespace XPowerApi.Managers
 {
     public class UserManager : IUserManager
     {
-       IUserProvider _userProvider;
+        IUserProvider _userProvider;
 
         public UserManager(IUserProvider userProvider)
         {
             _userProvider = userProvider;
         }
 
-        public Task<User> CreateUser(UserCreate userCreate)
+        public async Task<User> CreateUser(UserCreate userCreate)
         {
-            return Task.Run(() => _userProvider.CreateUser(userCreate));
+            // Generate Salt
+            byte[] salt = SecuritySupport.GenerateSalt();
+            string hashed_password = SecuritySupport.HashPassword(userCreate.Password!, salt);
+            // Create User DB Object
+            Dictionary<string, string> dataArray = new Dictionary<string, string>()
+            {
+                { "hashed_password", hashed_password },
+                { "username", userCreate.UserName },
+                { "salt", System.Text.Encoding.UTF8.GetString(salt) }
+            };
+            return (await _userProvider.CreateUser(dataArray)).ConvertToUser();
         }
 
-        public Task<User> GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
-            return Task.Run(() => _userProvider.GetUserById(id));
+            return (await _userProvider.GetUserById(id)).ConvertToUser();
         }
-
     }
 }

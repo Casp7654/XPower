@@ -3,7 +3,6 @@ using XPowerApi.Models.HomeModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-
 namespace XPowerApi.Controllers
 {
     [Route("api/home")]

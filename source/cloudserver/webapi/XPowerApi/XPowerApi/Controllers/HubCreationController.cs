@@ -30,7 +30,8 @@ namespace XPowerApi.Controllers
                 return BadRequest(new { Message = "Missing parameter" });
 
             //checking if Home, Mac_addr and Pricate_addr is not null or empty
-            if (string.IsNullOrEmpty(hubCreateInfo.Home) || string.IsNullOrEmpty(hubCreateInfo.Mac) || string.IsNullOrEmpty(hubCreateInfo.PrivateAddress))
+            if (string.IsNullOrEmpty(hubCreateInfo.Home) || string.IsNullOrEmpty(hubCreateInfo.Mac) ||
+                string.IsNullOrEmpty(hubCreateInfo.PrivateAddress))
                 return BadRequest(new { Message = "Name, Mac_addr or PrivateAddress is missing valid" });
 
             try

@@ -1,9 +1,14 @@
 using XPowerApi.DbModels;
-using XPowerApi.Models.HomeModels;
+using XPowerApi.DbModels.SurrealDbModels;
 
-namespace XPowerApi.Interfaces;
-
-public interface IHomeProvider : IHomeManager
+namespace XPowerApi.Interfaces
 {
-    // TBD more methods
+    public interface IHomeProvider
+    {
+        public Task<HomeDb> CreateHome(Dictionary<string, string> dataArray, int userId);
+
+        public Task<HomeDb> GetHomeById(int id);
+
+        public Task<RelateObject> RelateUserToHome(int userId, int homeId);
+    }
 }

@@ -1,23 +1,17 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Web;
-
 using XPowerApi.Interfaces;
 using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Managers
 {
-
     public class TokenManager : ITokenManager<UserToken>
     {
         private readonly IConfiguration _configuration;
         private readonly string _secret = "";
+
         public TokenManager(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -54,7 +48,6 @@ namespace XPowerApi.Managers
 
         public Task<UserToken> GenerateToken(User user)
         {
-
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -103,7 +96,7 @@ namespace XPowerApi.Managers
                 };
                 SecurityToken securityToken;
                 ClaimsPrincipal principal = tokenHandler.ValidateToken(token,
-                      parameters, out securityToken);
+                    parameters, out securityToken);
                 return principal;
             }
             catch
@@ -131,6 +124,7 @@ namespace XPowerApi.Managers
             {
                 return await Task.Run(() => false);
             }
+
             Claim usernameClaim = identity.FindFirst(ClaimTypes.Name);
             Claim userIdClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
             username = usernameClaim.Value;
