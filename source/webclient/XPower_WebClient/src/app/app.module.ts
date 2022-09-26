@@ -24,7 +24,6 @@ import { HeaderComponent } from './Navigation/header/header.component';
 import { MatListModule } from '@angular/material/list';
 import { SidenavListComponent } from './Navigation/sidenav-list/sidenav-list.component'
 import { BrowserWebBluetooth} from '@manekinekko/angular-web-bluetooth'
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
