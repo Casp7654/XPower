@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -23,8 +22,13 @@ import { SocketComponent } from './Components/socket/socket.component';
 import { HeaderComponent } from './Navigation/header/header.component';
 import { MatListModule } from '@angular/material/list';
 import { SidenavListComponent } from './Navigation/sidenav-list/sidenav-list.component'
+import { BrowserWebBluetooth} from '@manekinekko/angular-web-bluetooth'
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input'
+import { FormBuilder, FormGroup,ReactiveFormsModule  } from '@angular/forms';
 
-
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +44,10 @@ import { SidenavListComponent } from './Navigation/sidenav-list/sidenav-list.com
   ],
   imports: [
     BrowserModule,
+    MatGridListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
     MatGridListModule,
     MatToolbarModule,
     MatIconModule,
@@ -57,7 +65,10 @@ import { SidenavListComponent } from './Navigation/sidenav-list/sidenav-list.com
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    BrowserWebBluetooth,
+    FormBuilder
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

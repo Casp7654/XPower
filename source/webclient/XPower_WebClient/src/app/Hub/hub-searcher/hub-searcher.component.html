@@ -1,1 +1,25 @@
-<p>hub-searcher works!</p>
+<!-- Remove 1 when testing colors -->
+<div class="container" [ngStyle]="{'display' : !connectedField}">
+  <form class="formContainer" [formGroup]="credentials" (ngSubmit)="sendinput()">
+    <mat-form-field
+    [hideRequiredMarker]="credentials.value.hideRequired"
+    [appearance]="credentials.value.apariencia"
+    [floatLabel]="credentials.value.floatLabel">
+    <mat-label>SSID</mat-label>
+    <input formControlName="fbssid" matInput placeholder="">
+  </mat-form-field>   
+  <br>  
+  <mat-form-field 
+  [hideRequiredMarker]="credentials.value.hideRequired"
+  [appearance]="credentials.value.apariencia"
+  [floatLabel]="credentials.value.floatLabel">
+  <mat-label>PassPhrase</mat-label>
+  <input formControlName="fbpassphrase" matInput placeholder="">
+</mat-form-field> 
+<br>
+<button id="okBtn" mat-button color="primary">OK</button>
+
+</form>
+</div>
+
+<button (click)="connect()" id="ConnectButton" mat-button color="primary" [ngStyle]="{'display' : !connectedField}">+</button>

@@ -50,10 +50,36 @@ interface SocketDeviceRequestConverter {
     +TurnOff() : string
 }
 
+class HubSearcherComponent{
+    ssid : string
+    passphrase : string
+    device : any
+
+    HubSearcherComponent(_zone: NgZone, _hubConnService: HubConnServiceService) : void
+    connected(value: BluetoothRemoteGATTCharacteristic) void
+    connect() : void
+    selectDevice() : void
+    sendinput() : void
+    onSsidKey(event : any) : void
+    onPassPhraseKey(event: any) : void
+}
+
+class HubConnServiceService{
+    GATT_CHARACTERISTIC_CONNECTION : string
+    GATT_PRIMARY_SERVICE : string
+    character : any
+
+    HubConnServiceService(ble: BluetoothCore)
+    getCharConnect() : BluetoothRemoteGATTCharacteristic
+    getCharacter() : BluetoothRemoteGATTCharacteristic
+    getDevice() : BluetoothDevice
+}
+
 HubDevice ..> IoTDevice
 SocketDevice ..> IoTDevice
 SocketDeviceService *-- SocketDeviceRequestConverter
 SocketDeviceService o-- MqttClientService
 IoTService -- IoTDevice
+HubSearcherComponent *-- HubConnServiceService
 
 @enduml
