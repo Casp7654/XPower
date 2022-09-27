@@ -1,4 +1,54 @@
-@startuml APPLICATION
+@startuml Webclient
+
+note "SocketDeviceRequestConverter will not have implementations shown\nMqttService is a third party library" as n1
+
+interface IoTDevice {
+    +name: string
+    +status: boolean
+    +mac_address: string
+}
+
+class Device {
+    +id: string
+    +name: string
+}
+
+class HubDevice {
+}
+
+class SocketDevice {
+    +turned_on: boolean
+    +group: string
+    +parent: IoTDevice
+}
+
+class IoTService {
+    +GetSocketDevicesFromHub(hubIdenfitifer : string) : void
+    +GetDevices() : Array<IoTDevice>
+    -GetFilteredDevices<T extends IoTDevice>(type: T) : Array<T>
+}
+
+class MqttClientService {
+  -client: MqttService
+
+  +Publish(target: string, data: string) : void
+  +Subscribe(target: string, onMessageFunc: (message : string) => void) : void
+  -CreateOptions() : IMqttServiceOptions
+}
+
+class SocketDeviceService {
+  -requestConverter: SocketDeviceRequestConverter
+  -mqttService {readonly}: MqttClientService
+
+  +SocketDeviceService(mqttService: MqttClientService) 
+  +TurnOff(target: string) : void
+  +TurnOn(target: string) : void
+}
+
+interface SocketDeviceRequestConverter {
+    +TurnOn() : string
+    +TurnOff() : string
+}
 
 class HubSearcherComponent{
     ssid : string
@@ -25,6 +75,11 @@ class HubConnServiceService{
     getDevice() : BluetoothDevice
 }
 
+HubDevice ..> IoTDevice
+SocketDevice ..> IoTDevice
+SocketDeviceService *-- SocketDeviceRequestConverter
+SocketDeviceService o-- MqttClientService
+IoTService -- IoTDevice
 HubSearcherComponent *-- HubConnServiceService
 
 @enduml

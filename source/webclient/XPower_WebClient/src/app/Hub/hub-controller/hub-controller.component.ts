@@ -9,10 +9,12 @@ import { HubModule } from '../hub/hub.module';
 })
 export class HubControllerComponent implements OnInit {
 public hubs! : HubModule[];
-  constructor() { }
+  constructor() { 
+    this.hubs = this.LoadHubsFromHome();
+
+  }
 
   ngOnInit(): void {
-    this.hubs = this.LoadHubsFromHome();
   }
 
   LoadHubsFromHome(homeName = "Alle") : HubModule[]{

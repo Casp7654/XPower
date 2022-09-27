@@ -6,4 +6,4 @@ export class Device {
         this.id = id;
         this.name = name;
     }
-   }
+}

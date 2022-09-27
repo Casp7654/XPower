@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { HubDevice } from 'src/app/Models/HubDevice';
 import { SocketDevice } from 'src/app/Models/SocketDevice';
 import { IoTService } from 'src/app/Services/io-t.service';
+import { SocketDeviceService } from 'src/app/Services/socket-device.service';
 
 @Component({
   selector: 'app-iot-devices',
@@ -21,7 +22,10 @@ export class IotDevicesComponent implements OnInit {
   */
   columnAmount: number = 2;
 
-  constructor(private iot_service: IoTService) 
+  toggle = false;
+
+  constructor(private iot_service: IoTService,
+    private socketDeviceService: SocketDeviceService) 
   {
     this.iot_service.GetSocketDevicesFromHub("");
     this.devices = this.iot_service.GetFilteredDevices(SocketDevice);
@@ -41,8 +45,13 @@ export class IotDevicesComponent implements OnInit {
   /*
   Called when a device should be turned on / off
   */
-  OnToggleDeviceClicked($device : SocketDevice): void {
-    console.log($device.name);
+  OnToggleDeviceClicked(device : SocketDevice): void {
+    if (this.toggle)
+      this.socketDeviceService.TurnOff("Rene");
+    else
+      this.socketDeviceService.TurnOn("Rene");
+
+    this.toggle = !this.toggle;
   }
 
   /*

@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  mqttClientSettings: {
+    url: "broker.emqx.io",
+    port: 8083,
+    path: "/mqtt"
+  }
+  
 };
 
 /*
