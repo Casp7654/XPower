@@ -47,7 +47,7 @@ class BasePage:
         """
         return BasePage.__current_page
 
-    def __clear_console(self) -> None:
+    def _clear_console(self) -> None:
         """Used to clear the console both linux and windows"""
         if (os.name == "posix"):
             os.system("clear")
@@ -83,7 +83,7 @@ class BasePage:
 
     def show_page(self) -> None:
         """Clears earlier content and shows current page."""
-        self.__clear_console()
+        self._clear_console()
         print(backcolors.OKCYAN, end="")
         self._show_controls()
         print(backcolors.ENDC, end="")
