@@ -1,0 +1,45 @@
+@startuml Hub SSD diagrams
+title Webklient to Hub Bluetooth
+
+participant HubSearcher
+participant HubSearchService
+participant BleConnectionService
+participant BleConnectionCharacteristic
+
+
+HubSearcher->HubSearchService: Search for devices
+HubSearchService->HubSearcher: Devices found
+HubSearcher->HubSearcher: Select device
+HubSearcher->HubSearchService: Connect to device
+HubSearchService->BleConnectionService: Connection request
+
+alt Not ok
+HubSearchService->HubSearcher: Couldn't connect with device
+end 
+
+alt Ok
+BleConnectionService->HubSearchService: Connected
+HubSearchService->HubSearcher: Connected
+HubSearcher->HubSearcher: Get ssid and passphrase of local network
+HubSearcher->HubSearchService: Send ssid and passphrase
+HubSearchService->BleConnectionService: Send ssid and passphrase
+BleConnectionService->BleConnectionCharacteristic:Connect to network with ssid and passphrase
+
+alt not conneted
+BleConnectionCharacteristic->BleConnectionService:  Respond with error message  
+end
+
+
+BleConnectionCharacteristic->BleConnectionCharacteristic: Get local IP address
+alt connected
+BleConnectionCharacteristic->BleConnectionService: Respond with local IP address
+end
+
+BleConnectionService->HubSearchService: Receive response
+HubSearchService->HubSearcher: Show response
+
+end 
+
+
+
+@enduml
