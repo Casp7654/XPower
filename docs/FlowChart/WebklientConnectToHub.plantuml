@@ -1,0 +1,32 @@
+@startuml Hub Flowchart diagram
+title Webklient to Hub Bluetooth
+
+(*) --> "Click on add hub"
+--> "Show found hubs"
+--> "Select choosen hub"
+--> "Start connectin to the hub"
+
+if "Couldn't connect to hub" then
+  -->[true] "Show not being able to connect to hub message"
+else 
+endif
+
+
+-->"Ask about ssid and passphrase for the local network"
+
+-->"Send credentials to connected device"
+
+-->"Try connection to network with credentials"
+
+if "Couldn't connect to network" then
+ -->"Show not being able to connect to network with error message"
+else
+endif
+
+-->"Get local ip adress"
+
+-->"Send local ip adress to webklient"
+
+
+
+@enduml
