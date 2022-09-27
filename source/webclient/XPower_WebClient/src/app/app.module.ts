@@ -23,12 +23,7 @@ import { SocketComponent } from './Components/socket/socket.component';
 import { HeaderComponent } from './Navigation/header/header.component';
 import { MatListModule } from '@angular/material/list';
 import { SidenavListComponent } from './Navigation/sidenav-list/sidenav-list.component'
-import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
-export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: 'broker.emqx.io',
-  port: 8083,
-  path: '/mqtt'
-}
+
 
 @NgModule({
   declarations: [
@@ -60,8 +55,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
       registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-    AppRoutingModule,
-    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

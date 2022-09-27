@@ -1,24 +1,35 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { IMqttMessage, MqttService, IMqttServiceOptions } from 'ngx-mqtt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MqttClientService {
 
-  private brokerUrl: string;
+  private client: MqttService;
 
-  constructor(private client: MqttService) {
-    this.brokerUrl = environment.brokerUrl;
-    this.client.observe("test").subscribe((msg: IMqttMessage) => {
-      console.log(msg.payload);
+  constructor() {
+    this.client = new MqttService(this.createOptions());
+
+    this.client.observe("alabama").subscribe((msg: IMqttMessage) => {
+      console.log(new TextDecoder().decode(msg.payload));
     });
 
-    this.client.unsafePublish("test", "Hej med dig fra constructor");
+    this.Publish("alabama", "hej med dig");
   }
 
+  
   Publish(target: string, data: string) {
-    //this.client.publish(target, data);
+    this.client.unsafePublish(target, data);
+  }
+
+  private createOptions() : IMqttServiceOptions {
+    let settings = environment.mqttClientSettings;
+    return {
+      hostname: settings.url,
+      port: settings.port,
+      path: settings.path
+    };
   }
 }
