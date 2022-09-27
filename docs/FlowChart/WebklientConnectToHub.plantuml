@@ -11,11 +11,8 @@ if "Couldn't connect to hub" then
 else 
 endif
 
-
 -->"Ask about ssid and passphrase for the local network"
-
 -->"Send credentials to connected device"
-
 -->"Try connection to network with credentials"
 
 if "Couldn't connect to network" then
@@ -23,10 +20,7 @@ if "Couldn't connect to network" then
 else
 endif
 
--->"Get local ip adress"
-
--->"Send local ip adress to webklient"
-
-
+-->"Get local IP address"
+-->"Send local IP address to webklient"
 
 @enduml

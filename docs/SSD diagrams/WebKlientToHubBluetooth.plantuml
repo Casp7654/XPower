@@ -30,9 +30,9 @@ BleConnectionCharacteristic->BleConnectionService:  Respond with error message
 end
 
 
-BleConnectionCharacteristic->BleConnectionCharacteristic: Get local ip adress
+BleConnectionCharacteristic->BleConnectionCharacteristic: Get local IP address
 alt connected
-BleConnectionCharacteristic->BleConnectionService: Respond with local ip-adress
+BleConnectionCharacteristic->BleConnectionService: Respond with local IP address
 end
 
 BleConnectionService->HubSearchService: Receive response
