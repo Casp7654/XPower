@@ -21,13 +21,13 @@ export class HubService {
   */
   public GetHubDevicesFromGroup(group_idenfitifer: string) : void {
     //An offline hub for testing
-    let a = new HubDevice();
-    a.status = false;
+    let offlineHub = new HubDevice();
+    offlineHub.status = false;
 
     this.hubDevices = [
       new HubDevice(),
       new HubDevice(),
-      a,
+      offlineHub,
       new HubDevice(),
       new HubDevice(),
       new HubDevice(),
