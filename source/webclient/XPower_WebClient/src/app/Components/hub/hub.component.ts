@@ -29,7 +29,7 @@ export class HubComponent implements OnInit {
   /*
   Event for when card is double clicked
   */
-  ondblclickevent(event : any): void {
+  onDblClickEvent(event : any): void {
     this.onToggleDeviceClick.emit(this.device);
   }
 

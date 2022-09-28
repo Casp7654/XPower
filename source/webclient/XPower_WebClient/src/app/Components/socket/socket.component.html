@@ -1,4 +1,4 @@
-<mat-card [class.opacity]="!device.status" (dblclick)="ondblclickevent($event)">
+<mat-card [class.opacity]="!device.status" (dblclick)="onDblClickEvent($event)">
     <mat-card-header class="socket-bottom-margin">
         <div mat-card-avatar>
             <mat-icon [ngClass]="device.turned_on ? 'online' : 'offline'">electrical_services</mat-icon>
