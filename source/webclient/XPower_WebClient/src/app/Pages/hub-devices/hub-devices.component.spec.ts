@@ -14,7 +14,6 @@ describe('HubDevicesComponent', () => {
 
     fixture = TestBed.createComponent(HubDevicesComponent);
     component = fixture.componentInstance;
-    component.iot = {id: "", name: ""};
     fixture.detectChanges();
   });
 
