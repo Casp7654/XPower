@@ -15,8 +15,12 @@ class StatusManager:
         self._change_status_publish()
 
     def _change_status_publish(self):
-        payLoad : StatusPayload = StatusPayload(self.__client_id, self.StatusID)
-        jsonPayload = json.dumps(payLoad.__dict__)
+        statusPayLoad : StatusPayload = StatusPayload(self.__client_id, self.StatusID)
+        
+        payload = []   
+        payload.append(statusPayLoad)
+        
+        jsonPayload = json.dumps(payload.__dict__)        
         self.__client.publish(f"StatusResponse/{self.__client_id}", jsonPayload)
         self.__client.publish(f"StatusResponse/all", jsonPayload)
 
