@@ -29,7 +29,6 @@
   <ItemGroup>
     <Folder Include="Managers" />
     <Folder Include="Providers" />
-    <Folder Include="Supporters" />
   </ItemGroup>
 
 </Project>
