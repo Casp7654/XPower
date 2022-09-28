@@ -47,13 +47,7 @@ namespace XPowerApiTEST.Controllers
         public async void CreateUser_ShouldFailClientError()
         {
             //Arrange
-            UserCreate input = new()
-            {
-                Email = "test@test.dk",
-                FirstName = "John",
-                LastName = "Doe",
-                UserName = "jodo",
-            };
+            UserCreate input = new();
             _userManager.Setup(x => x.CreateUser(input)).ReturnsAsync(new UserToken());
 
             //Act
