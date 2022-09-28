@@ -1,4 +1,4 @@
-enum ClientStatusEnum {
+export enum ClientStatusEnum {
     Unknown = 0,
     TurnedOff = 1,
     TurnedOn = 2,

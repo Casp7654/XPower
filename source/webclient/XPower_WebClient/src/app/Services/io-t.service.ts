@@ -3,6 +3,7 @@ import { HubDevice } from '../Models/HubDevice';
 import { IoTDevice } from '../Models/IoTDevice';
 import { SocketDevice } from '../Models/SocketDevice';
 import { MqttClientService } from './mqtt-client.service';
+import { ClientStatusResponse } from '../Models/Dtos/ClientStatusResponse';
 
 @Injectable({
   providedIn: 'root'
