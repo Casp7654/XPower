@@ -64,5 +64,5 @@ jobs:
       - name: Running webclient tests
         run: |
           cd source/webclient/XPower_WebClient
-          npm install
+          npm install --force
           ng test --watch=false --browsers=ChromeHeadless
