@@ -58,3 +58,8 @@ jobs:
         run: |
             cd source/cloudserver/webapi/XPowerApi
             dotnet test
+            
+      - name: Running webclient tests
+        run: |
+          cd source/webclient/XPower_WebClient
+          ng test
