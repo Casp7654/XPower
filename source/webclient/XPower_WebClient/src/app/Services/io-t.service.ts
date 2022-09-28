@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HubDevice } from '../Models/HubDevice';
 import { IoTDevice } from '../Models/IoTDevice';
 import { SocketDevice } from '../Models/SocketDevice';
+import { MqttClientService } from './mqtt-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class IoTService {
   */
   private devices: Array<IoTDevice> = new Array<IoTDevice>();
 
-  constructor() {
-    
+  constructor(private mqttService: MqttClientService) {
+    mqttService.Subscribe("StatusResponse/all", this.onIoTStatusResponse);
   }
 
   /*
@@ -51,7 +52,7 @@ export class IoTService {
   Returns array of devices specified from the the given type
   */
   public GetFilteredDevices<T extends IoTDevice>(type: new (...params : any[]) => T) : Array<T>{
-     let socketDevices = Array<T>();
+    let socketDevices = Array<T>();
 
     this.devices.forEach(dev => {
       if (dev instanceof type)
@@ -59,5 +60,20 @@ export class IoTService {
     });
 
     return socketDevices;
+  }
+
+  private getDeviceById(clientId: string) : IoTDevice | undefined {
+    return this.devices
+      .find((dev) => dev.name == clientId);
+  }
+
+  private onIoTStatusResponse(message: string) : void {
+    let obj = JSON.parse(message);
+    let clientStatus = obj as ClientStatusResponse[];
+
+    clientStatus.forEach((status) => {
+      let dev = this.getDeviceById(status.ClientId);
+      dev!.status = status.StatusId as number > 0;
+    });
   }
 }
