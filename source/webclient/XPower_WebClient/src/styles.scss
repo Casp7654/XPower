@@ -31,7 +31,12 @@ background-color: rgba(27,40,69,1);
 .content-wrapper{
   height: 100vh;
 }
-
+.custom-button{
+  border-radius: 5px;
+  margin-top: 10%;
+  color:rgba(27,40,69,1);
+  background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgba(242,244,255,1) 100%);
+}
 html{
   background: $linear-background;
   height: 100vh;
