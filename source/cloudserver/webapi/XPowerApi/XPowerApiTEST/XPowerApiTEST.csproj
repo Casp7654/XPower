@@ -26,9 +26,4 @@
     <ProjectReference Include="..\XPowerApi\XPowerApi.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Managers" />
-    <Folder Include="Providers" />
-  </ItemGroup>
-
 </Project>
