@@ -1,3 +1,4 @@
+from calendar import c
 from tokenize import Number
 from BasePage import BasePage, backcolors
 from StatusManager import StatusManager
@@ -11,8 +12,7 @@ class StatusPage(BasePage):
         Args:
             statusManager (StatusManager): The manager to hold status
         """
-        self.__cursor_pos = 0
-        self.__current_page = self
+
         self.__statusManager = statusManager
     
     def _clear_console(self) -> None:
@@ -22,29 +22,37 @@ class StatusPage(BasePage):
         statusType : StatusType = StatusType.Unknown
         while statusType == statusType.Unknown:
             self._clear_console()
-            print("Current status: {}-{}".format(statusType.value, statusType.name))
+            print(self.__statusManager._get_current_str_of_status())
             print("Select status: ")
             for name, member in StatusType.__members__.items():
                 print("{}: {}".format(member.value, name))
-            status = input("status id: ")
-            statusType = self.__statusManager.convert_value_to_status(status)    
+            inputStatus = input("Input new status id: ")
+            statusType = self.__statusManager._convert_value_to_status(inputStatus)    
         
         self._clear_console()
         self.__statusManager._change_status(statusType)
-        print("Changed status to: {}-{}".format(statusType.value, statusType.name))
 
-    def _show_page(self) -> None:
-        if not self.__statusManager.is_running():
-            status = self.__statusManager.StatusID
-            print("Current status: {}-{}".format(status.value, status.name))
-            self.__create_client()
-            self.__change_status()
+    def __show_status(self):
+        print(self.__statusManager._get_current_str_of_status())
+        input("Press enter to proceed")
 
-    def __create_client(self) -> None:
-        name = input("device id: ")
-        server = input("ip: ")
-        port = input("port: ")
-        self.__statusManager._add_client(name, server, port)
+    def __create_broker_connection(self) -> None:
+        if not self.__statusManager._is_running():
+            print("Creating Connection")
+            name = input("device id: ")
+            server = input("ip: ")
+            port = input("port: ")
+            self.__statusManager._add_broker(name, server, port)
+        
+
+    def _show_controls(self) -> None:
+        """Ui to show controls."""
+        print("S - Change status")
+        print("P - Publish status")
+        print("C - Connect to broker")
+        print("G - Get current status")
+        print("L - Go to logging")
+        print("------------------------------")
 
     def _on_key_pressed(self, k : str) -> None:
         """The callback for when a key has been pressed
@@ -55,3 +63,11 @@ class StatusPage(BasePage):
         """
         if k == "l":
             BasePage.change_page("logging_page")
+        if k == "s":
+            self.__change_status()
+        if k == "p":
+            self.__statusManager._change_status_publish()
+        if k == "c":
+            self.__create_broker_connection()
+        if k == "g":
+            self.__show_status()

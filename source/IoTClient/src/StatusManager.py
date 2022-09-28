@@ -12,14 +12,21 @@ class StatusManager:
 
     def _change_status(self, statusId : StatusType) -> None:
         self.StatusID = statusId
-        payLoad : StatusPayload = StatusPayload(self.StatusID)
-        jsonPayload = json.dumps(payLoad.__dict__)
-        self.__client.publish(f"Status/{self.__client_id}", jsonPayload)
+        self._change_status_publish()
 
-    def convert_value_to_status(self, value):
+    def _change_status_publish(self):
+        payLoad : StatusPayload = StatusPayload(self.__client_id, self.StatusID)
+        jsonPayload = json.dumps(payLoad.__dict__)
+        self.__client.publish(f"StatusResponse/{self.__client_id}", jsonPayload)
+        self.__client.publish(f"StatusResponse/all", jsonPayload)
+
+    def _get_current_str_of_status(self) -> str:
+        return "Current status: {}-{}".format(self.StatusID.value, self.StatusID.name)
+
+    def _convert_value_to_status(self, value):
         try:
             # if provided value is a int
-            return StatusType(value)
+            return StatusType(int(value))
         except:
             try:
                 # if provided value is a string
@@ -27,22 +34,23 @@ class StatusManager:
             except:
                 return StatusType.Unknown
 
-    def _add_client(self, deviceID : str, ip : str, port : int):
-        self.__client_id = f"mqtt_{deviceID}"
+    def _add_broker(self, deviceID : str, ip : str, port : int):
+        self.__client_id = f"{deviceID}"
         self.__ip = ip
         self.__port = port
         self.__keep_alive = 60
         self.__client = mqtt.Client(client_id=self.__client_id, clean_session=True, userdata=None, protocol=mqtt.MQTTv311, transport="tcp")
         self.__client.on_connect = self.__on_connect
         self.__client.on_message = self.__on_message
-        self.__topic_name = f"Status/{self.__client_id}"
+        self.__topic_name = f"StatusRequest/{self.__client_id}"
         self.__set_logging_events()
         self.__client.connect(self.__ip, int(self.__port), self.__keep_alive)
+        self.__subscribe("StatusRequest/all")
         self.__client.loop_start()
         self.__is_running = True 
 
-    def is_running(self):
-        return self.__is_running;
+    def _is_running(self):
+        return self.__is_running
 
     def __set_logging_events(self) -> None:
         """Sets logging for the clients events
@@ -53,7 +61,6 @@ class StatusManager:
         self.on_connected = lambda id, ip, port: self.__logger.info(f"{id} -> Connected to {ip}:{port}")
         self.on_subscribed = lambda id, topic: self.__logger.info(f"{id} -> subscribed to {topic}")
         self.on_message_received = lambda id, topic, payload: self.__logger.info(f"{id} -> received message {topic}:{payload}")
-        self.on_published = lambda id, topic, payload: self.__logger.info(f"{id} -> publish send {topic}:{payload}")
 
 
     def __on_connect(self, client : mqtt.Client, userdata : any, flags : int, rc : int) -> None:
@@ -85,10 +92,10 @@ class StatusManager:
             userdata (any): The data which is defined by the user before going into the method
             msg (mqtt.MQTTMessage): The message recieved
         """
-        appData = json.loads(msg.payload)
-        status = appData["StatusID"]
-        print(f"status changed to {status}")        
 
+        # publish status of the devices after it was requested
+        if "StatusRequest" in msg.topic:
+            self._change_status_publish()
+        
         if (self.on_message_received):
             self.on_message_received(self.__client_id, msg.topic, msg.payload)
-
