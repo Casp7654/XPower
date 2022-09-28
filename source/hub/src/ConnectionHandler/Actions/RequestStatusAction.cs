@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System;
 
 class RequestStatusAction : IMessageAction
 {
@@ -12,11 +13,13 @@ class RequestStatusAction : IMessageAction
 
     public async void Action(string clientId, string topic, string data)
     {
+        Console.WriteLine(JsonSerializer.Serialize(_deviceManager.GetDevices()));
         await _serverHandler.PublishAsync("StatusResponse/all", JsonSerializer.Serialize(_deviceManager.GetDevices()));
     }
 
     public bool CanExecute(string clientId, string topic, string data)
     {
-        return (topic.ToLower() == "requeststatus");
+        Console.WriteLine(topic);
+        return (topic.ToLower() == "statusrequest");
     }
 };

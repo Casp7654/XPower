@@ -1,5 +1,5 @@
 class Device
 {
-    public string ClientID { get; set; }
-    public DeviceStatusType StatusID { get; set; }
+    public string ClientId { get; set; }
+    public DeviceStatusType StatusId { get; set; }
 }

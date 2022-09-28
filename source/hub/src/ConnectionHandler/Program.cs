@@ -13,11 +13,10 @@ var server = new MqttServerHandler(mqtt);
 
 var actions = new List<IMessageAction> {
     new SampleAction(),
-    new RequestStatusAction(new DeviceManager())
+    new RequestStatusAction(new DeviceManager(), server)
 };
 var serverController = new ServerController(actions, server);
 await server.StartAsync();
-
 using (var mqttClient = mqttFactory.CreateMqttClient())
 {
     var mqttClientOptions = new MqttClientOptionsBuilder()

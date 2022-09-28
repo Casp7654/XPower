@@ -6,26 +6,26 @@ from ConsoleLogger import ConsoleLogger
 
 class StatusManager:
     def __init__(self, logger : ConsoleLogger) -> None:
-        self.StatusID : StatusType = StatusType.Unknown
+        self.StatusId : StatusType = StatusType.Unknown
         self.__logger = logger   
         self.__is_running = False 
 
     def _change_status(self, statusId : StatusType) -> None:
-        self.StatusID = statusId
+        self.StatusId = statusId
         self._change_status_publish()
 
     def _change_status_publish(self):
-        statusPayLoad : StatusPayload = StatusPayload(self.__client_id, self.StatusID)
+        statusPayLoad : StatusPayload = StatusPayload(self.__client_id, self.StatusId)
         
         payload = []   
-        payload.append(statusPayLoad)
+        payload.append(statusPayLoad.__dict__)
         
-        jsonPayload = json.dumps(payload.__dict__)        
+        jsonPayload = json.dumps(payload)        
         self.__client.publish(f"StatusResponse/{self.__client_id}", jsonPayload)
         self.__client.publish(f"StatusResponse/all", jsonPayload)
 
     def _get_current_str_of_status(self) -> str:
-        return "Current status: {}-{}".format(self.StatusID.value, self.StatusID.name)
+        return "Current status: {}-{}".format(self.StatusId.value, self.StatusId.name)
 
     def _convert_value_to_status(self, value):
         try:
@@ -46,10 +46,9 @@ class StatusManager:
         self.__client = mqtt.Client(client_id=self.__client_id, clean_session=True, userdata=None, protocol=mqtt.MQTTv311, transport="tcp")
         self.__client.on_connect = self.__on_connect
         self.__client.on_message = self.__on_message
-        self.__topic_name = f"StatusRequest/{self.__client_id}"
         self.__set_logging_events()
         self.__client.connect(self.__ip, int(self.__port), self.__keep_alive)
-        self.__subscribe("StatusRequest/all")
+        self.__subscribe("StatusRequest")
         self.__client.loop_start()
         self.__is_running = True 
 
@@ -78,8 +77,6 @@ class StatusManager:
         """
         if (self.on_connected):
             self.on_connected(self.__client_id, self.__ip, self.__port)
-
-        self.__subscribe(self.__topic_name)
 
     def __subscribe(self, topic_name : str) -> None:
         """Subscribes to the given topic name"""
