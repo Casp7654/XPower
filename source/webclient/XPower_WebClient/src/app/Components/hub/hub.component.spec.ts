@@ -5,6 +5,10 @@ import { HubComponent } from './hub.component';
 
 describe('HubComponent', () => {
   let component: HubComponent;
+  const expectedDevice = {
+    name: "Hub 1",
+    mac: "macAddr"
+  };
   let fixture: ComponentFixture<HubComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -20,5 +24,34 @@ describe('HubComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should display have opacity class when status is false', () => {
+    component.device.status = false;
+    expect(component.device.status)
+    .toBeFalse();
+
+    fixture.detectChanges();
+
+    const nativeElements: HTMLElement = fixture.nativeElement;
+    let elements = nativeElements.getElementsByClassName('opacity');
+    expect(elements.length)
+    .toEqual(1);
+  });
+
+  it('should display name for hub', () => {
+
+    const nativeElements: HTMLElement = fixture.nativeElement;
+    
+    expect(nativeElements.textContent)
+    .toContain(expectedDevice.name);
+  });
+
+  it('should display mac address for hub', () => {
+
+    const nativeElements: HTMLElement = fixture.nativeElement;
+
+    expect(nativeElements.textContent)
+    .toContain(expectedDevice.mac);
   });
 });
