@@ -1,6 +1,5 @@
 import { Component, OnInit, NgZone, Inject } from '@angular/core';
-import { HubConnServiceService  } from './hub-conn-service.service';
-import { BluetoothCore } from '@manekinekko/angular-web-bluetooth';
+import { HubConnServiceService  } from 'src/app/Services/hub-conn-service.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -28,17 +27,21 @@ export class HubSearcherComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDeviceStatus();
+    this.connect();
   }
 
   connected(value: any){
     this.isConnected = true;
   }
 
+  // Connects to a hub using hub connection service
   connect(){
     this._hubConnService?.getCharConnect()?.subscribe(this.connected.bind(this));
   }
 
+  // Gets status of device using hub connection service
   getDeviceStatus() {
+    let b = this._hubConnService.getDevice();
     this._hubConnService.getDevice().subscribe((device) => {
       if (device) {
         this.device = device;
@@ -51,6 +54,7 @@ export class HubSearcherComponent implements OnInit {
       }
     });
   }
+  
 
   async sendinput(){
     const encoder = new TextEncoder();
