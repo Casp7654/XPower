@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+$linear-background: linear-gradient(144deg, rgba(0,138,219,0.65) 39%, rgba(27,40,69,1) 57%);
+$linear-component-background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgba(242,244,255,1) 100%);
+
+.mat-card {
+  background-image: $linear-component-background;
+}
+
+.secondary-background-color {
+  background: $linear-component-background;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.primary-color{
+background-color: rgba(27,40,69,1);
+}
+
+.device {
+  border-radius: 20%;
+  background: $linear-component-background;
+  height: 95%;
+  width: 60%;
+}
+ .device-text{
+   padding: 5%;
+   text-align: center;
+   font-size: large;
+  } 
+
+html{
+  background: $linear-background;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.container-wrapper {
+  height: 100vh;
+}

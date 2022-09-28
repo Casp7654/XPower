@@ -1,0 +1,5 @@
+<mat-grid-list [cols]="columnAmount" (window:resize)="onResize($event)">
+    <mat-grid-tile *ngFor="let dev of devices; index as i">
+        <app-socket [device]="dev" (onToggleDeviceClick)="OnToggleDeviceClicked($event)"></app-socket>
+    </mat-grid-tile>
+</mat-grid-list>

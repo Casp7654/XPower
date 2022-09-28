@@ -1,9 +1,4 @@
-import managers.grpc_manager as grpc
+import BleConnection 
 
-def main():
-    gManager = grpc.grpcmanager()
-    gManager.hello()
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    BleConnection.run()
