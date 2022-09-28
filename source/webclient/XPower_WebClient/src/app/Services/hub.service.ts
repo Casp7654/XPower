@@ -17,9 +17,9 @@ export class HubService {
   }
 
   /*
-  Retrieves the socket devices from the hub
+  Retrieves the hub devices from the group
   */
-  public GetHubDevicesFromHome(home_idenfitifer: string) : void {
+  public GetHubDevicesFromGroup(group_idenfitifer: string) : void {
     //An offline hub for testing
     let a = new HubDevice();
     a.status = false;

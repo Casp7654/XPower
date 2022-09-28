@@ -21,7 +21,7 @@ export class HubDevicesComponent implements OnInit {
 
   constructor(private hub_service: HubService) 
   {
-    this.hub_service.GetHubDevicesFromHome("");
+    this.hub_service.GetHubDevicesFromGroup("");
     this.hubDevices = this.hub_service.GetFilteredDevices(HubDevice);
     this.changeColumnsFromWidth(window.innerWidth);
   }
