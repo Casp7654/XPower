@@ -61,7 +61,10 @@ jobs:
             cd source/cloudserver/webapi/XPowerApi
             dotnet test
             
+      - name: Install npm
+        run: npm install
+            
       - name: Running webclient tests
         run: |
           cd source/webclient/XPower_WebClient
-          ng test
+          ng test --watch=false --browsers=ChromeHeadless
