@@ -21,7 +21,6 @@ class StatusManager:
         payload.append(statusPayLoad.__dict__)
         
         jsonPayload = json.dumps(payload)        
-        self.__client.publish(f"StatusResponse/{self.__client_id}", jsonPayload)
         self.__client.publish(f"StatusResponse/all", jsonPayload)
 
     def _get_current_str_of_status(self) -> str:
