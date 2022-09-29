@@ -14,18 +14,38 @@ namespace XPowerApiTEST.Managers
 
         public void FromTokenString_ShouldReturnUserTokenObject()
         {
+            //Arrange
+            
+            //Act
+            
+            //Assert
         }
 
         public void GenerateToken_ShouldReturnUserTokenObject()
         {
+            //Arrange
+            
+            //Act
+            
+            //Assert
         }
 
         public void GetPrincipal_ShouldReturnClaimsPrincipalObject()
         {
+            //Arrange
+            
+            //Act
+            
+            //Assert
         }
 
         public void ValidateToken_ShouldReturnTrue()
         {
+            //Arrange
+            
+            //Act
+            
+            //Assert
         }
     }
 }

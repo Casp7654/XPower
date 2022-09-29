@@ -5,11 +5,11 @@ namespace XPowerApi.Providers
 {
     public class HubProvider : IHubProvider
     {
-        private SurrealDbProvider _dbProvider;
+        private ISurrealDbProvider _dbProvider;
 
-        public HubProvider(IConfiguration configuration)
+        public HubProvider(ISurrealDbProvider dbProvider)
         {
-            _dbProvider = new SurrealDbProvider(configuration);
+            _dbProvider = dbProvider;
         }
 
         public async Task<HubDb> CreateHub(Dictionary<string, string> dataArray)
@@ -19,17 +19,17 @@ namespace XPowerApi.Providers
 
         public async Task<HubDb> GetHubById(int id)
         {
-            return await _dbProvider.GetOneById<HubDb>("home", id);
+            return await _dbProvider.GetOneById<HubDb>("hub", id);
         }
 
-        public async Task<List<HubDb>> GetHubsByHomeId(int homeid)
+        public async Task<List<HubDb>> GetHubsByHomeId(int homeId)
         {
-            return await _dbProvider.GetOneFromInsideAnother<HubDb>("hub", "home", $"home:{homeid}");
+            return await _dbProvider.GetOneFromInsideAnother<HubDb>("hub", "home", $"home:{homeId}");
         }
 
-        public async Task<List<HubDb>> GetHubsByUserId(int userid)
+        public async Task<List<HubDb>> GetHubsByUserId(int userId)
         {
-            return await _dbProvider.GetOneFromInsideARelation<HubDb>("hub", "home", "homeusers", $"user:{userid}");
+            return await _dbProvider.GetOneFromInsideARelation<HubDb>("hub", "home", "homeusers", $"user:{userId}");
         }
     }
 }

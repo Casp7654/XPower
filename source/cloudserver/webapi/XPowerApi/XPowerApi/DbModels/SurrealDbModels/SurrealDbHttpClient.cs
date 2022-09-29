@@ -1,9 +1,10 @@
 using System.Text;
 using System.Net.Http.Headers;
+using XPowerApi.Interfaces;
 
 namespace XPowerApi.DbModels.SurrealDbModels
 {
-    public class SurrealDbHttpClient : HttpClient
+    public class SurrealDbHttpClient : HttpClient, ISurrealDbHttpClient
     {
         public SurrealDbHttpClient(IConfiguration configuration) : base()
         {

@@ -5,14 +5,14 @@ namespace XPowerApi.Providers
 {
     public class UserProvider : IUserProvider
     {
-        private SurrealDbProvider _dbProvider;
+        ISurrealDbProvider _dbProvider;
 
-        public UserProvider(IConfiguration configuration)
+        public UserProvider(ISurrealDbProvider dbProvider)
         {
-            _dbProvider = new SurrealDbProvider(configuration);
+            _dbProvider = dbProvider;
         }
 
-        public async Task<UserDb> CreateUser(Dictionary<string,string> dataArray)
+        public async Task<UserDb> CreateUser(Dictionary<string, string> dataArray)
         {
             return await _dbProvider.Create<UserDb>("user", dataArray);
         }

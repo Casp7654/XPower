@@ -17,7 +17,10 @@ namespace XPowerApi.Managers
         {
             // Convert Home to DB Object
             Dictionary<string, string> dataArray = new Dictionary<string, string>() { { "name", homeCreate.Name }, };
-            return (await _homeProvider.CreateHome(dataArray, userId)).ConvertToHome();
+            Home home = (await _homeProvider.CreateHome(dataArray)).ConvertToHome();
+            // Create User Relation on created home
+            RelateObject related = (await _homeProvider.RelateUserToHome(userId, home.Id));
+            return home;
         }
 
         public async Task<Home> GetHomeById(int id)

@@ -18,12 +18,15 @@ namespace XPowerApiTEST.Managers
         public async void CreateHome_ShouldReturnHomeObject()
         {
             //Arrange
+            int userId = 1;
             HomeCreate input = new() { Name = "Home1" };
             Dictionary<string, string> dataArray = new() { { "name", input.Name } };
             HomeDb expected = new() { id = "home:1", name = input.Name };
-            int userId = 1;
-            _homeProvider.Setup(s => s.CreateHome(dataArray, userId))
+            RelateObject expectedRelate = new(Id:"",In:$"user:{userId}",Out:$"{expected.id}");
+            _homeProvider.Setup(s => s.CreateHome(dataArray))
                 .ReturnsAsync(() => expected);
+            _homeProvider.Setup(s => s.RelateUserToHome(userId, expected.ConvertToHome().Id))
+                .ReturnsAsync(() => expectedRelate);
 
             //Act
             var actual = (await _subject.CreateHome(input, userId));

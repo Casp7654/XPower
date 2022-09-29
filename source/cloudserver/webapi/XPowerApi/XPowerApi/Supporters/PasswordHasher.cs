@@ -1,16 +1,22 @@
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using XPowerApi.Interfaces;
 
 namespace XPowerApi.Supporters
 {
-    public static class SecuritySupport
+    public class PasswordHasher : IPasswordHasher
     {
-        public static byte[] GenerateSalt()
+        public byte[] GenerateSalt()
         {
             return RandomNumberGenerator.GetBytes(128 / 8);
         }
 
-        public static string HashPassword(string password, byte[] salt)
+        public string SaltToString(byte[] salt)
+        {
+            return System.Text.Encoding.UTF8.GetString(salt);
+        }
+
+        public string HashPassword(string password, byte[] salt)
         {
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,

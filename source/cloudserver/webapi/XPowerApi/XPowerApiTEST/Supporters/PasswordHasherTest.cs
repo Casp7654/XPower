@@ -2,16 +2,21 @@ using XPowerApi.Supporters;
 
 namespace XPowerApiTEST.Supporters
 {
-    public class SecuritySupportTest
+    public class PasswordHasherTest
     {
+        private readonly PasswordHasher _subject;
+
+        public PasswordHasherTest()
+            => _subject = new();
+        
         [Fact]
         public void GenerateSalt_ShouldReturnByteArray()
         {
             //Arrange
-            byte[] salt = new byte[0];
+            byte[] salt;
 
             //Act
-            salt = SecuritySupport.GenerateSalt();
+            salt = _subject.GenerateSalt();
 
             //Assert
             Assert.NotEmpty(salt);
@@ -22,14 +27,14 @@ namespace XPowerApiTEST.Supporters
         public void HashPassword_ShouldReturnHashedString()
         {
             //Arrange 
-            string clean_password = "SuperSecretPassword";
+            string cleanPassword = "SuperSecretPassword";
 
             //Act
-            string hashedPassword = (SecuritySupport.HashPassword(clean_password, SecuritySupport.GenerateSalt()));
+            string hashedPassword = (_subject.HashPassword(cleanPassword, _subject.GenerateSalt()));
 
             //Assert
             Assert.NotEmpty(hashedPassword);
-            Assert.True(hashedPassword.Length >= clean_password.Length);
+            Assert.True(hashedPassword.Length >= cleanPassword.Length);
         }
     }
 }

@@ -8,8 +8,8 @@ namespace XPowerApi.Interfaces
 
         public Task<HubDb> GetHubById(int id);
 
-        public Task<List<HubDb>> GetHubsByHomeId(int homeid);
+        public Task<List<HubDb>> GetHubsByHomeId(int homeId);
 
-        public Task<List<HubDb>> GetHubsByUserId(int userid);
+        public Task<List<HubDb>> GetHubsByUserId(int userId);
     }
 }
