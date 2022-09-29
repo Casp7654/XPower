@@ -4,12 +4,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HubComponent } from 'src/app/Components/hub/hub.component';
+import { HubDevice } from 'src/app/Models/HubDevice';
 
 import { HubDevicesComponent } from './hub-devices.component';
 
 describe('HubDevicesComponent', () => {
   let component: HubDevicesComponent;
   let fixture: ComponentFixture<HubDevicesComponent>;
+  let expectedHub = new HubDevice();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -25,6 +27,8 @@ describe('HubDevicesComponent', () => {
 
     fixture = TestBed.createComponent(HubDevicesComponent);
     component = fixture.componentInstance;
+    component.hubDevices.push(expectedHub);
+
     fixture.detectChanges();
   });
 
