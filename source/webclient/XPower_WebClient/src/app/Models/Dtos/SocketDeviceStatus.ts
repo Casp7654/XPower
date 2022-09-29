@@ -1,3 +1,3 @@
 export interface SocketDeviceStatus {
-    turnedOn: boolean;
+    TurnedOn: boolean;
 }

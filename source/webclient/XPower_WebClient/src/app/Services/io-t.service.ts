@@ -67,9 +67,9 @@ export class IoTService {
     let jsonObjs: any[] = JSON.parse(message);
 
     jsonObjs.forEach((obj) => {
-      let device = obj['device'] as DeviceStatus;
+      let device = obj['Device'] as DeviceStatus;
 
-      switch(device.typeId) {
+      switch(device.TypeId) {
         // TODO: Find parent hub
         case DeviceType.Socket:
           let socketResponse = obj as DeviceStatusResponse<SocketDeviceStatus>;
@@ -85,23 +85,23 @@ export class IoTService {
    * @param status The new status for the device.
    */
   private onSocketStatusResponse(status: DeviceStatusResponse<SocketDeviceStatus>) : void {
-    let knownDevice = this.getDeviceById(status.device.clientId) as SocketDevice;
+    let knownDevice = this.getDeviceById(status.Device.ClientId) as SocketDevice;
 
     if (knownDevice === undefined) {
       // Create new device
       this.devices.push(new SocketDevice(
-        status.device.clientId,
-        status.device.statusId > 0,
-        status.device.macAddress,
-        status.data.turnedOn,
+        status.Device.ClientId,
+        status.Device.StatusId > 0,
+        status.Device.MacAddress,
+        status.Data.TurnedOn,
         "Home",
         new HubDevice(),
       ));
     }
     else {
       // Update device
-      knownDevice.status = status.device.statusId > 0;
-      knownDevice.turned_on = status.data.turnedOn;
+      knownDevice.status = status.Device.StatusId > 0;
+      knownDevice.turned_on = status.Data.TurnedOn;
     }
   }
 }
