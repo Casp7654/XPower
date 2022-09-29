@@ -34,6 +34,10 @@ namespace XPowerApi.Managers
         public async Task<bool> ValidateUserCredentials(User user)
         {
             User validUser = await GetUserByUsername(user.UserName);
+            if(validUser == null)
+                return false;
+
+            return true;
         }
 
         public async Task<User> GetUserById(int id)
