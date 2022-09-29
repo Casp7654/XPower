@@ -1,5 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FakeBluetoothDevice } from '@manekinekko/angular-web-bluetooth';
 import { EMPTY, observable, Observable, Subject, take } from 'rxjs';
 import { HubConnServiceService } from 'src/app/Services/hub-conn-service.service';
@@ -68,7 +79,19 @@ describe('HubSearcherComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ HubSearcherComponent ],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, 
+        MatGridListModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatGridListModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatSidenavModule,
+        MatButtonModule,
+        MatListModule,
+        BrowserAnimationsModule],
       providers: [{provide: HubConnServiceService, useValue: connServiceMock}, {provide: FormBuilder, useValue: formBuilderMock} ]
     })
     .compileComponents();

@@ -13,9 +13,8 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent, MatIcon, MatToolbar, MatSidenav ],
-      imports: [MatIconModule, MatToolbarModule],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [ HeaderComponent ],
+      imports: [MatIconModule, MatToolbarModule]
     })
     .compileComponents();
 
