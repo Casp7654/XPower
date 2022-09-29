@@ -31,9 +31,19 @@ namespace XPowerApi.Managers
             return (await _userProvider.CreateUser(dataArray)).ConvertToUser();
         }
 
+        public async Task<bool> ValidateUserCredentials(User user)
+        {
+            User validUser = await GetUserByUsername(user.UserName);
+        }
+
         public async Task<User> GetUserById(int id)
         {
             return (await _userProvider.GetUserById(id)).ConvertToUser();
+        }
+
+        public async Task<User> GetUserByUsername(string username)
+        {
+            return (await _userProvider.GetUserByUsername(username)).ConvertToUser();
         }
     }
 }
