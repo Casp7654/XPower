@@ -22,7 +22,6 @@ public class ServerController {
     /// </summary>
     private void OnMessageReceived(string clientId, string topic, string payload)
     {
-        System.Console.WriteLine("T: "+topic);
         foreach (var action in Actions)
             if (action.CanExecute(clientId, topic, payload))
                 action.Action(clientId, topic, payload);

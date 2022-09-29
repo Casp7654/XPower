@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System;
-
+using MQTTnet;
+using MQTTnet.Client;
 class RequestStatusAction : IMessageAction
 {
     private readonly IDeviceManager _deviceManager;
@@ -13,13 +14,11 @@ class RequestStatusAction : IMessageAction
 
     public async void Action(string clientId, string topic, string data)
     {
-        Console.WriteLine(JsonSerializer.Serialize(_deviceManager.GetDevices()));
-        await _serverHandler.PublishAsync("StatusResponse/all", JsonSerializer.Serialize(_deviceManager.GetDevices()));
+        await _serverHandler.PublishAsync("StatusResponse/all", JsonSerializer.Serialize(_deviceManager.GetDeviceStatusResponses()));
     }
 
     public bool CanExecute(string clientId, string topic, string data)
     {
-        Console.WriteLine(topic);
         return (topic.ToLower() == "statusrequest");
     }
 };

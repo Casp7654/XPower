@@ -1,8 +1,11 @@
 from StatusType import StatusType
-from StatusPayload import StatusPayload
+from Device import Device
+from DeviceStatusResponse import DeviceStatusResponse
 import paho.mqtt.client as mqtt
 import json
 from ConsoleLogger import ConsoleLogger
+from SocketData import SocketData
+from StatusType import DeviceType
 
 class StatusManager:
     def __init__(self, logger : ConsoleLogger) -> None:
@@ -15,10 +18,11 @@ class StatusManager:
         self._change_status_publish()
 
     def _change_status_publish(self):
-        statusPayLoad : StatusPayload = StatusPayload(self.__client_id, self.StatusId)
-        
+        device : Device = Device(self.__client_id, self.StatusId, DeviceType.Socket, "531ba4d1-b469-42ca-a277-57b3a2ad729e")
+        statusDevice : DeviceStatusResponse = DeviceStatusResponse(device.__dict__, SocketData(5, 3.5).__dict__)
+
         payload = []   
-        payload.append(statusPayLoad.__dict__)
+        payload.append(statusDevice.__dict__)
         
         jsonPayload = json.dumps(payload)        
         self.__client.publish(f"StatusResponse/all", jsonPayload)
