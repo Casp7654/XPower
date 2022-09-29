@@ -9,6 +9,8 @@ namespace XPowerApi.DbModels
         public string name { get; set; }
 
         public string mac { get; set; }
+        
+        public string home { get; set; }
 
         public string private_addr { get; set; }
 
@@ -21,6 +23,7 @@ namespace XPowerApi.DbModels
                 Id = int.Parse(id.Split(':')[1]),
                 Name = name,
                 Mac = mac,
+                Home = home,
                 PrivateAddress = private_addr,
                 PublicAddress = public_addr
             };
