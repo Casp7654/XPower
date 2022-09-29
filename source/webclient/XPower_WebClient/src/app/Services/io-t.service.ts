@@ -3,55 +3,41 @@ import { HubDevice } from '../Models/HubDevice';
 import { IoTDevice } from '../Models/IoTDevice';
 import { SocketDevice } from '../Models/SocketDevice';
 import { MqttClientService } from './mqtt-client.service';
-import { ClientStatusResponse } from '../Models/Dtos/ClientStatusResponse';
+import { DeviceStatus } from '../Models/Dtos/DeviceStatus';
+import { DeviceType } from '../Models/Dtos/DeviceType';
+import { SocketDeviceStatus } from '../Models/Dtos/SocketDeviceStatus';
+import { DeviceStatusResponse } from '../Models/Dtos/DeviceStatusResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IoTService {
 
-  /*
-  Array of all the avaible devices.
-  */
   private devices: Array<IoTDevice> = new Array<IoTDevice>();
 
   constructor(private mqttService: MqttClientService) {
     mqttService.Subscribe("StatusResponse/all", this.onIoTStatusResponse);
   }
 
-  /*
-  Retrieves the socket devices from the hub
-  */
+  /**
+   * Sends request to hub to get devices
+   * @param hub_idenfitifer The hub identifier to request from
+   */
   public GetSocketDevicesFromHub(hub_idenfitifer: string) : void {
-
-    let hub = new HubDevice();
-    
-    this.devices = [
-      new SocketDevice("Device1", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device2", true, "MAC:18:1238:asd", false, "Hjemme", hub),
-      new SocketDevice("Device3", false, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-      new SocketDevice("Device4", true, "MAC:18:1238:asd", true, "Hjemme", hub),
-    ];
+    this.mqttService.Publish("StatusRequest/all", "");
   }
 
-  /*
-  Returns all the devices
-  */
+  /**
+   * @returns All devices
+   */
   public GetDevices() : Array<IoTDevice> {
     return this.devices;
   }
 
-  /*
-  Returns array of devices specified from the the given type
-  */
+  /**
+   * @param type The IoTDevice to look for
+   * @returns array of devices specified from the the given type
+   */
   public GetFilteredDevices<T extends IoTDevice>(type: new (...params : any[]) => T) : Array<T>{
     let socketDevices = Array<T>();
 
@@ -63,18 +49,59 @@ export class IoTService {
     return socketDevices;
   }
 
+  /**
+   * Finds device in IoT devices array by given client id
+   * @param clientId The id to look for
+   * @returns IoTDevice if found undefined if not
+   */
   private getDeviceById(clientId: string) : IoTDevice | undefined {
     return this.devices
       .find((dev) => dev.name == clientId);
   }
 
+  /**
+   * Called when a IoT device response comes in with a status
+   * @param message The application message from the device
+   */
   private onIoTStatusResponse(message: string) : void {
-    let obj = JSON.parse(message);
-    let clientStatus = obj as ClientStatusResponse[];
+    let jsonObjs: any[] = JSON.parse(message);
 
-    clientStatus.forEach((status) => {
-      let dev = this.getDeviceById(status.ClientId);
-      dev!.status = status.StatusId as number > 0;
+    jsonObjs.forEach((obj) => {
+      let device = obj['device'] as DeviceStatus;
+
+      switch(device.typeId) {
+        // TODO: Find parent hub
+        case DeviceType.Socket:
+          let socketResponse = obj as DeviceStatusResponse<SocketDeviceStatus>;
+          this.onSocketStatusResponse(obj);
+          break;
+      };
     });
+  }
+
+  /**
+   * Either creates a new socket device or updates the exisisting one
+   * With the new status data.
+   * @param status The new status for the device.
+   */
+  private onSocketStatusResponse(status: DeviceStatusResponse<SocketDeviceStatus>) : void {
+    let knownDevice = this.getDeviceById(status.device.clientId) as SocketDevice;
+
+    if (knownDevice === undefined) {
+      // Create new device
+      this.devices.push(new SocketDevice(
+        status.device.clientId,
+        status.device.statusId > 0,
+        status.device.macAddress,
+        status.data.turnedOn,
+        "Home",
+        new HubDevice(),
+      ));
+    }
+    else {
+      // Update device
+      knownDevice.status = status.device.statusId > 0;
+      knownDevice.turned_on = status.data.turnedOn;
+    }
   }
 }
