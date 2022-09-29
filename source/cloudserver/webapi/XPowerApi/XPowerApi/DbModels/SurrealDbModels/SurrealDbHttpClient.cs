@@ -4,7 +4,7 @@ using XPowerApi.Interfaces;
 
 namespace XPowerApi.DbModels.SurrealDbModels
 {
-    public class SurrealDbHttpClient : HttpClient, ISurrealDbHttpClient
+    public class SurrealDbHttpClient : HttpClient
     {
         public SurrealDbHttpClient(IConfiguration configuration) : base()
         {

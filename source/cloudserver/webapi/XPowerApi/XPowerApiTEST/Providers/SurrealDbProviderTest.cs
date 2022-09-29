@@ -10,11 +10,14 @@ namespace XPowerApiTEST.Providers
     public class SurrealDbProviderTest
     {
         private readonly SurrealDbProvider _subject;
-        private readonly Mock<SurrealDbHttpClient> _httpClient = new(new FakeConfiguration());
-
+        private readonly Mock<SurrealDbHttpClient> _httpClient;
+        private readonly Mock<IConfiguration> _configuration = new();
         public SurrealDbProviderTest()
         {
-            _subject = new(_httpClient.Object);
+            FakeConfiguration config = new();
+            _subject = new(config);
+            _httpClient =new(config);
+            _subject.HttpClient = _httpClient.Object;
         }
 
         [Fact]

@@ -6,11 +6,11 @@ namespace XPowerApi.Providers
 {
     public class SurrealDbProvider : ISurrealDbProvider
     {
-        public SurrealDbHttpClient _httpClient;
+        public SurrealDbHttpClient HttpClient;
 
-        public SurrealDbProvider(SurrealDbHttpClient httpClient)
+        public SurrealDbProvider(IConfiguration configuration)
         {
-            _httpClient = httpClient;
+            HttpClient = new SurrealDbHttpClient(configuration);
         }
 
         public async Task<SurrealDbResult> MakeRawResult(string sqlString)
@@ -18,7 +18,7 @@ namespace XPowerApi.Providers
             // Create RequestMessage
             SurrealDbHttpRequestMessage request = new SurrealDbHttpRequestMessage(sqlString);
             // Get Response
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
+            HttpResponseMessage response = await HttpClient.SendAsync(request);
             string jsonData = await response.Content.ReadAsStringAsync();
             // ERR
             if (!response.IsSuccessStatusCode)

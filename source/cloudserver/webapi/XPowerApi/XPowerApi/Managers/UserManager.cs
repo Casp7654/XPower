@@ -1,6 +1,5 @@
 ﻿using XPowerApi.Interfaces;
 using XPowerApi.Models.UserModels;
-using XPowerApi.Supporters;
 
 namespace XPowerApi.Managers
 {
