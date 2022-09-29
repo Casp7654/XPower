@@ -15,12 +15,18 @@ export class SocketDeviceService {
     this.requestConverter = new SocketDeviceJsonRequestConverter();
   }
 
+  /*
+  Sends a message to the target, that it should turn off.
+  */
   TurnOff(target: string) {
     let topicTarget = "Led/" + target;
     let data = this.requestConverter.TurnOff();
     this.mqttService.Publish(topicTarget, data);
   }
 
+  /*
+  Sends a message to the target, that it should turn on.
+  */
   TurnOn(target: string) {
     let topicTarget = "Led/" + target;
     let data = this.requestConverter.TurnOn();

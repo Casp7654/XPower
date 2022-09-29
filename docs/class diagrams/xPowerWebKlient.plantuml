@@ -1,30 +1,85 @@
-@startuml APPLICATION
+@startuml Webclient
 
-interface ICaller
-{
-    #hosturl : string
+note "SocketDeviceRequestConverter will not have implementations shown\nMqttService is a third party library" as n1
+
+interface IoTDevice {
+    +name: string
+    +status: boolean
+    +mac_address: string
 }
 
-interface ApiCaller
-{
-    +GetPrice()
+class Device {
+    +id: string
+    +name: string
 }
 
-class GrpcCaller 
-{
-    -hubControllSerivce : HubControllSerive
-    +TurnOnOff(uid : string) : void
+class HubDevice {
 }
 
-class HubControllSerive
-{
-    +Search() : void
-    +Connect(uid : string) : void
+class SocketDevice {
+    +turned_on: boolean
+    +group: string
+    +parent: IoTDevice
 }
 
-ApiCaller <|-- ICaller
-GrpcCaller <|-- ICaller
-GrpcCaller *-- HubControllSerive
+class IoTService {
+    +GetSocketDevicesFromHub(hubIdenfitifer : string) : void
+    +GetDevices() : Array<IoTDevice>
+    -GetFilteredDevices<T extends IoTDevice>(type: T) : Array<T>
+}
 
+class MqttClientService {
+  -client: MqttService
+
+  +Publish(target: string, data: string) : void
+  +Subscribe(target: string, onMessageFunc: (message : string) => void) : void
+  -CreateOptions() : IMqttServiceOptions
+}
+
+class SocketDeviceService {
+  -requestConverter: SocketDeviceRequestConverter
+  -mqttService {readonly}: MqttClientService
+
+  +SocketDeviceService(mqttService: MqttClientService) 
+  +TurnOff(target: string) : void
+  +TurnOn(target: string) : void
+}
+
+interface SocketDeviceRequestConverter {
+    +TurnOn() : string
+    +TurnOff() : string
+}
+
+class HubSearcherComponent{
+    ssid : string
+    passphrase : string
+    device : any
+
+    HubSearcherComponent(_zone: NgZone, _hubConnService: HubConnServiceService) : void
+    connected(value: BluetoothRemoteGATTCharacteristic) void
+    connect() : void
+    selectDevice() : void
+    sendinput() : void
+    onSsidKey(event : any) : void
+    onPassPhraseKey(event: any) : void
+}
+
+class HubConnServiceService{
+    GATT_CHARACTERISTIC_CONNECTION : string
+    GATT_PRIMARY_SERVICE : string
+    character : any
+
+    HubConnServiceService(ble: BluetoothCore)
+    getCharConnect() : BluetoothRemoteGATTCharacteristic
+    getCharacter() : BluetoothRemoteGATTCharacteristic
+    getDevice() : BluetoothDevice
+}
+
+HubDevice ..> IoTDevice
+SocketDevice ..> IoTDevice
+SocketDeviceService *-- SocketDeviceRequestConverter
+SocketDeviceService o-- MqttClientService
+IoTService -- IoTDevice
+HubSearcherComponent *-- HubConnServiceService
 
 @enduml

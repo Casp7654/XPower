@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  brokerUrl: "broker.emqx.io"
+  mqttClientSettings: {
+    url: "broker.emqx.io",
+    port: 8083,
+    path: "/mqtt"
+  }
+  
 };
 
 /*

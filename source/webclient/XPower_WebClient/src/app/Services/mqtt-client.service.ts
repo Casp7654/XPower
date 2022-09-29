@@ -1,24 +1,45 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { IMqttMessage, MqttService, IMqttServiceOptions } from 'ngx-mqtt';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MqttClientService {
 
-  private brokerUrl: string;
+  private client: MqttService;
 
-  constructor(private client: MqttService) {
-    this.brokerUrl = environment.brokerUrl;
-    this.client.observe("test").subscribe((msg: IMqttMessage) => {
-      console.log(msg.payload);
-    });
-
-    this.client.unsafePublish("test", "Hej med dig fra constructor");
+  constructor() {
+    this.client = new MqttService(this.CreateOptions());
+  }
+  
+  /*
+  Publishes data to the broker, target is the topic and data is the payload
+  */
+  Publish(target: string, data: string) : void {
+    this.client.unsafePublish(target, data);
   }
 
-  Publish(target: string, data: string) {
-    //this.client.publish(target, data);
+  /*
+  Subscribes to a topic and attaches a event function for when a message
+  with that specific topic is catched.
+  */
+  Subscribe(target: string, onMessageFunc: (message : string) => void) : void {
+    this.client.observe(target).subscribe((msg: IMqttMessage) => {
+      onMessageFunc(new TextDecoder().decode(msg.payload));
+    });
+  }
+
+  /*
+  Creates the connection options for the client.
+  */
+  private CreateOptions() : IMqttServiceOptions {
+    let settings = environment.mqttClientSettings;
+    return {
+      hostname: settings.url,
+      port: settings.port,
+      path: settings.path
+    };
   }
 }
