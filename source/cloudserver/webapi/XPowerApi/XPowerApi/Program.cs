@@ -6,6 +6,8 @@ using XPowerApi.Providers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using XPowerApi.DbModels.SurrealDbModels;
+using XPowerApi.Supporters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,8 @@ builder.Services.AddScoped<IUserProvider, UserProvider>();
 builder.Services.AddScoped<IHomeProvider, HomeProvider>();
 builder.Services.AddScoped<IHubProvider, HubProvider>();
 builder.Services.AddScoped<ISurrealDbProvider, SurrealDbProvider>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<ISurrealDbHttpClient, SurrealDbHttpClient>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
