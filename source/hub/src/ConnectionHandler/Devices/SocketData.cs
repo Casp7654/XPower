@@ -1,5 +1,4 @@
-class SocketData
+public class SocketData
 {
-    public int Gpio { get; set; }
-    public double Volt { get; set; }
+    public bool TurnedOn { get; set; }
 }

@@ -2,11 +2,11 @@ using System.Text.Json;
 using System;
 using MQTTnet;
 using MQTTnet.Client;
-class RequestStatusAction : IMessageAction
+public class RequestStatusAction : IMessageAction
 {
     private readonly IDeviceManager _deviceManager;
-    private readonly MqttServerHandler _serverHandler;
-    public RequestStatusAction(IDeviceManager deviceManager, MqttServerHandler serverHandler)
+    private readonly IServerHandler _serverHandler;
+    public RequestStatusAction(IDeviceManager deviceManager, IServerHandler serverHandler)
     {
         _deviceManager = deviceManager;
         _serverHandler = serverHandler;
@@ -19,6 +19,6 @@ class RequestStatusAction : IMessageAction
 
     public bool CanExecute(string clientId, string topic, string data)
     {
-        return (topic.ToLower() == "statusrequest");
+        return (topic.ToLower() == "statusrequest/all");
     }
 };

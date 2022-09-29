@@ -19,7 +19,7 @@ class StatusManager:
 
     def _change_status_publish(self):
         device : Device = Device(self.__client_id, self.StatusId, DeviceType.Socket, "531ba4d1-b469-42ca-a277-57b3a2ad729e")
-        statusDevice : DeviceStatusResponse = DeviceStatusResponse(device.__dict__, SocketData(5, 3.5).__dict__)
+        statusDevice : DeviceStatusResponse = DeviceStatusResponse(device.__dict__, SocketData(True).__dict__)
 
         payload = []   
         payload.append(statusDevice.__dict__)
@@ -51,7 +51,7 @@ class StatusManager:
         self.__client.on_message = self.__on_message
         self.__set_logging_events()
         self.__client.connect(self.__ip, int(self.__port), self.__keep_alive)
-        self.__subscribe("StatusRequest")
+        self.__subscribe("StatusRequest/all")
         self.__client.loop_start()
         self.__is_running = True 
 
