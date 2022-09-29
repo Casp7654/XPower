@@ -16,7 +16,7 @@ export class IoTService {
   private devices: Array<IoTDevice> = new Array<IoTDevice>();
 
   constructor(private mqttService: MqttClientService) {
-    mqttService.Subscribe("StatusResponse/all", this.onIoTStatusResponse);
+    mqttService.Subscribe("StatusResponse/all", (msg: string) => this.onIoTStatusResponse(msg));
   }
 
   /**
@@ -90,12 +90,13 @@ export class IoTService {
    * @param message The application message from the device
    */
   private onIoTStatusResponse(message: string) : void {
+
+    if (!message)
+      return;
+
     let jsonObjs: any[] = JSON.parse(message);
 
-    //this.onSocketStatusResponse(jsonObjs[0] as DeviceStatusResponse<SocketDeviceStatus>);
-    this.devices.push(new HubDevice());
-
-    /* jsonObjs.forEach((obj) => {
+    jsonObjs.forEach((obj) => {
       let device = obj['Device'] as DeviceStatus;
 
       if (device.TypeId == DeviceType.Socket) {
@@ -103,13 +104,13 @@ export class IoTService {
           this.onSocketStatusResponse(socketResponse);
       }
 
-      /* switch(device.TypeId) {
+      switch(device.TypeId) {
         // TODO: Find parent hub
         case DeviceType.Socket:
           let socketResponse = obj as DeviceStatusResponse<SocketDeviceStatus>;
           this.onSocketStatusResponse(socketResponse);
           break;
-      }; */
-    //});
+      };
+    });
   }
 }
