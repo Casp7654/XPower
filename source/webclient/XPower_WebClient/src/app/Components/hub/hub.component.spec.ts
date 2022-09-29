@@ -20,16 +20,9 @@ describe('HubComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ HubComponent ],
-      imports: [ MatGridListModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatGridListModule,
-        MatToolbarModule,
+      imports: [
         MatIconModule,
         MatCardModule,
-        MatDividerModule,
-        MatSidenavModule,
-        MatButtonModule,
         MatListModule ]
     })
     .compileComponents();

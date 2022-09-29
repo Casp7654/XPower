@@ -80,17 +80,9 @@ describe('HubSearcherComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ HubSearcherComponent ],
       imports: [ReactiveFormsModule, 
-        MatGridListModule,
         MatFormFieldModule,
         MatInputModule,
-        MatGridListModule,
-        MatToolbarModule,
         MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatSidenavModule,
-        MatButtonModule,
-        MatListModule,
         BrowserAnimationsModule],
       providers: [{provide: HubConnServiceService, useValue: connServiceMock}, {provide: FormBuilder, useValue: formBuilderMock} ]
     })

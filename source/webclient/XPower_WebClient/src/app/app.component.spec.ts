@@ -28,7 +28,8 @@ describe('AppComponent', () => {
         RouterModule.forRoot([]),
         MatSidenavModule,
         BrowserAnimationsModule,
-        MatIconModule, MatListModule,
+        MatIconModule, 
+        MatListModule,
         MatToolbarModule
       ]
     }).compileComponents();
