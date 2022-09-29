@@ -3,6 +3,7 @@ import { HubDevice } from 'src/app/Models/HubDevice';
 
 import { HubComponent } from './hub.component';
 
+
 describe('HubComponent', () => {
   let component: HubComponent;
   const expectedDevice = {
@@ -41,6 +42,9 @@ describe('HubComponent', () => {
 
   it('should display name for hub', () => {
 
+    component.device.name = expectedDevice.name;
+    fixture.detectChanges();
+
     const nativeElements: HTMLElement = fixture.nativeElement;
     
     expect(nativeElements.textContent)
@@ -49,6 +53,8 @@ describe('HubComponent', () => {
 
   it('should display mac address for hub', () => {
 
+    component.device.mac_address = expectedDevice.mac;
+    fixture.detectChanges();
     const nativeElements: HTMLElement = fixture.nativeElement;
 
     expect(nativeElements.textContent)
