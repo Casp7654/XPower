@@ -1,19 +1,24 @@
-import { computeMsgId, publishFacade } from '@angular/compiler';
 import { TestBed } from '@angular/core/testing';
+import { Observable, Subject } from 'rxjs';
 import { IoTService } from './io-t.service';
 import { MqttClientService } from './mqtt-client.service';
 
 describe('IoTService', () => {
   let service: IoTService;
 
-  let func: (msg: string) => void;
+  //let func: (msg: string) => void;
+  let func: Subject<string> = new Subject<string>();
   let applicationData: string;
   let mockMqttService = {
     Subscribe(target: string, onMessageFunc: (message : string) => void) : void {
-      func = onMessageFunc;
+      //func = onMessageFunc;
+      func.subscribe((msg: string) => {
+        onMessageFunc(msg);
+      });
     },
     Publish(target: string, data: string) : void {
-      func(applicationData);
+      //func(applicationData);
+      func.next(applicationData);
     }
   };
 

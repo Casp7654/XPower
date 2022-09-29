@@ -60,31 +60,11 @@ export class IoTService {
   }
 
   /**
-   * Called when a IoT device response comes in with a status
-   * @param message The application message from the device
-   */
-  private onIoTStatusResponse(message: string) : void {
-    let jsonObjs: any[] = JSON.parse(message);
-
-    jsonObjs.forEach((obj) => {
-      let device = obj['Device'] as DeviceStatus;
-
-      switch(device.TypeId) {
-        // TODO: Find parent hub
-        case DeviceType.Socket:
-          let socketResponse = obj as DeviceStatusResponse<SocketDeviceStatus>;
-          this.onSocketStatusResponse(obj);
-          break;
-      };
-    });
-  }
-
-  /**
    * Either creates a new socket device or updates the exisisting one
    * With the new status data.
    * @param status The new status for the device.
    */
-  private onSocketStatusResponse(status: DeviceStatusResponse<SocketDeviceStatus>) : void {
+   private onSocketStatusResponse(status: DeviceStatusResponse<SocketDeviceStatus>) : void {
     let knownDevice = this.getDeviceById(status.Device.ClientId) as SocketDevice;
 
     if (knownDevice === undefined) {
@@ -103,5 +83,33 @@ export class IoTService {
       knownDevice.status = status.Device.StatusId > 0;
       knownDevice.turned_on = status.Data.TurnedOn;
     }
+  }
+
+  /**
+   * Called when a IoT device response comes in with a status
+   * @param message The application message from the device
+   */
+  private onIoTStatusResponse(message: string) : void {
+    let jsonObjs: any[] = JSON.parse(message);
+
+    //this.onSocketStatusResponse(jsonObjs[0] as DeviceStatusResponse<SocketDeviceStatus>);
+    this.devices.push(new HubDevice());
+
+    /* jsonObjs.forEach((obj) => {
+      let device = obj['Device'] as DeviceStatus;
+
+      if (device.TypeId == DeviceType.Socket) {
+        let socketResponse = obj as DeviceStatusResponse<SocketDeviceStatus>;
+          this.onSocketStatusResponse(socketResponse);
+      }
+
+      /* switch(device.TypeId) {
+        // TODO: Find parent hub
+        case DeviceType.Socket:
+          let socketResponse = obj as DeviceStatusResponse<SocketDeviceStatus>;
+          this.onSocketStatusResponse(socketResponse);
+          break;
+      }; */
+    //});
   }
 }
