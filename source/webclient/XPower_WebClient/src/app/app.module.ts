@@ -27,6 +27,13 @@ import { HubDevicesComponent } from './Pages/hub-devices/hub-devices.component';
 import { HubComponent } from './Components/hub/hub.component';
 
  
+import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: 'broker.emqx.io',
+  port: 8083,
+  path: '/mqtt'
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +66,8 @@ import { HubComponent } from './Components/hub/hub.component';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],
   providers: [
     BrowserWebBluetooth,

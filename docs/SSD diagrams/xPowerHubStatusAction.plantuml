@@ -1,0 +1,9 @@
+@startuml Hub status action SD diagrams
+title Send Status from hub
+
+ServerController -> IStatusMessageActions: Execute
+IStatusMessageActions -> IDeviceManager: Get connected devices
+IDeviceManager -> IStatusMessageActions: Return connected devices
+IStatusMessageActions -> ServerController: Publish connected devices
+
+@enduml

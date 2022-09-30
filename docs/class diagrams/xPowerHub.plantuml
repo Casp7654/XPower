@@ -27,7 +27,54 @@ class ServerController {
     -OnMessageReceived(clientId : string, topic : string, payload : string) : void
 }
 
+class IDeviceManager{
+    +GetDevices() : List<Device>
+    +GetStatusDevices() : List<DeviceStatusResponse>
+}
+
+class RequestStatusAction {
+
+}
+
+class Device{
+    +ClientId : string
+    +StatusId : DeviceStatusType
+    +TypeId : DeviceType
+    +MacAdress : string
+}
+class DeviceStatusResponse{
+    +Device : Device
+    +Data : object
+}
+class SocketData{
+    +TurnedOn : bool
+}
+enum DeviceStatus{
+    Unknown : 0
+    TurnedOff : 1
+    TurnedOn : 2
+    ConnectedToHub : 3
+}
+
+enum DeviceType{
+    Hub : 0
+    Socket : 1
+}
+
 MqttServerHandler ..|> IServerHandler
 ServerController o.. IServerHandler
 ServerController o.. IMessageAction
+
+RequestStatusAction ..|> IMessageAction
+RequestStatusAction o-- IServerHandler
+RequestStatusAction o-- IDeviceManager
+
+
+IDeviceManager *-- DeviceStatusResponse
+DeviceStatusResponse *-- Device
+Device <|-- DeviceStatus
+Device <|-- DeviceType
+
+
+
 @enduml
