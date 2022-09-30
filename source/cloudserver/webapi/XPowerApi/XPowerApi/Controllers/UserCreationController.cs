@@ -72,3 +72,4 @@ namespace XPowerApi.Controllers
             }
         }
     }
+}
