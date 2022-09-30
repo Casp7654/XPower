@@ -1,4 +1,5 @@
-﻿using XPowerApi.Interfaces;
+﻿using XPowerApi.DbModels;
+using XPowerApi.Interfaces;
 using XPowerApi.Models.UserModels;
 using XPowerApi.Supporters;
 
@@ -13,7 +14,7 @@ namespace XPowerApi.Managers
             _userProvider = userProvider;
         }
 
-        public async Task<User> CreateUser(UserCreate userCreate)
+        public async Task<User> CreateUser(UserCredentials userCreate)
         {
             // Generate Salt
             byte[] salt = SecuritySupport.GenerateSalt();
@@ -31,10 +32,17 @@ namespace XPowerApi.Managers
             return (await _userProvider.CreateUser(dataArray)).ConvertToUser();
         }
 
-        public async Task<bool> ValidateUserCredentials(User user)
+        public async Task<bool> ValidateUserCredentials(UserLogin user)
         {
-            User validUser = await GetUserByUsername(user.UserName);
+            if (user == null)
+                return false;
+
+            UserDb validUser = await GetUserByUsername(user.UserName);
+
             if(validUser == null)
+                return false;
+
+            if (!MatchPassword(validUser, user))
                 return false;
 
             return true;
@@ -45,9 +53,24 @@ namespace XPowerApi.Managers
             return (await _userProvider.GetUserById(id)).ConvertToUser();
         }
 
-        public async Task<User> GetUserByUsername(string username)
+        public async Task<UserDb> GetUserByUsername(string username)
         {
-            return (await _userProvider.GetUserByUsername(username)).ConvertToUser();
+            return (await _userProvider.GetUserByUsername(username));
+        }
+
+        // TODO: Figure out if this is needed and if it should even be in this class
+        // Matches the passwords of 2 user, 1 of which contains a hashed password and its salt.
+        // The other contains a plain text password.
+        // Returns true if passwords match after being hashed with same salt.
+        private bool MatchPassword(UserDb userWithSalt, UserLogin user)
+        {
+            byte[] salt = System.Text.Encoding.UTF8.GetBytes(userWithSalt.salt);
+
+            if (userWithSalt.hashedPassword == SecuritySupport.HashPassword(user.Password, salt))
+                return true;
+
+            return false;
+
         }
     }
 }

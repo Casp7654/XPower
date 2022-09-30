@@ -38,7 +38,7 @@ namespace XPowerApi.Controllers
                 }
 
                 // Validates user with credentials
-                if (await _userManager.ValidateUser(user))
+                if (await _userManager.ValidateUserCredentials(user))
                     return Ok(await _tokenManager.GenerateToken(user));
                 else
                     return Unauthorized("Username or Password Invalid");
@@ -48,6 +48,8 @@ namespace XPowerApi.Controllers
 
                 // If error is not accounted for
                 _logger.LogError("Something went wrong inside Login with message: " + ex.Message);
+
+                return BadRequest("Something went wrong with login.");
             }
 
 
