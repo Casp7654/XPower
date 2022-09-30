@@ -90,7 +90,6 @@ export class IoTService {
    * @param message The application message from the device
    */
   private onIoTStatusResponse(message: string) : void {
-
     if (!message)
       return;
 
@@ -98,11 +97,6 @@ export class IoTService {
 
     jsonObjs.forEach((obj) => {
       let device = obj['Device'] as DeviceStatus;
-
-      if (device.TypeId == DeviceType.Socket) {
-        let socketResponse = obj as DeviceStatusResponse<SocketDeviceStatus>;
-          this.onSocketStatusResponse(socketResponse);
-      }
 
       switch(device.TypeId) {
         // TODO: Find parent hub

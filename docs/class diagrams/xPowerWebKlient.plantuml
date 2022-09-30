@@ -1,6 +1,6 @@
 @startuml Webclient
 
-note "SocketDeviceRequestConverter will not have implementations shown\nMqttService is a third party library" as n1
+note "SocketDeviceRequestConverter will not have implementations shown\nMqttService is a third party library\nDto's will not be shown in this diagram." as n1
 
 interface IoTDevice {
     +name: string
@@ -26,6 +26,9 @@ class IoTService {
     +GetSocketDevicesFromHub(hubIdenfitifer : string) : void
     +GetDevices() : Array<IoTDevice>
     -GetFilteredDevices<T extends IoTDevice>(type: T) : Array<T>
+    -GetDeviceById(clientId: string) : IoTDevice
+    -OnSocketStatusResponse(status: DeviceStatusResponse<SocketDeviceStatus>) : void
+    -OnIoTStatusResponse(message: string) : void
 }
 
 class MqttClientService {
