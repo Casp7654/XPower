@@ -9,7 +9,7 @@ WORKDIR /root
 RUN mkdir -p ./source
 
 #& 4. Install Dependencies
-RUN apt-get update
+RUN apt-get update && apt-get install psmisc
 # SurrealDB
 RUN apt-get install -y curl
 RUN curl -sSf https://install.surrealdb.com | sh
@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install -y dotnet-sdk-6.0 dotnet-runtime-6.0 aspne
 
 #& 5. Expose Ports in Container
 EXPOSE 80
-EXPOSE 443
+EXPOSE 433
+EXPOSE 8000
 
 #& 6. Create Volume Paths
 # Volume map point is set when running container
@@ -33,6 +34,7 @@ VOLUME [ "/root/backups", "/root/source" ]
 COPY ./resource/bin/webapi/* /usr/local/bin/
 # Remember to make them executable for the user
 RUN chmod u+x /usr/local/bin/*
+RUN echo "ls /usr/local/bin" > commands && chmod u+x commands
 
 #& 9. Compile / Setup Project
 #RUN

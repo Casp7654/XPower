@@ -1,0 +1,78 @@
+-- ------------------------------
+-- OPTION
+-- ------------------------------
+
+OPTION IMPORT;
+
+-- ------------------------------
+-- TABLE: home
+-- ------------------------------
+
+DEFINE TABLE home SCHEMAFULL;
+
+DEFINE FIELD name ON home TYPE string;
+
+-- ------------------------------
+-- TABLE: hub
+-- ------------------------------
+
+DEFINE TABLE hub SCHEMAFULL;
+
+DEFINE FIELD name ON hub TYPE string;
+DEFINE FIELD mac ON hub TYPE string;
+Define field home on hub type record(home);
+DEFINE FIELD private_addr ON hub TYPE string;
+DEFINE FIELD public_addr ON hub TYPE string;
+
+-- ------------------------------
+-- TABLE: user
+-- ------------------------------
+
+DEFINE TABLE user SCHEMAFULL;
+
+DEFINE FIELD email ON user TYPE string;
+DEFINE FIELD firstname ON user TYPE string;
+DEFINE FIELD hashed_password ON user TYPE string;
+DEFINE FIELD lastname ON user TYPE string;
+DEFINE FIELD salt ON user TYPE string;
+DEFINE FIELD username ON user TYPE string;
+
+-- ------------------------------
+-- TABLE: homeusers
+-- ------------------------------
+
+DEFINE TABLE homeusers SCHEMALESS PERMISSIONS NONE;
+
+-- ------------------------------
+-- TRANSACTION
+-- ------------------------------
+
+BEGIN TRANSACTION;
+
+
+-- ------------------------------
+-- TABLE DATA: home
+-- ------------------------------
+
+
+-- ------------------------------
+-- TABLE DATA: hub
+-- ------------------------------
+
+
+-- ------------------------------
+-- TABLE DATA: user
+-- ------------------------------
+
+
+-- ------------------------------
+-- TABLE DATA: homeusers
+-- ------------------------------
+
+
+-- ------------------------------
+-- TRANSACTION
+-- ------------------------------
+
+COMMIT TRANSACTION;
+

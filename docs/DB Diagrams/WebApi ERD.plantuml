@@ -1,0 +1,46 @@
+@startuml WebApi_ERD
+Title WebApi ER Diagram
+left to right direction
+
+hide <<Relation>> circle
+
+entity User {
+    **PK** int: id
+    --
+    string: username
+    string: email
+    string: firstname
+    string: lastname
+    string: hashed_password
+    string: salt
+}
+
+entity Home {
+    **PK** int: id
+    --
+    string: name
+}
+
+entity Hub {
+    **PK** int: id
+    --
+    string: name
+    string: mac
+    **FK** int: home
+    string: private_addr
+    string: public_addr
+}
+
+entity UserGroups <Relational Table> <<Relation>> {
+    **PK** int: id
+    --
+    **FK** int: user_id <<in>>
+    **FK** int: home_id <<out>>
+}
+
+
+User::id"1" ||--{ "*"UserGroups::user_id
+UserGroups::home_id"*" }--|| "1"Home::id
+Home::id"1" ||--{ "*"Hub::home
+
+@enduml
