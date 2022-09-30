@@ -12,7 +12,6 @@ var mqtt = mqttFactory.CreateMqttServer(options);
 
 var server = new MqttServerHandler(mqtt);
 var actions = new List<IMessageAction> {
-    new SampleAction(),
     new RequestStatusAction(new DeviceManager(), server)
 };
 var serverController = new ServerController(actions, server);

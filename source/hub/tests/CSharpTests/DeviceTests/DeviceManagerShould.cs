@@ -57,16 +57,18 @@ public class DeviceManagerShould
     void DeviceManagerShould_ReturnStatusDevicesSameAmount()
      {
         // Arrange
-        var deviceManager = A.Fake<IDeviceManager>();
-        
+        var deviceManager = A.Fake<IDeviceManager>();        
         var devices = GetDevices();
         var deviceResponse = GetDeviceStatusResponses();
         
-
         A.CallTo(() => deviceManager.GetDevices()).Returns(devices);
         A.CallTo(() => deviceManager.GetDeviceStatusResponses()).Returns(deviceResponse);
 
-        Assert.Equal(deviceManager.GetDeviceStatusResponses().Count, devices.Count);
+        // Act
+        var deviceStatus = deviceManager.GetDeviceStatusResponses();
+
+        // Assert
+        Assert.Equal(deviceStatus.Count, devices.Count);
     }
 
     [Fact]
@@ -74,14 +76,15 @@ public class DeviceManagerShould
      {
         // Arrange
         var deviceManager = A.Fake<IDeviceManager>();
+        var deviceResponse = GetDeviceStatusResponses();        
         
-        var devices = GetDevices();
-        var deviceResponse = GetDeviceStatusResponses();
-        
-
-        A.CallTo(() => deviceManager.GetDevices()).Returns(devices);
+        A.CallTo(() => deviceManager.GetDevices()).Returns(GetDevices());
         A.CallTo(() => deviceManager.GetDeviceStatusResponses()).Returns(deviceResponse);
 
-        Assert.Equal(deviceManager.GetDeviceStatusResponses(), deviceResponse);
+        // Act 
+        var deviceStatus = deviceManager.GetDeviceStatusResponses();
+
+        // Assert
+        Assert.Equal(deviceStatus, deviceResponse);
     }
 }

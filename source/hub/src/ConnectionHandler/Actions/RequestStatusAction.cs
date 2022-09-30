@@ -14,6 +14,7 @@ public class RequestStatusAction : IMessageAction
 
     public async void Action(string clientId, string topic, string data)
     {
+        // Publish connected devices that are offline and their status
         await _serverHandler.PublishAsync("StatusResponse/all", JsonSerializer.Serialize(_deviceManager.GetDeviceStatusResponses()));
     }
 
