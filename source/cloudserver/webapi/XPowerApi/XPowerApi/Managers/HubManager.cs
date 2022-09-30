@@ -16,7 +16,14 @@ namespace XPowerApi.Managers
         public async Task<Hub> CreateHub(HubCreate hubCreate)
         {
             // Create HomeGroup DB Object
-            Dictionary<string, string> dataArray = new Dictionary<string, string>() { { "name", hubCreate.Name }, };
+            Dictionary<string, string> dataArray = new Dictionary<string, string>()
+            {
+                { "name", hubCreate.Name },
+                { "mac", hubCreate.Mac },
+                { "home", hubCreate.Home },
+                { "private_addr", hubCreate.PrivateAddress },
+                { "public_addr", hubCreate.PublicAddress }
+            };
             return (await _hubProvider.CreateHub(dataArray)).ConvertToHub();
         }
 
