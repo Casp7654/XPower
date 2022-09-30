@@ -1,4 +1,4 @@
-@startuml Hub status action SSD diagrams
+@startuml Hub status action SD diagrams
 title Send Status from hub
 
 ServerController -> IStatusMessageActions: Execute
