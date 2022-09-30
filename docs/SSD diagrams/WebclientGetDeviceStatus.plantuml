@@ -1,9 +1,9 @@
 @startuml WebclientGetDeviceStatus
 
-entity IoTDevices as client
 participant IoTPage as page
 participant IoTService as service
 participant MqttService as mqttService
+entity IoTDevices as client
 
 page -> service: Call Get Status From Iot Devices
 service -> mqttService: Publish request to iot devices
