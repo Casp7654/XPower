@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XPowerApi.Interfaces;
 using XPowerApi.Models.HomeModels;
 
 namespace XPowerApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/home")]
     [ApiController]
     public class HomeController : Controller

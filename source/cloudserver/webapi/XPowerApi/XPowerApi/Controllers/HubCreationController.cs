@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace XPowerApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/hub")]
     [ApiController]
     public class HubCreationController : Controller
