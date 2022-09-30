@@ -6,7 +6,6 @@ using XPowerApi.Providers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using XPowerApi.DbModels.SurrealDbModels;
 using XPowerApi.Supporters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +22,23 @@ builder.Services.AddSwaggerGen(c =>
         {
             Description = "JWT Authorization header using the Bearer scheme.",
             Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
-            Scheme = "Bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
+            Scheme = "Bearer", //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
+            In = ParameterLocation.Header
+        });
+    c.AddSecurityRequirement(
+        new OpenApiSecurityRequirement()
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] { }
+            }
         });
 });
 
@@ -76,4 +91,3 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.Run();

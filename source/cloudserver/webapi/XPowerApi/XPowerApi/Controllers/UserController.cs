@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using XPowerApi.Interfaces;
-using XPowerApi.Managers;
-using XPowerApi.Models;
 using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : Controller
