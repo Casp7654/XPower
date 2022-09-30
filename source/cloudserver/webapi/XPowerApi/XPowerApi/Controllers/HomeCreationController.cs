@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace XPowerApi.Controllers
 {
+    //[Authorize]
     [Route("api/home")]
     [ApiController]
     public class HomeCreationController : Controller
@@ -31,7 +32,7 @@ namespace XPowerApi.Controllers
 
             //checking if name is not null or empty
             if (string.IsNullOrEmpty(homeCreateInfo.Name))
-                return BadRequest(new { Message = "Name is missing valid" });
+                return BadRequest(new { Message = "Name is missing" });
 
             try
             {

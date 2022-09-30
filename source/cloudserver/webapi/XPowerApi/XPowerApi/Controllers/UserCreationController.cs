@@ -48,7 +48,7 @@ namespace XPowerApi.Controllers
                 string.IsNullOrEmpty(userCreateInfo.FirstName) ||
                 string.IsNullOrEmpty(userCreateInfo.LastName)
             )
-                return BadRequest(new { Message = "Username or Password is missing valid" });
+                return BadRequest(new { Message = "Username or Password is missing" });
 
             try
             {

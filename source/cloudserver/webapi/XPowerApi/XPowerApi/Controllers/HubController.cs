@@ -4,7 +4,7 @@ using XPowerApi.Models.HubModels;
 
 namespace XPowerApi.Controllers
 {
-//[Authorize]
+    //[Authorize]
     [Route("api/hub")]
     [ApiController]
     public class HubController : Controller
