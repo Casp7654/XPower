@@ -3,14 +3,14 @@ FROM debian:bullseye
 
 #& 2. Set User
 #USER root
-run whoami
+#run whoami
 
 #& 3. Set Working directory
 WORKDIR /root
 RUN mkdir -p ./source
 
 #& 4. Install Dependencies
-RUN apt-get update && apt-get install -y psmisc screen
+RUN apt-get update && apt-get install -y psmisc
 # SurrealDB
 RUN apt-get install -y curl
 RUN curl -sSf https://install.surrealdb.com | sh
