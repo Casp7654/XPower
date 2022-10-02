@@ -1,7 +1,1 @@
-curl --request POST \
-    --user "root:root" \
-    --header "NS: xpower" \
-    --header "DB: webapi" \
-    --header "Content-Type: application/json" \
-    --data "INFO FOR DB;" \
-    http://172.32.0.2:8000/sql && echo ""
+curl --request POST --user "root:root" --header "NS: xpower" --header "DB: webapi" --header "Content-Type: application/json" --data "INFO FOR DB;" http://172.32.0.2:8000/sql && echo ""

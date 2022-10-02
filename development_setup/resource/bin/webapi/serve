@@ -1,1 +1,4 @@
-/usr/local/bin/startdb && /usr/local/bin/startapi
+/usr/local/bin/startdb &
+sleep 2
+/usr/local/bin/dbtest
+/usr/local/bin/startapi

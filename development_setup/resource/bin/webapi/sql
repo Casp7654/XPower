@@ -1,7 +1,1 @@
-surreal sql \
-    --conn http://172.32.0.2:8000 \
-    --user root \
-    --pass root \
-    --ns xpower \
-    --db $@ \
-    --pretty
+surreal sql --conn http://172.32.0.2:8000 --user root --pass root --ns xpower --db $@ --pretty
