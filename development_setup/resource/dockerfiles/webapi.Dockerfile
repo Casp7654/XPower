@@ -37,7 +37,7 @@ RUN chmod u+x /usr/local/bin/*
 RUN echo "ls /usr/local/bin" > commands && chmod u+x commands
 
 #& 9. Compile / Setup Project
-#RUN
+RUN dotnet run --project sourcecode/XPowerApi/XPowerApi --launch-profile Docker
 
 #& 10. Done
 # Only needed if image is not a complete machine eg. gcc or c# image
