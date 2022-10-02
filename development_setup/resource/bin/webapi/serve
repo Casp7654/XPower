@@ -1,4 +1,5 @@
 /usr/local/bin/startdb &
-sleep 2
+sleep 5
+/usr/local/bin/import-db full
 /usr/local/bin/dbtest
-/usr/local/bin/startapi
+/usr/local/bin/startapi & echo "==>> Everything is running.."

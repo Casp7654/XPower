@@ -56,7 +56,7 @@ if [ ! "$1" == "" ]; then
     if [ "$1" == "webapi" ]; then
         run_webapi
     elif [ "$1" == "handler" ]; then
-        run_iothandler
+        #run_iothandler
     elif [ "$1" == "pwa" ]; then
         run_pwa
     elif [ "$1" == "hub" ]; then
@@ -64,12 +64,12 @@ if [ ! "$1" == "" ]; then
     elif [ "$1" == "iot" ]; then
         run_iot "$2"
     elif [ "$1" == "all" ]; then
-    run_webapi
-    run_iothandler
-    run_pwa
-    run_hub 1
-    run_iot 1
-    run_iot 2
+        run_webapi
+        #run_iothandler
+        run_pwa
+        run_hub 1
+        run_iot 1
+        run_iot 2
     else
         echo $(pwd)
         echo -e "\tNothing to start\n"
