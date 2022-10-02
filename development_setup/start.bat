@@ -4,6 +4,7 @@ echo -e "\nStarting HUB Container"
         --mount type=bind,src="%cd%/../source/hub/src",dst=/root/source ^
         --mount type=bind,src="%cd%/resource/volumes/hub/backups",dst=/root/backups ^
         --name xpower-hub ^
+        -p 1883:1883/tcp ^
         xpower-hub
 
 echo -e "\nStarting web api Container"
