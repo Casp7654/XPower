@@ -1,10 +1,16 @@
+from nis import cat
 from gpiozero import LED
 import os
 
 class Led:
     def __init__(self, gpio : int) -> None:
         """Constructor for led"""
-        self.set_gpio(gpio)
+        try:
+            self.set_gpio(gpio)
+        except:
+            self.__pin = gpio
+            self.__turned_on = False
+            
 
     def set_gpio(self, gpio : int) -> None:
         """Sets the gpio pin number and turns it off
