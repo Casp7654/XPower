@@ -30,7 +30,7 @@ COPY ./resource/bin/iot/* /usr/local/bin/
 RUN chmod u+x /usr/local/bin/*
 
 #& 9. Compile / Setup Project
-RUN pip3 install -r sourcecode/requirements.txt
+RUN pip3 install paho-mqtt gpiozero readchar
 
 
 #& 10. Done

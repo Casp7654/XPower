@@ -1,9 +1,2 @@
 echo -e "Running..."
-surreal start \
-    --log debug \
-    --user root \
-    --pass root \
-    --bind 172.32.0.2:8000 \
-    file://./datastore/CUR \
-    || echo -e "\$ERR!" & \
-    sleep 1 && /usr/local/bin/dbtest
+surreal start --log debug --user root --pass root --bind 172.32.0.2:8000 file://./datastore/CUR || echo -e "\$ERR!" & sleep 1 && /usr/local/bin/dbtest

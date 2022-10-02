@@ -1,0 +1,2 @@
+cd root/source/
+ng serve --host "172.16.0.17" --port 80 --disable-host-check

@@ -1,2 +1,1 @@
-#!/bin/bash
-/usr/local/bin/startdb & /usr/local/bin/startapi
+/usr/local/bin/startdb && /usr/local/bin/startapi
