@@ -4,19 +4,19 @@ import { Observable } from 'rxjs';
 import { User } from '../Models/User';
 import { UserToken } from '../Models/UserToken';
 
-import { UserService } from './user-register.service';
+import { UserRegisterService } from './user-register.service';
 
-describe('UserService', () => {
-  let service: UserService;
+describe('UserRegisterService', () => {
+  let service: UserRegisterService;
   let expectedUser : User = new User("a","b","c","d","e");
   let expectedUserToken = new Observable<UserToken>(x => x.next(new UserToken("a","b","c","d","e", "ey")));
   let httpClientSpyPost = jasmine.createSpyObj('HttpClient', ['post']);
-  let registerUserService = new UserService(<any>httpClientSpyPost);
+  let registerUserService = new UserRegisterService(<any>httpClientSpyPost);
   let localStore;
 
   beforeEach(() => {
     TestBed.configureTestingModule({imports: [HttpClientTestingModule]});
-    service = TestBed.inject(UserService);
+    service = TestBed.inject(UserRegisterService);
   });
 
   it('should be created', () => {

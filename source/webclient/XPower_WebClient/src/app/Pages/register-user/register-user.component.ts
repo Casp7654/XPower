@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserService  } from 'src/app/Services/user-register.service';
+import { UserRegisterService  } from 'src/app/Services/user-register.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/Models/User';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class RegisterUserComponent implements OnInit {
   credentials: FormGroup;
   
-  constructor(private router: Router, public userSerrvice : UserService, fb: FormBuilder)
+  constructor(private router: Router, public userSerrvice : UserRegisterService, fb: FormBuilder)
   {
       this.credentials = fb.group({
         hideRequired: false,

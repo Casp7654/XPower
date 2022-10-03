@@ -4,10 +4,7 @@ import { User } from 'src/app/Models/User';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RegisterUserComponent } from './register-user.component';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { UserService } from 'src/app/Services/user-register.service';
-import { Observable } from 'rxjs';
-import { UserToken } from 'src/app/Models/UserToken';
+import { UserRegisterService } from 'src/app/Services/user-register.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -36,7 +33,7 @@ describe('RegisterUserComponent', () => {
         BrowserAnimationsModule,
         HttpClientTestingModule
         ],
-      providers: [{provide: FormBuilder, useValue: formBuilderMock}, {provide: UserService} ]
+      providers: [{provide: FormBuilder, useValue: formBuilderMock}, {provide: UserRegisterService} ]
     }) 
     .compileComponents();
 
@@ -62,9 +59,14 @@ describe('RegisterUserComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should return user'), () => {
-    expect(component.formToUser()).toBe(expectedUser)
-  }
+  it('should return user', () => {
+    component.credentials.controls["username"].setValue('a');
+    component.credentials.controls["password"].setValue('b');
+    component.credentials.controls["email"].setValue('c');
+    component.credentials.controls["firstname"].setValue('d');
+    component.credentials.controls["lastname"].setValue('e');
+    expect(component.formToUser()).toEqual(expectedUser)
+  });
 
   it('should not be valid email', () => {
     component.credentials.controls["email"].setValue('email.com');

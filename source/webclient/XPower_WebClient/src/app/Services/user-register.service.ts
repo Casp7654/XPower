@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserRegisterService {
 
   constructor(private http: HttpClient) { }
 
@@ -17,6 +17,7 @@ export class UserService {
     return this.http.post<UserToken>(environment.apiServer.url+"api/user/CreateUser",  user)
   }
 
+  // Save user token and user in local storage
   saveCreatedUser(createdUser : UserToken){
     // save user token in local storage
     localStorage.setItem("xpowerToken", createdUser.token);
