@@ -5,11 +5,11 @@
 export const environment = {
   production: false,
   mqttClientSettings: {
-    url: "broker.hivemq.com",
-    port: 8000,
-    path: "/mqtt"
+    url: "localhost",
+    port: 5000,
+    path: "/mqtt",
   }
-  
+
 };
 
 /*
