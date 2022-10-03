@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { UserLogoutService } from 'src/app/Services/user-logout.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,14 +12,20 @@ export class HeaderComponent implements OnInit {
   //Event emitter for side navigation opening
   @Output() public sidenavOpen = new EventEmitter();
 
-  constructor() { }
+  constructor(private logoutservice: UserLogoutService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   //Emits the sidenavOpen event when called.
-  public onSidenavOpen(): void 
+  public onSidenavOpen(): void
   {
     this.sidenavOpen.emit();
   };
+
+  public onLogout(): void {
+    this.logoutservice.logoutUser();
+    this.router.navigate([""]);
+  }
+
 }
