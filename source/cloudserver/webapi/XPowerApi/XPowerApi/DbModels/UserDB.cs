@@ -34,10 +34,11 @@ namespace XPowerApi.DbModels
         {
             return new UserCredentials
             {
+                Id = int.Parse(id.Split(':')[1]),
+                Firstname = firstname,
+                Lastname = lastname,
                 UserName = username,
                 Password = hashedPassword,
-                FirstName = firstname,
-                LastName = lastname,
                 Email = email,
                 Salt = salt
             };

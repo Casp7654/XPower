@@ -10,36 +10,32 @@ namespace XPowerApi.Controllers
     [ApiController]
     public class UserLoginController : Controller
     {
-        private readonly ITokenManager<UserToken> _tokenManager;
         private readonly ILogger<UserLoginController> _logger;
         private readonly IUserManager _userManager;
 
-        public UserLoginController(ITokenManager<UserToken> tokenManager, ILogger<UserLoginController> logger, IUserManager userManager)
+        public UserLoginController(ILogger<UserLoginController> logger, IUserManager userManager)
         {
-            _tokenManager = tokenManager;
             _logger = logger;
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Login(UserToken user)
+        /// <summary>
+        /// Calls usermanager to validate user login info
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>New token if user is valid</returns>
+        public async Task<IActionResult> LoginUser(UserLogin user)
         {
+            // Check if token is provided
             if (user == null)
-                return BadRequest("No login provided");
+                return BadRequest("No user provided");
 
             try
             {
-                if (!string.IsNullOrEmpty(user.Token))
-                {
-                    // Check if token is valid
-                    if (await _tokenManager.ValidateToken(user.Token))
-                        return Ok("Login Success");
-                    else
-                        return Unauthorized("Token Invalid");
-                }
-
-                // Validates user with credentials
-                if (await _userManager.ValidateUserCredentials(user))
-                    return Ok(await _tokenManager.GenerateToken(user));
+                // Validates user with credentials and fetches a new token
+                string validUserToken = await _userManager.GetNewUserToken(user);
+                if (!string.IsNullOrEmpty(validUserToken))
+                    return Ok(validUserToken);
                 else
                     return Unauthorized("Username or Password Invalid");
             }
@@ -51,8 +47,6 @@ namespace XPowerApi.Controllers
 
                 return BadRequest("Something went wrong with login.");
             }
-
-
 
         }
     }

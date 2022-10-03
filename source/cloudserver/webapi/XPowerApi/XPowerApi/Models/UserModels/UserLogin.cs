@@ -1,6 +1,6 @@
 ﻿namespace XPowerApi.Models.UserModels
 {
-    public class UserLogin : UserToken
+    public class UserLogin : User
     {
         public string Password { get; set; }
     }

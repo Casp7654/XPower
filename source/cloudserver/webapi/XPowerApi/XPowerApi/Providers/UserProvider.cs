@@ -21,5 +21,10 @@ namespace XPowerApi.Providers
         {
             return await _dbProvider.GetOneById<UserDb>("user", id);
         }
+
+        public async Task<UserDb> GetUserByUsername(string username)
+        {
+            return await _dbProvider.getOneBy
+        }
     }
 }

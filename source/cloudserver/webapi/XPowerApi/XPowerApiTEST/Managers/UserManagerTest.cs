@@ -17,7 +17,7 @@ namespace XPowerApiTEST.Managers
         public async void CreateUser_ShouldReturnHubObject()
         {
             //Arrange
-            UserCredentials input = new()
+            UserCreate input = new()
             {
                 UserName = "JohnDon",
                 FirstName = "John",

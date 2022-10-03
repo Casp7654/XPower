@@ -35,7 +35,7 @@ namespace XPowerApi.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("CreateUser")]
-        public async Task<ActionResult<UserToken>> CreateUser(UserCredentials userCreateInfo)
+        public async Task<ActionResult<UserToken>> CreateUser(UserCreate userCreateInfo)
         {
             if (userCreateInfo == null)
                 return BadRequest(new { Message = "Missing parameter" });

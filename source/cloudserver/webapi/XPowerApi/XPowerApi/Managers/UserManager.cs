@@ -8,13 +8,15 @@ namespace XPowerApi.Managers
     public class UserManager : IUserManager
     {
         IUserProvider _userProvider;
+        private readonly ITokenManager<UserToken> _tokenManager;
 
-        public UserManager(IUserProvider userProvider)
+        public UserManager(IUserProvider userProvider, ITokenManager<UserToken> tokenManager)
         {
             _userProvider = userProvider;
+            _tokenManager = tokenManager;
         }
 
-        public async Task<User> CreateUser(UserCredentials userCreate)
+        public async Task<User> CreateUser(UserCreate userCreate)
         {
             // Generate Salt
             byte[] salt = SecuritySupport.GenerateSalt();
@@ -32,20 +34,22 @@ namespace XPowerApi.Managers
             return (await _userProvider.CreateUser(dataArray)).ConvertToUser();
         }
 
-        public async Task<bool> ValidateUserCredentials(UserLogin user)
+        /// <summary>
+        /// Fetches a new user token, if user is valid.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>A new user token</returns>
+        public async Task<string> GetNewUserToken(UserLogin user)
         {
-            if (user == null)
-                return false;
+            UserCredentials validUser = await GetUserCredentialsByUsername(user.UserName);
 
-            UserDb validUser = await GetUserByUsername(user.UserName);
+            if (ValidateCredentials(validUser, user))
+            {
+                UserToken userToken = await _tokenManager.GenerateToken(validUser);
+                return userToken.Token;
+            }
 
-            if(validUser == null)
-                return false;
-
-            if (!MatchPassword(validUser, user))
-                return false;
-
-            return true;
+            return string.Empty;
         }
 
         public async Task<User> GetUserById(int id)
@@ -53,20 +57,43 @@ namespace XPowerApi.Managers
             return (await _userProvider.GetUserById(id)).ConvertToUser();
         }
 
-        public async Task<UserDb> GetUserByUsername(string username)
+        public async Task<UserCredentials> GetUserCredentialsByUsername(string username)
         {
-            return (await _userProvider.GetUserByUsername(username));
+            return (await _userProvider.GetUserByUsername(username)).ConvertToUserCredentials();
         }
 
-        // TODO: Figure out if this is needed and if it should even be in this class
-        // Matches the passwords of 2 user, 1 of which contains a hashed password and its salt.
-        // The other contains a plain text password.
-        // Returns true if passwords match after being hashed with same salt.
-        private bool MatchPassword(UserDb userWithSalt, UserLogin user)
+        // Validates user credentials.
+        private bool ValidateCredentials(UserCredentials validUser, UserLogin user)
         {
-            byte[] salt = System.Text.Encoding.UTF8.GetBytes(userWithSalt.salt);
+            if (user == null)
+                return false;
 
-            if (userWithSalt.hashedPassword == SecuritySupport.HashPassword(user.Password, salt))
+
+            if (validUser == null)
+                return false;
+
+            if (MatchPassword(validUser, user))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Matches the passwords of 2 user, 1 of which contains a hashed password and its salt.
+        /// The other contains a plain text password.
+        /// </summary>
+        /// User containing a hashed password and a salt
+        /// <param name="validUser"></param>
+        /// User with plain text password
+        /// <param name="user"></param>
+        /// <returns> true if passwords match after being hashed with same salt.</returns>
+        private bool MatchPassword(UserCredentials validUser, UserLogin user)
+        {
+            byte[] salt = System.Text.Encoding.UTF8.GetBytes(validUser.Salt);
+
+            if (validUser.Password == SecuritySupport.HashPassword(user.Password, salt))
                 return true;
 
             return false;
