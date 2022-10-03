@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserService  } from 'src/app/Services/user.service';
+import { UserService  } from 'src/app/Services/user-register.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/Models/User';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
@@ -19,7 +20,7 @@ export class RegisterUserComponent implements OnInit {
         apariencia: 'fill',
         username : '',
         password : '',
-        email : '',// ['', [Validators.required/*, Validators.pattern("^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$")*/] ], // regex pattern to check generic email adress
+        email : ['', [Validators.required, Validators.pattern("^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$") ]], // regex pattern to check generic email adress
         firstname : '',
         lastname : '',
       });
@@ -37,13 +38,21 @@ export class RegisterUserComponent implements OnInit {
     this.userSerrvice.createUser(user).subscribe(createdUser => {
       
       alert("Bruger oprettet")
+
+      // save user token in local storage
+      localStorage.setItem("xpowerToken", createdUser.token);
       
-      // Save it somewhere?
-      console.log(createdUser);
+      // save user in local storage
+      localStorage.setItem("xpowerUser", JSON.stringify({ createdUser }))
       
       // move to default page
       this.router.navigate([""])
-    })
+    },
+    error => {
+      // Show error message to user
+      alert("Kunne ikke oprette bruger: " + error?.error?.message);
+    }
+    )
   }
 
   ngOnInit(): void {
