@@ -21,7 +21,7 @@ echo -e "\nStarting Hosted PWA Container"
         --network xpower-cloud --ip 172.32.0.4 ^
         --mount type=bind,src="%cd%/../source/webclient/XPower_WebClient",dst=/root/source ^
         --name xpower-hosted_pwa ^
-        -P ^
+        -p 8080:80 ^
         xpower-hosted_pwa
 
 echo -e "\nStarting IoT Device Container"

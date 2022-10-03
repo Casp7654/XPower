@@ -47,9 +47,9 @@ export class IotDevicesComponent implements OnInit {
   */
   OnToggleDeviceClicked(device : SocketDevice): void {
     if (this.toggle)
-      this.socketDeviceService.TurnOff("Rene");
+      this.socketDeviceService.TurnOff(device.name);
     else
-      this.socketDeviceService.TurnOn("Rene");
+      this.socketDeviceService.TurnOn(device.name);
 
     this.toggle = !this.toggle;
   }

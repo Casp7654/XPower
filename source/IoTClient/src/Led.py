@@ -1,4 +1,3 @@
-from nis import cat
 from gpiozero import LED
 import os
 

@@ -43,7 +43,7 @@ class LightClient:
 
         self.__subscribe(f"Led/{self.__client_id}")
         self.__subscribe("Led/All")
-        self.__subscribe("StatusRequest/All")
+        self.__subscribe("StatusRequest/all")
 
     def __subscribe(self, topic_name : str) -> None:
         """Subscribes to the given topic name"""
@@ -60,15 +60,14 @@ class LightClient:
             userdata (any): The data which is defined by the user before going into the method
             msg (mqtt.MQTTMessage): The message recieved
         """
-        appData = json.loads(msg.payload)
-
-        if appData["cmd"] == "on":
-            self.__gpio.set_state(True)
-        elif appData["cmd"] == "off":
-            self.__gpio.set_state(False)
-
         if "StatusRequest" in msg.topic:
-            self.__publish_status()
+            self.publish_status()
+        elif "Led" in msg.topic:
+            appData = json.loads(msg.payload)
+            if appData["cmd"] == "on":
+                self.__gpio.set_state(True)
+            elif appData["cmd"] == "off":
+                self.__gpio.set_state(False)
 
         if (self.on_message_received):
             self.on_message_received(self.__client_id, msg.topic, msg.payload)
@@ -87,7 +86,9 @@ class LightClient:
     def publish_status(self):
         """Publishes the current status of the device to the topic StatusResponse/All
         """
-        statusDevice : DeviceStatusResponse = DeviceStatusResponse(self.__device.__dict__, SocketData(self.__gpio.get_state()).__dict__)
+        socketData = SocketData(self.__gpio.get_state())
+        statusDevice : DeviceStatusResponse = DeviceStatusResponse(self.__device.__dict__, socketData.__dict__)
+        self.__on_publish("test", json.dumps(socketData.__dict__))
 
         payload = []   
         payload.append(statusDevice.__dict__)

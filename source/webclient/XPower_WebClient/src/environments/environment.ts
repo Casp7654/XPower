@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   mqttClientSettings: {
-    url: "broker.hivemq.com",
-    port: 8000,
+    url: "broker.emqx.io",
+    port: 8083,
     path: "/mqtt"
   }
   
