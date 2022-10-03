@@ -27,34 +27,36 @@ export class RegisterUserComponent implements OnInit {
     }
 
   onSubmit(){
-    const user = new User(
+    const user = this.formToUser();
+    
+    this.userSerrvice.createUser(user).subscribe(createdUser => {
+      
+      // Save user data
+      this.userSerrvice.saveCreatedUser(createdUser);
+
+      alert("Bruger oprettet")
+
+      // Move back to main page
+      this.router.navigate([""]);
+    },
+    e => {
+      // Show error message to user
+      alert("Kunne ikke oprette bruger: " + e?.error?.message);
+    }
+    )
+  }
+
+  formToUser() : User
+  {
+    return new User(
       this.credentials.value.username,
       this.credentials.value.password,
       this.credentials.value.email,
       this.credentials.value.firstname,
       this.credentials.value.lastname
     );
-    
-    this.userSerrvice.createUser(user).subscribe(createdUser => {
-      
-      alert("Bruger oprettet")
-
-      // save user token in local storage
-      localStorage.setItem("xpowerToken", createdUser.token);
-      
-      // save user in local storage
-      localStorage.setItem("xpowerUser", JSON.stringify({ createdUser }))
-      
-      // move to default page
-      this.router.navigate([""])
-    },
-    error => {
-      // Show error message to user
-      alert("Kunne ikke oprette bruger: " + error?.error?.message);
-    }
-    )
   }
-
+  
   ngOnInit(): void {
   }
 

@@ -16,4 +16,12 @@ export class UserService {
   createUser(user : User) : Observable<UserToken> {
     return this.http.post<UserToken>(environment.apiServer.url+"api/user/CreateUser",  user)
   }
+
+  saveCreatedUser(createdUser : UserToken){
+    // save user token in local storage
+    localStorage.setItem("xpowerToken", createdUser.token);
+      
+    // save user in local storage
+    localStorage.setItem("xpowerUser", JSON.stringify({ createdUser }))
+  }
 }

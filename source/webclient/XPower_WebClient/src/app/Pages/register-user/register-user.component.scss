@@ -12,13 +12,13 @@
     position: relative;
     padding: 2%;
 }
-#okBtn{
+#submitBtn{
     float: right;
     margin-top: 10%;
     color: rgba(27,40,69,1);
     background: linear-gradient(180deg, rgba(255,165,82,1) 0%, rgba(242,244,255,1) 100%);
 }
-#okBtn:hover{
+#submitBtn:hover{
     background: linear-gradient(180deg, rgba(255,165,82,0.5) 0%, rgba(242,244,255,0.5) 100%);
 }
 #ConnectButton{

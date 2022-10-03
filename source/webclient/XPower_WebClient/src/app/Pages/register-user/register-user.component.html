@@ -26,7 +26,7 @@
       [appearance]="credentials.value.apariencia"
       [floatLabel]="credentials.value.floatLabel">
       <mat-label>Email</mat-label>
-      <input type="email" formControlName="email" matInput placeholder="" required>
+      <input type="email" formControlName="email" ngModel [email]="true" matInput placeholder="" required>
     </mat-form-field>  
 
     <br>  
@@ -48,7 +48,7 @@
 
 <br>  
 
-<button type="submit"  id="okBtn" ng-disabled="credentials.$invalid" mat-button color="primary">Opret bruger</button>
+<button type="submit" [disabled]="!credentials.valid" id="submitBtn" ng-disabled="credentials.$invalid" mat-button color="primary">Opret bruger</button>
   
 </form>
 </div>
