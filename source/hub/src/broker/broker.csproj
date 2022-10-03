@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="MQTTnet" Version="4.1.1.318" />
     <PackageReference Include="MQTTnet.AspNetCore" Version="4.1.1.318" />
+    <PackageReference Include="MQTTnet.Extensions.WebSocket4Net" Version="4.1.1.318" />
   </ItemGroup>
 
 </Project>

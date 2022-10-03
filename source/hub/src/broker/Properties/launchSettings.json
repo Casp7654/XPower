@@ -11,8 +11,8 @@
     "broker": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:7132;http://localhost:5283",
+      "launchBrowser": false,
+      "applicationUrl": "wss://localhost:7132;ws://localhost:5283",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

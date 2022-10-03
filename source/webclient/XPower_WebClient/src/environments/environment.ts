@@ -9,7 +9,7 @@ export const environment = {
     port: 8083,
     path: "/mqtt"
   }
-  
+
 };
 
 /*
