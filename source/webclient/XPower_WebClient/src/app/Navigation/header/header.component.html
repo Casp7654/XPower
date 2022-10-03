@@ -9,11 +9,14 @@
     <mat-icon>keyboard_arrow_down</mat-icon>
 </div>
 <div>
-    <button mat-icon-button (click)="onSidenavOpen()">
+    <button mat-icon-button (click)="onSidenavOpen()" title="Search">
         <mat-icon>search</mat-icon>
     </button>
-    <button mat-icon-button (click)="onSidenavOpen()">
+    <button mat-icon-button (click)="onSidenavOpen()" title="Open Menu">
         <mat-icon>more_vert</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onLogout()" title="Logout">
+        <mat-icon>eject</mat-icon>
     </button>
 </div>
 </mat-toolbar>
