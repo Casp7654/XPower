@@ -88,6 +88,13 @@ namespace XPowerApi.Providers
             T t = JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(dbResult.result[0]))!;
             return t;
         }
+        public async Task<T> GetOneByField<T>(string tableName, string field, string value)
+        {
+            string sqlString = $"select * from {tableName} where {field} = {value} limit 1;";
+            SurrealDbResult dbResult = await MakeRawResult(sqlString);
+            T t = JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(dbResult.result[0]))!;
+            return t;
+        }
 
         public async Task<RelateObject> GetRelation(string subjectId, string relationName, string alias = "")
         {
