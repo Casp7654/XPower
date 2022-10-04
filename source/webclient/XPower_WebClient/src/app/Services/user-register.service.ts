@@ -20,9 +20,9 @@ export class UserRegisterService {
   // Save user token and user in local storage
   saveCreatedUser(createdUser : UserToken){
     // save user token in local storage
-    localStorage.setItem("xpowerToken", createdUser.token);
+    localStorage.setItem("Token", createdUser.token);
       
     // save user in local storage
-    localStorage.setItem("xpowerUser", JSON.stringify({ createdUser }))
+    localStorage.setItem("User", JSON.stringify({ createdUser }))
   }
 }
