@@ -1,20 +1,19 @@
 using System.Text.Json;
 using XPowerApi.Interfaces;
 using XPowerApi.DbModels.SurrealDbModels;
-using System.Threading.Tasks;
 
 namespace XPowerApi.Providers
 {
     public class SurrealDbProvider : ISurrealDbProvider
     {
-        private readonly SurrealDbHttpClient _HttpClient;
+        private readonly HttpClient _HttpClient;
 
         public SurrealDbProvider(IConfiguration configuration)
         {
             _HttpClient = new SurrealDbHttpClient(configuration);
         }
 
-        public SurrealDbProvider(SurrealDbHttpClient httpClient)
+        public SurrealDbProvider(HttpClient httpClient)
         {
             _HttpClient = httpClient;
         }
@@ -33,7 +32,7 @@ namespace XPowerApi.Providers
             // UnPack Result
             List<SurrealDbResult> dbResult = JsonSerializer.Deserialize<List<SurrealDbResult>>(jsonData)!;
 
-            return dbResult[0];
+            return dbResult.FirstOrDefault();
         }
 
         /// <inheritDoc />
