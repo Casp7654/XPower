@@ -14,7 +14,7 @@ namespace XPowerApi.DbModels
 
         public string username { get; set; }
 
-        public string hashedPassword { get; set; }
+        public string hashed_password { get; set; }
 
         public string salt { get; set; }
 
@@ -38,7 +38,7 @@ namespace XPowerApi.DbModels
                 Firstname = firstname,
                 Lastname = lastname,
                 UserName = username,
-                HashedPassword = hashedPassword,
+                HashedPassword = hashed_password,
                 Email = email,
                 Salt = salt
             };

@@ -61,7 +61,7 @@ namespace XPowerApi.Managers
 
         public async Task<UserCredentials> GetUserCredentialsByUsername(string username)
         {
-            return (await _userProvider.GetUserByUsername(username))?.ConvertToUserCredentials();
+            return (await _userProvider.GetUserByUsername(username)).ConvertToUserCredentials();
         }
 
         // Validates user credentials.
