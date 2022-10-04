@@ -4,19 +4,19 @@ namespace XPowerApi.Interfaces;
 
 public interface ISurrealDbProvider
 {
-    public Task<SurrealDbResult> MakeRawResult(string sqlString);
+    Task<SurrealDbResult> MakeRawResult(string sqlString);
+    Task<T> Create<T>(string tableName, Dictionary<string, string> dataArray) where T : new();
 
-    public Task<T> Create<T>(string tableName, Dictionary<string, string> dataArray) where T : new();
+    Task<RelateObject> Relate(string fromId, string toId, string byName);
 
-    public Task<RelateObject> Relate(string fromId, string toId, string byName);
+    Task<int> GetNextId(string tableName);
 
-    public Task<int> GetNextId(string tableName);
+    Task<T> GetOneById<T>(string tableName, int id);
 
-    public Task<T> GetOneById<T>(string tableName, int id);
+    Task<RelateObject> GetRelation(string subjectId, string relationName, string alias = "");
 
-    public Task<RelateObject> GetRelation(string subjectId, string relationName, string alias = "");
+    Task<List<T>> GetOneFromInsideAnother<T>(string tableName, string baseTable, string targetId);
 
-    public Task<List<T>> GetOneFromInsideAnother<T>(string tableName, string baseTable, string targetId);
-
-    public Task<List<T>> GetOneFromInsideARelation<T>(string tableName, string baseTable, string relationTable, string targetId);
+    Task<List<T>> GetOneFromInsideARelation<T>(string tableName, string baseTable, string relationTable, string targetId);
+    Task<T> GetOneByField<T>(string tableName, string field, string value);
 }
