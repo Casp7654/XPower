@@ -20,7 +20,7 @@ namespace XPowerApi.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("ValidateToken")]
         /// <summary>
         /// Checks if users token is valid and returns accordingly.
@@ -53,3 +53,4 @@ namespace XPowerApi.Controllers
 
         }
     }
+}

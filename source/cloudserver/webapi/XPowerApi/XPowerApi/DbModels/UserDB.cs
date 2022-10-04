@@ -38,7 +38,7 @@ namespace XPowerApi.DbModels
                 Firstname = firstname,
                 Lastname = lastname,
                 UserName = username,
-                Password = hashedPassword,
+                HashedPassword = hashedPassword,
                 Email = email,
                 Salt = salt
             };

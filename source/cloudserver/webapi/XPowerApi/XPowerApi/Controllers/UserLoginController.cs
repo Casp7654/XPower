@@ -19,6 +19,8 @@ namespace XPowerApi.Controllers
             _userManager = userManager;
         }
 
+        [HttpPost]
+        [Route("Login")]
         /// <summary>
         /// Calls usermanager to validate user login info
         /// </summary>

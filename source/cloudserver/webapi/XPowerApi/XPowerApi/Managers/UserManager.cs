@@ -29,7 +29,7 @@ namespace XPowerApi.Managers
                 { "firstname", userCreate.FirstName},
                 { "lastname", userCreate.LastName},
                 { "email", userCreate.Email },
-                { "salt", System.Text.Encoding.UTF8.GetString(salt) }
+                { "salt", Convert.ToBase64String(salt) }
             };
             return (await _userProvider.CreateUser(dataArray)).ConvertToUser();
         }
@@ -41,7 +41,7 @@ namespace XPowerApi.Managers
         /// <returns>A new user token</returns>
         public async Task<string> GetNewUserToken(UserLogin user)
         {
-            UserCredentials validUser = await GetUserCredentialsByUsername(user.UserName);
+            UserCredentials validUser = await GetUserCredentialsByUsername(user.Username);
 
             if (ValidateCredentials(validUser, user))
             {
@@ -59,25 +59,21 @@ namespace XPowerApi.Managers
 
         public async Task<UserCredentials> GetUserCredentialsByUsername(string username)
         {
-            return (await _userProvider.GetUserByUsername(username)).ConvertToUserCredentials();
+            return (await _userProvider.GetUserByUsername(username))?.ConvertToUserCredentials();
         }
 
         // Validates user credentials.
         private bool ValidateCredentials(UserCredentials validUser, UserLogin user)
         {
+
             if (user == null)
                 return false;
-
 
             if (validUser == null)
                 return false;
 
-            if (MatchPassword(validUser, user))
-            {
-                return true;
-            }
-
-            return false;
+            return MatchPassword(validUser, user);
+          
         }
 
         /// <summary>
@@ -91,9 +87,9 @@ namespace XPowerApi.Managers
         /// <returns> true if passwords match after being hashed with same salt.</returns>
         private bool MatchPassword(UserCredentials validUser, UserLogin user)
         {
-            byte[] salt = System.Text.Encoding.UTF8.GetBytes(validUser.Salt);
+            byte[] salt = Convert.FromBase64String(validUser.Salt);
 
-            if (validUser.Password == SecuritySupport.HashPassword(user.Password, salt))
+            if (validUser.HashedPassword == SecuritySupport.HashPassword(user.Password, salt))
                 return true;
 
             return false;
