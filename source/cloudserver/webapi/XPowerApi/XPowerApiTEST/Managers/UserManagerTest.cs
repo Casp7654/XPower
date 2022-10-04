@@ -29,7 +29,7 @@ namespace XPowerApiTEST.Managers
                 firstname = "Peter",
                 lastname = "Parker",
                 username = "PeterParker",
-                hashedPassword = "SecretPassword",
+                hashed_password = "SecretPassword",
                 salt = "abcdefg",
                 email = "peter@email.com"
             };
@@ -138,7 +138,7 @@ namespace XPowerApiTEST.Managers
                 username = "PeterParker",
                 email = "peter@email.com",
                 salt = Convert.ToBase64String(salt),
-                hashedPassword = hashed_password
+                hashed_password = hashed_password
             };
             UserLogin userLogin = new UserLogin()
             {
@@ -176,7 +176,7 @@ namespace XPowerApiTEST.Managers
                 username = "PeterParker",
                 email = "peter@email.com",
                 salt = Convert.ToBase64String(salt),
-                hashedPassword = hashed_password
+                hashed_password = hashed_password
             };
             UserLogin userLogin = new UserLogin()
             {
@@ -212,7 +212,7 @@ namespace XPowerApiTEST.Managers
                 username = "PeterParker",
                 email = "peter@email.com",
                 salt = Convert.ToBase64String(salt),
-                hashedPassword = hashed_password
+                hashed_password = hashed_password
             };
             UserLogin userLogin = new UserLogin()
             {
