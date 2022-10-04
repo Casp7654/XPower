@@ -28,6 +28,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
 import { RegisterUserComponent } from './Pages/register-user/register-user.component';
+import { LoginUserComponent } from './Pages/login-user/login-user.component';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'broker.emqx.io',
@@ -45,7 +46,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     SidenavListComponent,
     HubDevicesComponent,
     HubComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    LoginUserComponent
   ],
   imports: [
     BrowserModule,
