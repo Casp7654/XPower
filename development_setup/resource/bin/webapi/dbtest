@@ -4,4 +4,4 @@ curl --request POST \
     --header "DB: webapi" \
     --header "Content-Type: application/json" \
     --data "INFO FOR DB;" \
-    http://172.32.0.2:8000/sql && echo ""
+    http://127.0.0.1:8000/sql && echo ""

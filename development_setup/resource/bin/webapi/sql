@@ -1,5 +1,5 @@
 surreal sql \
-    --conn http://172.32.0.2:8000 \
+    --conn http://127.0.0.1:8000 \
     --user root \
     --pass root \
     --ns xpower \
