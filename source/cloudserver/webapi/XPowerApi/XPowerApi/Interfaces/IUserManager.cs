@@ -7,6 +7,6 @@ namespace XPowerApi.Interfaces
         Task<User> CreateUser(UserCreate userCreate);
         Task<User> GetUserById(int id);
         Task<UserCredentials> GetUserCredentialsByUsername(string username);
-        Task<string> GetNewUserToken(UserLogin user);
+        Task<UserToken> GetNewUserToken(UserLogin user);
     }
 }
