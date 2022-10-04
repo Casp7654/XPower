@@ -4,8 +4,9 @@ namespace XPowerApi.Interfaces
 {
     public interface IUserProvider
     {
-        public Task<UserDb> CreateUser(Dictionary<string,string> dataArray);
-        
-        public Task<UserDb> GetUserById(int id);
+        Task<UserDb> CreateUser(Dictionary<string, string> dataArray);
+
+        Task<UserDb> GetUserById(int id);
+        Task<UserDb> GetUserByUsername(string username);
     }
 }
