@@ -20,7 +20,7 @@ export class RegisterUserComponent implements OnInit {
         apariencia: 'fill',
         username : '',
         password : '',
-        email : ['', [Validators.required, Validators.pattern("^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$") ]], // regex pattern to check generic email adress
+        email : ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$") ]], // regex pattern to check generic email adress
         firstname : '',
         lastname : '',
       });

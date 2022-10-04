@@ -11,7 +11,13 @@ export class HubSearcherComponent implements OnInit {
   device: any = {};
   credentials: FormGroup;
   isConnected : boolean = false
-  connectedField = this.isConnected ? "block" : "none";
+
+  getStyle(){
+    if(this.isConnected)
+      return "block";
+
+    return "none"
+  }
 
   constructor(public _hubConnService: HubConnServiceService,
     fb: FormBuilder)
@@ -41,7 +47,7 @@ export class HubSearcherComponent implements OnInit {
 
   // Gets status of device using hub connection service
   getDeviceStatus() {
-    let b = this._hubConnService.getDevice();
+
     this._hubConnService.getDevice().subscribe((device) => {
       if (device) {
         this.device = device;

@@ -18,7 +18,8 @@ export class HubConnServiceService {
 
       return this.ble
         .discover$({
-          acceptAllDevices: true,
+          acceptAllDevices: false,
+          filters: [{services: [HubConnServiceService.GATT_PRIMARY_SERVICE]}],
           optionalServices: [HubConnServiceService.GATT_PRIMARY_SERVICE],
         }).pipe(
           mergeMap(gatt => {
