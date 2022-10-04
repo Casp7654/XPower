@@ -30,6 +30,8 @@ import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
 import { RegisterUserComponent } from './Pages/register-user/register-user.component';
 import { LoginUserComponent } from './Pages/login-user/login-user.component';
 
+import { AuthguardService } from './Services/authguard.service';
+
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'broker.emqx.io',
   port: 8083,
@@ -77,7 +79,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   providers: [
     BrowserWebBluetooth,
     FormBuilder,
-    HttpClient
+    HttpClient,
+    AuthguardService
   ],
   bootstrap: [AppComponent]
 })
