@@ -6,10 +6,14 @@ import { HubDevice } from 'src/app/Models/HubDevice';
 
 import { HubComponent } from './hub.component';
 
+
 describe('HubComponent', () => {
   let component: HubComponent;
+  const expectedDevice = new HubDevice()
+  expectedDevice.mac_address = "macAddr";
+  expectedDevice.name = "Hub 1";
+  
   let fixture: ComponentFixture<HubComponent>;
-  let expectedDevice = new HubDevice();
 
 
   beforeEach(async () => {
@@ -30,6 +34,19 @@ describe('HubComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should display have opacity class when status is false', () => {
+    component.device.status = false;
+    expect(component.device.status)
+    .toBeFalse();
+
+    fixture.detectChanges();
+
+    const nativeElements: HTMLElement = fixture.nativeElement;
+    let elements = nativeElements.getElementsByClassName('opacity');
+    expect(elements.length)
+    .toEqual(1);
   });
 
   it('should have device name rendered', () => {
