@@ -24,9 +24,11 @@ import { MatInputModule } from '@angular/material/input'
 import { FormBuilder, FormGroup,ReactiveFormsModule  } from '@angular/forms';
 import { HubDevicesComponent } from './Pages/hub-devices/hub-devices.component';
 import { HubComponent } from './Components/hub/hub.component';
-
- 
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
+import { RegisterUserComponent } from './Pages/register-user/register-user.component';
+
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'broker.emqx.io',
   port: 8083,
@@ -42,7 +44,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     HeaderComponent,
     SidenavListComponent,
     HubDevicesComponent,
-    HubComponent
+    HubComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,
@@ -66,11 +69,13 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     }),
     BrowserAnimationsModule,
     AppRoutingModule,
+    HttpClientModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],
   providers: [
     BrowserWebBluetooth,
-    FormBuilder
+    FormBuilder,
+    HttpClient
   ],
   bootstrap: [AppComponent]
 })
