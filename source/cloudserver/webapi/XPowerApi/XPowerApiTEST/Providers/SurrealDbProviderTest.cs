@@ -16,7 +16,7 @@ namespace XPowerApiTEST.Providers
         {
             FakeConfiguration config = new();
             _subject = new(config);
-            _httpClient =new(config);
+            _httpClient = new(config);
             _subject.HttpClient = _httpClient.Object;
         }
 
