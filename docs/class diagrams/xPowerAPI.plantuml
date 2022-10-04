@@ -1,104 +1,180 @@
 @startuml API
-
-interface IGetPrice
-{
-    +GetPrice(period : Period) : Price
-    +GetPriceBetweendays(from : Datetime,to : Datetime, company : Company) : Price
+left to right direction
+UserLoginController o-- IUserManager
+UserLoginController --> UserLogin
+class UserLoginController{
+    -_logger {readonly} : ILogger<UserLoginController>
+    -_userManager {readonly} : IUserManager
+    +UserLoginController(logger : ILogger<UserLoginController>, userManger : IUserManager)
+    +LoginUser(user : UserLogin) : Task<IActionResult>
 }
 
-class PriceController
-{
-    -priceService : IGetPrice
+UserTokenController o-- IUserManager
+UserTokenController o-- ITokenManager
+UserTokenController --> UserToken
+class UserTokenController{
+    -_logger {readonly} : ILogger<UserTokenController>
+    -_userManager {readonly} : IUserManager
+    -_tokenManager {readonly} : ITokenManager <UserToken>
+    +UserTokenController(logger : ILogger<UserTokenController>, userManger : IUserManager, tokenManager : ITokenManager <UserToken>)
+    +ValidateToken(token : string) : Task<IActionResult>
 }
 
-class Price
-{
-    +Amount : double
+UserCreationController o-- IUserManager
+UserCreationController o-- IHomeManager
+UserCreationController o-- ITokenManager
+UserCreationController --> UserToken
+UserCreationController --> UserCreate
+class UserCreationController{
+    -_logger{readonly} : ILogger<UserCreationController>
+    -_userManager{readonly} : IUserManager
+    -_homeManager {readonly} : IHomeManager
+    -_tokenManager {readonly} : ITokenManager<UserToken>
+    +UserCreationController(logger : ILogger<UserCreationController>, userManager : IUserManager, homeManager : IHomeManager, tokenManager : ITokenManager <UserToken>)
+    +CreateUser(userCreateInfo : UserCreate) : Task<ActionResult<UserToken>>
 }
 
-enum Company
-{
-    Unknown
-    ElCompany1
-    ElCompany2
+UserController --> User
+UserController o-- IUserManager
+class UserController{
+    -_logger{readonly} : ILogger<UserController>
+    -_userManager{readonly} : IUserManager
+    +UserController(logger : ILogger<UserController>, userManager : IUserManager)
+    +GetUserById(id : int) : Task<ActionResult<User>>
 }
 
-enum Period
-{
-    Today
-    Week
-    2Weeks
-    Month
-    Q1
-    Q2
-    Year
+HubController --> Hub
+HubController o-- IHubManager
+class HubController{
+    -_logger{readonly} : ILogger<HubController>
+    -_hubManager{readonly} : IHubManager
+    +HubController(logger : ILogger<HubController>, hubManager : IHubManager)
+    +GetHubById(id : int) : Task<ActionResult<Hub>>
+    +GetHubsByHomeId(homeId : int) : Task<ActionResult<List<Hub>>>
+    +GetHubsByUserId(userId : int) : Task<ActionResult<List<Hub>>>
+
+}
+HubCreationController --> HubCreate
+HubCreationController --> Hub
+HubCreationController o-- IHubManager
+class HubCreationController{
+    -_logger{readonly} : ILogger<HubCreationController>
+    -_hubManager{readonly} : IHubManager
+    +HubCreationController(logger : ILogger<HubCreationController>, hubManager : IHubManager)
+    +CreateHub(hubCreateInfo : HubCreate) : Task<ActionResult<Hub>>
 }
 
-interface IUserCrud
-{
-    +CreateUser(UserCreate : UserCreateDTO) : T  
-    +GetUser(userID : int ) : T
-    +UpdateUser(userID : int, username : string) : T
-    +DeleteUser(userID : int ) : void
+HomeCreationController --> HomeCreate
+HomeCreationController o-- IHomeManager
+HomeCreationController --> Home
+class HomeCreationController{
+    -_logger{readonly} : ILogger<HomeCreationController>
+    -_homeManager{readonly} : IHomeManager
+    +HomeCreationController(logger : ILogger<HomeCreationController>, homeManager: IHomeManager)
+    +CreateHome(homeCreateInfo HomeCreate, userId : int) : Task<ActionResult<Home>>
 }
 
-class UserController
-{
-    -userService : IUserCrud
+HomeController o-- IHomeManager
+HomeController --> Home
+class HomeController{
+    -_logger{readonly} : ILogger<HomeController>
+    -_homeManager{readonly} : IHomeManager
+    +HomeController(logger : ILogger<HomeController>, homeManager: IHomeManager)
+    +GetHomeById(id : int) : Task<ActionResult<Home>>
 }
 
-class UserCreateDTO
+IUserManager --> UserCreate
+IUserManager --> User
+IUserManager --> UserLogin
+IUserManager --> UserCredentials
+interface IUserManager{
+    +CreateUser(userCreate : UserCreate) : Task<User>
+    +GetUserById(id : int) : Task<User>
+    +GetUserCredentialsByUsername(username : string) : Task<UserCredentials>
+    +GetNewUserToken(user : UserLogin) : Task<string>
+}
+ITokenManager --> User
+ITokenManager --> TToken
+interface ITokenManager {
+    +GenerateToken(user User) : Task<TToken>
+    +ValidateToken(token : string) : Task<bool>
+    +FromTokenString(token : string) : Task <TToken>
+}
+
+IHubManager --> HubCreate
+IHubManager --> Hub
+interface IHubManager{
+    +CreateHub(hubCreate : HubCreate) : Task<Hub>
+    +GetHubById(id : int) : Task<Hub>
+    +GetHubsByHomeId(homeId : int) : Task<List<Hub>>
+    +GetHubsByUserId(userId : int) : Task<List<Hub>>
+}
+IHomeManager --> HomeCreate
+IHomeManager --> Home
+IHomeManager --> RelateObject
+interface IHomeManager{
+    +CreateHome(homeCreate : HomeCreate, userId : int) : Task<Home>
+    +GetHomeById(id : int) : Task<Home>
+    +RelateUserToHome(userId : int, homeId : int) : Task<RelateObject>
+}
+
+class UserLogin
 {
     +Username : string
     +Password : string
 }
-
-class User
-{
-    +Username : string,
-    +ID : int
+UserToken --|> User
+class UserToken{
+    +Token : string
 }
 
-interface IHubCrud
-{
-    +CreateHub(hubCreate : HubCreate) : T  
-    +GetHub(hubID : int ) : T
-    +GetUserHubs(userID : int) : List<T>
-    +GetHomeUserHubs(homeUserID : int) : List<T>
-    +UpdateHub(hubID : int, displayname : string) : T
-    +DeleteUser(hubID : int ) : void
+class User {
+    +Id : int
+    +UserName : string
+    +Email : string
+    +FirstName : string
+    +LastName : string
+}
+UserCredentials --|> User
+class UserCredentials{
+    +Salt : string
+    +HashedPassword : string
 }
 
-class HubController
-{
-    -hubService : IGetPrice
+class UserCreate{
+    +UserName : string
+    +Password : string
+    +Email : string
+    +FirstName : string
+    +LastName : string
 }
-
-class HubCreate
-{
-    +UID : string
+class Hub {
+    +Id : int
+    +Name: string
+    +Mac : string
+    +Home : string
+    +PrivateAddress : string
+    +PublicAddress : string
 }
-
-class Hub
-{
-    +ID : int
-    +UID : string
-    +DisplayName : string
-    +HomeID : int
+class HubCreate{
+    +Name: string
+    +Mac : string
+    +Home : string
+    +PrivateAddress : string
+    +PublicAddress : string
 }
-
-PriceController *-- IGetPrice
-IGetPrice --> Price
-IGetPrice --> Company
-IGetPrice --> Period
-
-UserController *.. IUserCrud
-IUserCrud --> UserCreateDTO
-IUserCrud --> User
-
-HubController *.. IHubCrud
-IHubCrud --> HubCreate
-IHubCrud --> Hub
-
+class HomeCreate{
+    +Name: string
+}
+class Home{
+    +Id : int
+    +Name: string
+}
+class RelateObject{
+    +Id : string
+    +In : string
+    +Out : string
+    +RelateObject(Id : string, In : string, Out : string)
+}
 
 @enduml
