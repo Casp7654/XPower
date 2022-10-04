@@ -39,13 +39,16 @@ class Led:
             turn_on (bool): The new state
         """
         if os.name != "posix": return
-        
-        if turn_on:
-            self.__gpio.on()
-        else:
-            self.__gpio.off()
-
         self.__turned_on = turn_on
+        
+        try:
+            if turn_on:
+                self.__gpio.on()
+            else:
+                self.__gpio.off()
+        except:
+            return
+
 
     def get_state(self) -> bool:
         """ Returns:

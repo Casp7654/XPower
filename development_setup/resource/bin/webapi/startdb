@@ -1,1 +1,1 @@
-surreal start --log debug --user root --pass root --bind 172.32.0.2:8000 file:///root/datastore/CUR
+surreal start --log debug --user root --pass root --bind 127.0.0.1:8000 file:///root/datastore/CUR

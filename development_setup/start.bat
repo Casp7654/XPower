@@ -13,7 +13,7 @@ docker run --rm -itd ^
         --mount type=bind,src="%cd%/resource/volumes/webapi/backups",dst=/root/backups ^
         --mount type=bind,src="%cd%/../source/cloudserver/webapi/XPowerApi/XPowerApi",dst=/root/source ^
         --name xpower-webapi ^
-        -P ^
+        -p 5083:443 ^
         xpower-webapi
 
 echo -e "\nStarting Hosted PWA Container"

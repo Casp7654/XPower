@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y dotnet-sdk-6.0 dotnet-runtime-6.0 aspne
 
 #& 5. Expose Ports in Container
 EXPOSE 80
-EXPOSE 433
+EXPOSE 443
 EXPOSE 8000
 
 #& 6. Create Volume Paths

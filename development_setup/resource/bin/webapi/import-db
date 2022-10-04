@@ -1,6 +1,6 @@
 if [ ! "$1" == "" ]; then
     echo -e "\nImporting $(pwd)/backups/$1.bak > NS:xpower,DB:webapi"
-    surreal import --conn http://172.32.0.2:8000 --user root --pass root --ns xpower --db webapi $(pwd)/backups/$1.bak && echo "...Done!" || echo "$!ERR¡"
+    surreal import --conn http://127.0.0.1:8000 --user root --pass root --ns xpower --db webapi $(pwd)/backups/$1.bak && echo "...Done!" || echo "ERR¡"
 else
     echo "please provide name for the OUTPUT FILE as \$1"
 fi

@@ -60,14 +60,14 @@ class LightClient:
             userdata (any): The data which is defined by the user before going into the method
             msg (mqtt.MQTTMessage): The message recieved
         """
-        if "StatusRequest" in msg.topic:
-            self.publish_status()
-        elif "Led" in msg.topic:
+        if "Led" in msg.topic:
             appData = json.loads(msg.payload)
             if appData["cmd"] == "on":
                 self.__gpio.set_state(True)
             elif appData["cmd"] == "off":
                 self.__gpio.set_state(False)
+
+        self.publish_status()
 
         if (self.on_message_received):
             self.on_message_received(self.__client_id, msg.topic, msg.payload)
