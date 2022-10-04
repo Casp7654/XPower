@@ -6,6 +6,10 @@ namespace XPowerApi.DbModels.SurrealDbModels
 {
     public class SurrealDbHttpClient : HttpClient
     {
+        /// <summary>
+        /// Creates the surreal http client with the given configuration
+        /// </summary>
+        /// <param name="configuration">The configuration object to configure from.</param>
         public SurrealDbHttpClient(IConfiguration configuration) : base()
         {
             BaseAddress = new Uri(configuration["SurrealDB:ConnStr"]);
