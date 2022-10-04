@@ -1,63 +1,79 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserRegisterService  } from 'src/app/Services/user-register.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/Models/User';
-import { Router } from '@angular/router';
+import { Component, OnInit, NgZone, Inject } from '@angular/core';
+import { HubConnServiceService  } from 'src/app/Services/hub-conn-service.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-register-user',
-  templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.scss']
+  selector: 'app-hub-searcher',
+  templateUrl: './hub-searcher.component.html',
+  styleUrls: ['./hub-searcher.component.scss']
 })
-export class RegisterUserComponent implements OnInit {
+export class HubSearcherComponent implements OnInit {
+  device: any = {};
   credentials: FormGroup;
-  
-  constructor(private router: Router, public userSerrvice : UserRegisterService, fb: FormBuilder)
-  {
+  isConnected : boolean = false
+
+  getStyle(){
+    if(this.isConnected)
+      return "block";
+
+    return "none"
+  }
+
+  constructor(public _hubConnService: HubConnServiceService,
+    fb: FormBuilder)
+    {
       this.credentials = fb.group({
         hideRequired: false,
         floatLabel: 'auto',
         apariencia: 'fill',
-        username : '',
-        password : '',
-        email : ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$") ]], // regex pattern to check generic email adress
-        firstname : '',
-        lastname : '',
+        fbssid : '',
+        fbpassphrase : ''
       });
     }
 
-  onSubmit(){
-    const user = this.formToUser();
-    
-    this.userSerrvice.createUser(user).subscribe(createdUser => {
-      
-      // Save user data
-      this.userSerrvice.saveCreatedUser(createdUser);
-
-      alert("Bruger oprettet")
-
-      // Move back to main page
-      this.router.navigate([""]);
-    },
-    e => {
-      // Show error message to user
-      alert("Kunne ikke oprette bruger: " + e?.error?.message);
-    }
-    )
+  ngOnInit(): void {
+    this.getDeviceStatus();
+    this.connect();
   }
-  // Create a user from values of credentials form
-  formToUser() : User
-  {
-    return new User(
-      this.credentials.value.username,
-      this.credentials.value.password,
-      this.credentials.value.email,
-      this.credentials.value.firstname,
-      this.credentials.value.lastname
-    );
+
+  connected(value: any){
+    this.isConnected = true;
+  }
+
+  // Connects to a hub using hub connection service
+  connect(){
+    this._hubConnService?.getCharConnect()?.subscribe(this.connected.bind(this));
+  }
+
+  // Gets status of device using hub connection service
+  getDeviceStatus() {
+
+    this._hubConnService.getDevice().subscribe((device) => {
+      if (device) {
+        this.device = device;
+      }
+      else
+      {
+        // device not connected or disconnected
+        this.device = null;
+        this.isConnected = false;
+      }
+    });
   }
   
-  ngOnInit(): void {
-  }
 
+  async sendinput(){
+    const encoder = new TextEncoder();
+    // json convert to ssid and password
+    var obj:any = {}
+    obj.ID = 0;
+    obj.SSID = this.credentials.value.fbssid;
+    obj.PassPhrase =  this.credentials.value.fbpassphrase;
+
+    var jStr = JSON.stringify(obj);
+    let encodedString = encoder.encode(jStr);
+
+   // Try with response, but after it changes the ip
+    await this._hubConnService.getCharacter().writeValueWithoutResponse(encodedString);
+  }
 }
