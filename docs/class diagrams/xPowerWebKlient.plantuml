@@ -78,6 +78,25 @@ class HubConnServiceService{
     getDevice() : BluetoothDevice
 }
 
+class User{
+    +username : string
+    +password : string
+    +email : string
+    +firstName : string
+    +lastName : string
+}
+
+class UserToken{
+    +token : string
+}
+
+class UserRegisterService{
+    +createUser(user : User) : UserToken
+    +saveCreatedUser(createdUser : UserToken) : void
+}
+
+UserToken --|> User
+UserToken <-- UserRegisterService
 HubDevice ..> IoTDevice
 SocketDevice ..> IoTDevice
 SocketDeviceService *-- SocketDeviceRequestConverter

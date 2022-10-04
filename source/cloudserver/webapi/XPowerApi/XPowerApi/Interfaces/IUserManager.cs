@@ -4,7 +4,9 @@ namespace XPowerApi.Interfaces
 {
     public interface IUserManager
     {
-        public Task<User> CreateUser(UserCreate userCreate);
-        public Task<User> GetUserById(int id);
+        Task<User> CreateUser(UserCreate userCreate);
+        Task<User> GetUserById(int id);
+        Task<UserCredentials> GetUserCredentialsByUsername(string username);
+        Task<string> GetNewUserToken(UserLogin user);
     }
 }

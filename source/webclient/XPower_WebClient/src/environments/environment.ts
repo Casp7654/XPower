@@ -8,8 +8,10 @@ export const environment = {
     url: "broker.emqx.io",
     port: 8083,
     path: "/mqtt"
+  },
+  apiServer : {
+    url: "https://xpower.nordnetic.dk:7083/"
   }
-  
 };
 
 /*

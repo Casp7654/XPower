@@ -29,5 +29,19 @@ namespace XPowerApi.DbModels
                 UserName = username
             };
         }
+
+        public UserCredentials ConvertToUserCredentials()
+        {
+            return new UserCredentials
+            {
+                Id = int.Parse(id.Split(':')[1]),
+                Firstname = firstname,
+                Lastname = lastname,
+                UserName = username,
+                HashedPassword = hashedPassword,
+                Email = email,
+                Salt = salt
+            };
+        }
     }
 }
