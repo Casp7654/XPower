@@ -1,0 +1,19 @@
+@startuml WebClientRegisterUser
+
+participant UserRegisterComponent
+participant UserRegisterService
+participant UserController
+participant UserService
+participant UserProvider
+
+
+UserRegisterComponent->UserRegisterService: Send form data
+UserRegisterService->UserController: Send user data
+UserController->UserService: Process and convert data
+UserService->UserProvider: Save data
+
+UserProvider->UserService: Return saved data
+UserService->UserController: Return converter data
+UserController->UserRegisterService: Return convrter data
+
+@enduml
