@@ -9,18 +9,20 @@ namespace XPowerApi.Managers
     {
         IUserProvider _userProvider;
         private readonly ITokenManager<UserToken> _tokenManager;
+        IPasswordHasher _passwordHasher;
 
-        public UserManager(IUserProvider userProvider, ITokenManager<UserToken> tokenManager)
+        public UserManager(IUserProvider userProvider, IPasswordHasher passwordHasher, ITokenManager<UserToken> tokenManager)
         {
             _userProvider = userProvider;
+            _passwordHasher = passwordHasher;
             _tokenManager = tokenManager;
         }
 
         public async Task<User> CreateUser(UserCreate userCreate)
         {
             // Generate Salt
-            byte[] salt = SecuritySupport.GenerateSalt();
-            string hashed_password = SecuritySupport.HashPassword(userCreate.Password!, salt);
+            byte[] salt = _passwordHasher.GenerateSalt();
+            string hashed_password = _passwordHasher.HashPassword(userCreate.Password!, salt);
             // Create User DB Object
             Dictionary<string, string> dataArray = new Dictionary<string, string>()
             {
@@ -29,7 +31,7 @@ namespace XPowerApi.Managers
                 { "firstname", userCreate.FirstName},
                 { "lastname", userCreate.LastName},
                 { "email", userCreate.Email },
-                { "salt", Convert.ToBase64String(salt) }
+                { "salt", _passwordHasher.SaltToString(salt)}
             };
             return (await _userProvider.CreateUser(dataArray)).ConvertToUser();
         }

@@ -6,20 +6,16 @@ namespace XPowerApi.Providers
 {
     public class HomeProvider : IHomeProvider
     {
-        private SurrealDbProvider _dbProvider;
+        private ISurrealDbProvider _dbProvider;
 
-        public HomeProvider(IConfiguration configuration)
+        public HomeProvider(ISurrealDbProvider dbProvider)
         {
-            _dbProvider = new SurrealDbProvider(configuration);
+            _dbProvider = dbProvider;
         }
 
-        public async Task<HomeDb> CreateHome(Dictionary<string, string> dataArray, int userId)
+        public async Task<HomeDb> CreateHome(Dictionary<string, string> dataArray)
         {
-            // Create Home in DB
-            HomeDb home = await _dbProvider.Create<HomeDb>("home", dataArray);
-            // Create User Relation on created home
-            RelateObject related = await this.RelateUserToHome(userId, Int32.Parse(home.id.Split(':')[1]));
-            return home;
+            return (await _dbProvider.Create<HomeDb>("home", dataArray));
         }
 
         public async Task<HomeDb> GetHomeById(int id)

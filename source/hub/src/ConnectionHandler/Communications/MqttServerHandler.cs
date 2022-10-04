@@ -51,7 +51,7 @@ public class MqttServerHandler : IServerHandler
     /// <returns>A task which can be awaited</returns>
     public async Task StartAsync()
     {
-        _mqttServer.ApplicationMessageNotConsumedAsync += OnMessageNotConsumedAsync;
+        _mqttServer.InterceptingPublishAsync += OnMessagePublishIntercept;
 
         await _mqttServer.StartAsync();
     }
@@ -68,9 +68,9 @@ public class MqttServerHandler : IServerHandler
     /// <summary>
     /// Called when message not consumed event is called.
     /// </summary>
-    private async Task OnMessageNotConsumedAsync(ApplicationMessageNotConsumedEventArgs packet) 
+    private async Task OnMessagePublishIntercept(InterceptingPublishEventArgs packet) 
     {
-        var clientId = packet.SenderId;
+        var clientId = packet.ClientId;
         var topic = packet.ApplicationMessage.Topic;
         var payload = packet.ApplicationMessage.ConvertPayloadToString();
         await Task.Run(() => 

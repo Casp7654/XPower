@@ -1,5 +1,6 @@
 using System.Text;
 using System.Net.Http.Headers;
+using XPowerApi.Interfaces;
 
 namespace XPowerApi.DbModels.SurrealDbModels
 {

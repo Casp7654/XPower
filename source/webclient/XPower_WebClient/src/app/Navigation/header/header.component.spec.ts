@@ -1,9 +1,6 @@
-import { CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIcon, MatIconModule} from '@angular/material/icon';
-import { MatSidenav } from '@angular/material/sidenav';
-import { MatToolbar, MatToolbarModule} from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { HeaderComponent } from './header.component';
 
@@ -13,9 +10,8 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent, MatIcon, MatToolbar, MatSidenav ],
-      imports: [MatIconModule, MatToolbarModule],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [ HeaderComponent ],
+      imports: [MatIconModule, MatToolbarModule]
     })
     .compileComponents();
 

@@ -19,7 +19,6 @@ import { HeaderComponent } from './Navigation/header/header.component';
 import { MatListModule } from '@angular/material/list';
 import { SidenavListComponent } from './Navigation/sidenav-list/sidenav-list.component'
 import { BrowserWebBluetooth} from '@manekinekko/angular-web-bluetooth'
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { FormBuilder, FormGroup,ReactiveFormsModule  } from '@angular/forms';
@@ -27,6 +26,13 @@ import { HubDevicesComponent } from './Pages/hub-devices/hub-devices.component';
 import { HubComponent } from './Components/hub/hub.component';
 
  
+import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: 'broker.emqx.io',
+  port: 8083,
+  path: '/mqtt'
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +65,8 @@ import { HubComponent } from './Components/hub/hub.component';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],
   providers: [
     BrowserWebBluetooth,

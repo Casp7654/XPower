@@ -1,9 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FakeBluetoothDevice } from '@manekinekko/angular-web-bluetooth';
-import { EMPTY, observable, Observable, Subject, take } from 'rxjs';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Observable } from 'rxjs';
 import { HubConnServiceService } from 'src/app/Services/hub-conn-service.service';
-
 import { HubSearcherComponent } from './hub-searcher.component';
 
 class mockBluetoothClass implements BluetoothDevice {
@@ -68,7 +71,11 @@ describe('HubSearcherComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ HubSearcherComponent ],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, 
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        BrowserAnimationsModule],
       providers: [{provide: HubConnServiceService, useValue: connServiceMock}, {provide: FormBuilder, useValue: formBuilderMock} ]
     })
     .compileComponents();
@@ -86,5 +93,20 @@ describe('HubSearcherComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have 2 inputs', () => {
+    
+    let inputs = fixture.debugElement.queryAll(By.css('input'));
+    
+    expect(inputs.length).toEqual(2);
+  });
+
+  it('should have Ok button', () => {
+    
+    let input = fixture.debugElement.query(By.css('#okBtn'));
+    let native: HTMLElement = input.nativeElement;
+    
+    expect(native.innerHTML).toContain("OK");
   });
 });

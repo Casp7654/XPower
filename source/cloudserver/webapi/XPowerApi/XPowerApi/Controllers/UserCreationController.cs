@@ -48,7 +48,7 @@ namespace XPowerApi.Controllers
                 string.IsNullOrEmpty(userCreateInfo.FirstName) ||
                 string.IsNullOrEmpty(userCreateInfo.LastName)
             )
-                return BadRequest(new { Message = "Username or Password is missing valid" });
+                return BadRequest(new { Message = "Username or Password is missing" });
 
             try
             {
@@ -58,7 +58,7 @@ namespace XPowerApi.Controllers
                 var home = await _homeManager.CreateHome(new HomeCreate() { Name = "Default" }, user.Id);
 
                 //  Return a created usertoken
-                return Ok(_tokenManager.GenerateToken(user));
+                return Ok(_tokenManager.GenerateToken(user).Result);
             }
             catch (ArgumentException e)
             {

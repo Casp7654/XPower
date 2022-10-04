@@ -1,4 +1,3 @@
-using System.Web.Http.Controllers;
 using XPowerApi.DbModels;
 using XPowerApi.Interfaces;
 using XPowerApi.Managers;
@@ -11,6 +10,7 @@ namespace XPowerApiTEST.Managers
     {
         private readonly UserManager _subject;
         private readonly Mock<IUserProvider> _userProvider = new();
+        private readonly Mock<IPasswordHasher> _passwordHasher = new();
         private readonly Mock<ITokenManager<UserToken>> _tokenManager = new();
 
         public static bool UserCredentialsEquals(UserCredentials a, UserCredentials b)
@@ -35,10 +35,13 @@ namespace XPowerApiTEST.Managers
             };
         }
         public UserManagerTest()
-            => _subject = new UserManager(_userProvider.Object, _tokenManager.Object);
+            => _subject = new UserManager(
+                _userProvider.Object,
+                _passwordHasher.Object
+            );
 
         [Fact]
-        public async void CreateUser_ShouldReturnHubObject()
+        public async void CreateUser_ShouldReturnUserObject()
         {
             //Arrange
             UserCreate input = new()
@@ -47,25 +50,33 @@ namespace XPowerApiTEST.Managers
                 FirstName = "John",
                 LastName = "Doe",
                 Email = "test@test.dk",
-                Password = "SecretPassword"
+                Password = "Teste",
             };
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+            string hashedPassword = _passwordHasher.Object.HashPassword(input.Password, salt);
             Dictionary<string, string> dataArray = new Dictionary<string, string>()
             {
+                { "hashed_password", hashedPassword },
                 { "username", input.UserName },
                 { "firstname", input.FirstName },
                 { "lastname", input.LastName },
                 { "email", input.Email },
+                { "salt", _passwordHasher.Object.SaltToString(salt) }
             };
             UserDb expected = new()
             {
                 id = "user:1",
                 username = "JohnDon",
             };
-            _userProvider.Setup(s => s.CreateUser(dataArray)).ReturnsAsync(expected);
+            _passwordHasher.Setup(s => s.GenerateSalt())
+                .Returns(() => salt);
+            _passwordHasher.Setup(s => s.HashPassword(input.Password!, salt))
+                .Returns(() => hashedPassword);
+            _userProvider.Setup(s => s.CreateUser(dataArray))
+                .ReturnsAsync(() => expected);
 
             //Act
             var actual = (await _subject.CreateUser(input));
-            // TODO: Figure out why this fails
 
             //Assert
             Assert.NotNull(actual);

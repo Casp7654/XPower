@@ -6,6 +6,7 @@ using XPowerApi.Providers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using XPowerApi.Supporters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,23 @@ builder.Services.AddSwaggerGen(c =>
         {
             Description = "JWT Authorization header using the Bearer scheme.",
             Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
-            Scheme = "Bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
+            Scheme = "Bearer", //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
+            In = ParameterLocation.Header
+        });
+    c.AddSecurityRequirement(
+        new OpenApiSecurityRequirement()
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] { }
+            }
         });
 });
 
@@ -33,6 +50,8 @@ builder.Services.AddScoped<ITokenManager<UserToken>, TokenManager>();
 builder.Services.AddScoped<IUserProvider, UserProvider>();
 builder.Services.AddScoped<IHomeProvider, HomeProvider>();
 builder.Services.AddScoped<IHubProvider, HubProvider>();
+builder.Services.AddScoped<ISurrealDbProvider, SurrealDbProvider>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

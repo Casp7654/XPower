@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace XPowerApi.Controllers
 {
+    [Authorize]
     [Route("api/hub")]
     [ApiController]
     public class HubCreationController : Controller
@@ -32,7 +33,7 @@ namespace XPowerApi.Controllers
             //checking if Home, Mac_addr and Pricate_addr is not null or empty
             if (string.IsNullOrEmpty(hubCreateInfo.Home) || string.IsNullOrEmpty(hubCreateInfo.Mac) ||
                 string.IsNullOrEmpty(hubCreateInfo.PrivateAddress))
-                return BadRequest(new { Message = "Name, Mac_addr or PrivateAddress is missing valid" });
+                return BadRequest(new { Message = "Name, Mac_addr or PrivateAddress is missing" });
 
             try
             {

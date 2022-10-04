@@ -17,8 +17,8 @@ namespace XPowerApiTEST.Managers
         public async void CreateHub_ShouldReturnHubObject()
         {
             //Arrange
-            HubCreate input = new() { Name = "Home1", Mac = "FF:FF:FF:FF:FF:FF", Home = "Home1" };
-            Dictionary<string, string> dataArray = new() { { "name", input.Name } };
+            HubCreate input = new() { Name = "Home1", Mac = "FF:FF:FF:FF:FF:FF", Home = "Home1", PrivateAddress = "127.0.0.1"};
+            Dictionary<string, string> dataArray = new() { { "name", input.Name }, { "mac", input.Mac }, { "home", input.Home }, { "private_addr", input.PrivateAddress }, { "public_addr", input.PublicAddress } };
             HubDb expected = new() { id = "hub:1", name = input.Name, mac = input.Mac, home = input.Home };
             _hubProvider.Setup(s => s.CreateHub(dataArray))
                 .ReturnsAsync(() => expected);

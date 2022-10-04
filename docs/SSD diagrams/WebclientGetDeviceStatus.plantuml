@@ -1,0 +1,22 @@
+@startuml WebclientGetDeviceStatus
+
+participant IoTPage as page
+participant IoTService as service
+participant MqttService as mqttService
+entity IoTDevices as client
+
+page -> service: Call Get Status From Iot Devices
+service -> mqttService: Publish request to iot devices
+mqttService --> client: Sends status data request
+
+client -> mqttService: Sends status data to subscribed clients
+mqttService -> service: Call subscribed method
+service -> service: Get device type
+service -> service: Device exists in array?
+alt exists
+    service -> service: Update known device
+else
+    service -> service: push new device into array
+end
+
+@enduml

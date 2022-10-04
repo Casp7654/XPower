@@ -1,4 +1,4 @@
-@startuml Hub SSD diagrams
+@startuml Hub SD diagrams
 title Webklient to Hub Bluetooth
 
 participant HubSearcher

@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XPowerApi.Interfaces;
 using XPowerApi.Models.HubModels;
 
 namespace XPowerApi.Controllers
 {
-//[Authorize]
+    [Authorize]
     [Route("api/hub")]
     [ApiController]
     public class HubController : Controller
