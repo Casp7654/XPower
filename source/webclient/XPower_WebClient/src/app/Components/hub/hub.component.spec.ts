@@ -9,12 +9,11 @@ import { HubComponent } from './hub.component';
 
 describe('HubComponent', () => {
   let component: HubComponent;
-  const expectedDevice = {
-    name: "Hub 1",
-    mac: "macAddr"
-  };
+  const expectedDevice = new HubDevice()
+  expectedDevice.mac_address = "macAddr";
+  expectedDevice.name = "Hub 1";
+  
   let fixture: ComponentFixture<HubComponent>;
-  let expectedDevice = new HubDevice();
 
 
   beforeEach(async () => {
