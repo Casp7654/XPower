@@ -37,7 +37,8 @@ namespace XPowerApiTEST.Managers
         public UserManagerTest()
             => _subject = new UserManager(
                 _userProvider.Object,
-                _passwordHasher.Object
+                _passwordHasher.Object,
+                _tokenManager.Object
             );
 
         [Fact]
@@ -52,7 +53,7 @@ namespace XPowerApiTEST.Managers
                 Email = "test@test.dk",
                 Password = "Teste",
             };
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+            byte[] salt = _passwordHasher.Object.GenerateSalt();
             string hashedPassword = _passwordHasher.Object.HashPassword(input.Password, salt);
             Dictionary<string, string> dataArray = new Dictionary<string, string>()
             {
