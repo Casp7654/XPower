@@ -227,10 +227,9 @@ namespace XPowerApiTEST.Managers
             _tokenManager.Setup(s => s.GenerateToken(It.IsAny<UserCredentials>())).ReturnsAsync(() => userToken);
             _userProvider.Setup(s => s.GetUserByUsername(userDb.username))
                 .ReturnsAsync(() => userDb);
-            //Func<Task<string>> func = async () =>  await _subject.GetNewUserToken(userLogin);
             var actual = await _subject.GetNewUserToken(userLogin);
+
             //Assert
-            //await Assert.ThrowsAsync<>(func);
             Assert.True(string.IsNullOrEmpty(actual));
         }
     }

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using XPowerApi.Interfaces;
 using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserTokenController : Controller
@@ -20,13 +21,13 @@ namespace XPowerApi.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
-        [Route("ValidateToken")]
         /// <summary>
         /// Checks if users token is valid and returns accordingly.
         /// </summary>
         /// <param name="token"></param>
         /// <returns>OK if token is valid & Unauthorized if token is invalid</returns>
+        [HttpPost]
+        [Route("ValidateToken")]
         public async Task<IActionResult> ValidateToken(string token)
         {
 

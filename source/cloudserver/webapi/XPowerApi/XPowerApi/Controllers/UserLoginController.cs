@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using XPowerApi.Interfaces;
 using XPowerApi.Managers;
 using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserLoginController : Controller
@@ -19,16 +20,16 @@ namespace XPowerApi.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
-        [Route("Login")]
         /// <summary>
         /// Calls usermanager to validate user login info
         /// </summary>
         /// <param name="user"></param>
         /// <returns>New token if user is valid</returns>
+        [HttpPost]
+        [Route("Login")]
         public async Task<IActionResult> LoginUser(UserLogin user)
         {
-            // Check if token is provided
+            // Check if user is provided
             if (user == null)
                 return BadRequest("No user provided");
 
