@@ -35,8 +35,8 @@ namespace XPowerApi.Controllers
             try
             {
                 // Validates user with credentials and fetches a new token
-                string validUserToken = await _userManager.GetNewUserToken(user);
-                if (!string.IsNullOrEmpty(validUserToken))
+                var validUserToken = await _userManager.GetNewUserToken(user);
+                if (!string.IsNullOrEmpty(validUserToken.Token))
                     return Ok(validUserToken);
                 else
                     return Unauthorized("Username or Password Invalid");
