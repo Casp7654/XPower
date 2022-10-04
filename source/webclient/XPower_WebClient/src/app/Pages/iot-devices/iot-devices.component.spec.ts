@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
+import { Observable } from 'rxjs';
+import { SocketDevice } from 'src/app/Models/SocketDevice';
 import { IoTService } from 'src/app/Services/io-t.service';
 import { SocketDeviceService } from 'src/app/Services/socket-device.service';
 import { IotDevicesComponent } from './iot-devices.component';
@@ -13,7 +15,16 @@ describe('IotDevicesComponent', () => {
 
   beforeEach(async () => {
 
-    mockIoTService = jasmine.createSpyObj(['GetSocketDevicesFromHub', 'GetFilteredDevices']);
+    mockIoTService = jasmine.createSpyObj('IoTService', {
+      'GetSocketDevicesFromHub' : undefined, 
+      'GetFilteredDevices' : undefined
+    },
+    {
+      observableDevices$ : new Observable<SocketDevice[]>(o => {
+        o.next(undefined);
+        o.complete();
+      })
+    });
 
     mockSocketDeviceService = jasmine.createSpyObj(['TurnOff']);
 
