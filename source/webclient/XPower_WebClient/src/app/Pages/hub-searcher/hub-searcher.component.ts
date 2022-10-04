@@ -38,9 +38,6 @@ export class HubSearcherComponent implements OnInit {
 
   connected(value: any){
     this.isConnected = true;
-    console.log("connected: " + value);
-    console.log(this.isConnected);
-    console.log(this.getStyle());
   }
 
   // Connects to a hub using hub connection service
