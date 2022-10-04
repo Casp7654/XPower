@@ -91,7 +91,7 @@ namespace XPowerApi.Managers
         {
             byte[] salt = Convert.FromBase64String(validUser.Salt);
 
-            if (validUser.HashedPassword == SecuritySupport.HashPassword(user.Password, salt))
+            if (validUser.HashedPassword == _passwordHasher.HashPassword(user.Password, salt))
                 return true;
 
             return false;

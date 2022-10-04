@@ -88,7 +88,7 @@ namespace XPowerApiTEST.Managers
         }
 
         [Fact]
-        public async void GetUserById_ShouldReturnHubObject()
+        public async void GetUserById_ShouldReturnUserObject()
         {
             //Arrange
             int userId = 1;
@@ -127,8 +127,8 @@ namespace XPowerApiTEST.Managers
         public async Task GetNewUserToken_ShouldReturnNewToken()
         {
             //Arrange
-            byte[] salt = SecuritySupport.GenerateSalt();
-            string hashed_password = SecuritySupport.HashPassword("SecretSecret", salt);
+            byte[] salt = _passwordHasher.Object.GenerateSalt();
+            string hashed_password = _passwordHasher.Object.HashPassword("SecretSecret", salt);
             string expected = "Token123";
             UserDb userDb = new UserDb()
             {
@@ -165,8 +165,9 @@ namespace XPowerApiTEST.Managers
         public async Task GetNewUserToken_ShouldReturnNullOrEmptyStringWhenPasswordIsWrong()
         {
             //Arrange
-            byte[] salt = SecuritySupport.GenerateSalt();
-            string hashed_password = SecuritySupport.HashPassword("SecretSecret", salt);
+            PasswordHasher passwordHasher = new();
+            byte[] salt = passwordHasher.GenerateSalt();
+            string hashed_password = passwordHasher.HashPassword("SecretSecret", salt);
             UserDb userDb = new UserDb()
             {
                 id = "user:1",
@@ -180,7 +181,7 @@ namespace XPowerApiTEST.Managers
             UserLogin userLogin = new UserLogin()
             {
                 Username = "PeterParker",
-                Password = "SecretSecret1"
+                Password = "secretsuperPassword"
             };
             UserToken userToken = new UserToken()
             {
@@ -201,8 +202,8 @@ namespace XPowerApiTEST.Managers
         public async Task GetNewUserToken_ShouldReturnNullOrEmptyStringWhenUsernameIsWrong()
         {
             //Arrange
-            byte[] salt = SecuritySupport.GenerateSalt();
-            string hashed_password = SecuritySupport.HashPassword("SecretSecret", salt);
+            byte[] salt = _passwordHasher.Object.GenerateSalt();
+            string hashed_password = _passwordHasher.Object.HashPassword("SecretSecret", salt);
             UserDb userDb = new UserDb()
             {
                 id = "user:1",

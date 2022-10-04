@@ -13,7 +13,7 @@ namespace XPowerApi.Supporters
 
         public string SaltToString(byte[] salt)
         {
-            return System.Text.Encoding.UTF8.GetString(salt);
+            return Convert.ToBase64String(salt);
         }
 
         public string HashPassword(string password, byte[] salt)
