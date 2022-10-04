@@ -18,6 +18,7 @@ namespace XPowerApi.Managers
             _tokenManager = tokenManager;
         }
 
+        /// <inheridDoc />
         public async Task<User> CreateUser(UserCreate userCreate)
         {
             // Generate Salt
@@ -36,11 +37,7 @@ namespace XPowerApi.Managers
             return (await _userProvider.CreateUser(dataArray)).ConvertToUser();
         }
 
-        /// <summary>
-        /// Fetches a new user token, if user is valid.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns>A new user token</returns>
+        /// <inheridDoc />
         public async Task<string> GetNewUserToken(UserLogin user)
         {
             UserCredentials validUser = await GetUserCredentialsByUsername(user.Username);
@@ -54,17 +51,24 @@ namespace XPowerApi.Managers
             return string.Empty;
         }
 
+        /// <inheridDoc />
         public async Task<User> GetUserById(int id)
         {
             return (await _userProvider.GetUserById(id)).ConvertToUser();
         }
 
+        /// <inheridDoc />
         public async Task<UserCredentials> GetUserCredentialsByUsername(string username)
         {
             return (await _userProvider.GetUserByUsername(username)).ConvertToUserCredentials();
         }
 
-        // Validates user credentials.
+        /// <summary>
+        /// Validates the given usercredentials by checking if the password matches. 
+        /// </summary>
+        /// <param name="validUser">The usercredentials to check against</param>
+        /// <param name="user">The user to check against</param>
+        /// <returns>True if valid, false if not.</returns>
         private bool ValidateCredentials(UserCredentials validUser, UserLogin user)
         {
 
@@ -83,10 +87,9 @@ namespace XPowerApi.Managers
         /// The other contains a plain text password.
         /// </summary>
         /// User containing a hashed password and a salt
-        /// <param name="validUser"></param>
-        /// User with plain text password
-        /// <param name="user"></param>
-        /// <returns> true if passwords match after being hashed with same salt.</returns>
+        /// <param name="validUser">The user with hashed password.</param>
+        /// <param name="user">The user with the plain password</param>
+        /// <returns> True if passwords match after being hashed with same salt.</returns>
         private bool MatchPassword(UserCredentials validUser, UserLogin user)
         {
             byte[] salt = Convert.FromBase64String(validUser.Salt);

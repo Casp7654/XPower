@@ -18,6 +18,7 @@ namespace XPowerApi.Managers
             _secret = _configuration["JWT:Key"];
         }
 
+        /// <inheridDoc />
         public Task<UserToken> FromTokenString(string token)
         {
             var principal = GetPrincipal(token);
@@ -46,6 +47,7 @@ namespace XPowerApi.Managers
             return Task.Run(() => userToken);
         }
 
+        /// <inheridDoc />
         public Task<UserToken> GenerateToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
@@ -78,6 +80,7 @@ namespace XPowerApi.Managers
             return Task.Run(() => t);
         }
 
+        /// <inheridDoc />
         public ClaimsPrincipal GetPrincipal(string token)
         {
             try
@@ -106,6 +109,7 @@ namespace XPowerApi.Managers
         }
 
 
+        /// <inheridDoc />
         public async Task<bool> ValidateToken(string token)
         {
             string username = null;

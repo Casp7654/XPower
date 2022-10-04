@@ -13,6 +13,7 @@ namespace XPowerApi.Managers
             _hubProvider = hubProvider;
         }
 
+        /// <inheridDoc />
         public async Task<Hub> CreateHub(HubCreate hubCreate)
         {
             // Create HomeGroup DB Object
@@ -27,11 +28,13 @@ namespace XPowerApi.Managers
             return (await _hubProvider.CreateHub(dataArray)).ConvertToHub();
         }
 
+        /// <inheridDoc />
         public async Task<Hub> GetHubById(int id)
         {
             return (await _hubProvider.GetHubById(id)).ConvertToHub();
         }
 
+        /// <inheridDoc />
         public async Task<List<Hub>> GetHubsByHomeId(int homeId)
         {
             List<Hub> hubs = new List<Hub>();
@@ -41,6 +44,7 @@ namespace XPowerApi.Managers
             return hubs;
         }
 
+        /// <inheridDoc />
         public async Task<List<Hub>> GetHubsByUserId(int userId)
         {
             List<Hub> hubs = new List<Hub>();
