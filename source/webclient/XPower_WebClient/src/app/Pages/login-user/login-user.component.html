@@ -1,0 +1,27 @@
+<!-- Remove 1 when testing colors -->
+<div class="container">
+
+    <form class="formContainer"  [formGroup]="credentials" (ngSubmit)="onSubmit()">
+
+    <mat-form-field class="custom-button"
+      [appearance]="credentials.value.apariencia"
+      [floatLabel]="credentials.value.floatLabel">
+      <mat-label>Brugernavn</mat-label>
+      <input formControlName="username" matInput placeholder="" required>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field class="custom-button"
+      [appearance]="credentials.value.apariencia"
+      [floatLabel]="credentials.value.floatLabel">
+      <mat-label>Adgangskode</mat-label>
+      <input type="password" formControlName="password" matInput placeholder="" required>
+    </mat-form-field>
+
+<br>
+
+<button type="submit" [disabled]="!credentials.valid" id="submitBtn" ng-disabled="credentials.$invalid" mat-button color="primary">Opret bruger</button>
+
+</form>
+</div>
