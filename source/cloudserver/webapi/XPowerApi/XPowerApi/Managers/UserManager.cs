@@ -38,17 +38,17 @@ namespace XPowerApi.Managers
         }
 
         /// <inheridDoc />
-        public async Task<string> GetNewUserToken(UserLogin user)
+        public async Task<UserToken> GetNewUserToken(UserLogin user)
         {
             UserCredentials validUser = await GetUserCredentialsByUsername(user.Username);
 
             if (ValidateCredentials(validUser, user))
             {
                 UserToken userToken = await _tokenManager.GenerateToken(validUser);
-                return userToken.Token;
+                return userToken;
             }
 
-            return string.Empty;
+            return new UserToken();
         }
 
         /// <inheridDoc />

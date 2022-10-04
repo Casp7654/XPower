@@ -29,7 +29,8 @@ namespace XPowerApi.Interfaces
         /// Generates a new user token from the specified login data.
         /// </summary>
         /// <param name="user">The user data to generate from.</param>
-        /// <returns>The token as a string.</returns>
-        Task<string> GetNewUserToken(UserLogin user);
+        /// <returns>The UserToken Object.</returns>
+        Task<UserToken> GetNewUserToken(UserLogin user);
+
     }
 }

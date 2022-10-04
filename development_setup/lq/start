@@ -6,7 +6,7 @@ run_webapi() {
     echo -e "\nStarting WebApi Container"
     docker run --rm -itd \
         --network xpower-cloud --ip 172.32.0.2 \
-        --mount type=bind,src="$(pwd)/resource/symblnk/webapi",dst=/root/source \
+        --mount type=bind,src="$(pwd)/../source/cloudserver/webapi/XPowerApi/XPowerApi",dst=/root/source \
         --mount type=bind,src="$(pwd)/resource/volumes/webapi/backups",dst=/root/backups \
         --name xpower-webapi \
         xpower-webapi
