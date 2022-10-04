@@ -1,3 +1,3 @@
 class SocketData:
     def __init__(self, turnedOn : bool) -> None:
-        self.TurnedOn : bool
+        self.TurnedOn : bool = turnedOn

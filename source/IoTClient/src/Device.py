@@ -6,4 +6,4 @@ class Device:
         self.ClientId : str = clientId
         self.StatusId : StatusType = statusId
         self.TypeId : DeviceType = typeId
-        self.MacAdress : str = macAdress
+        self.MacAddress : str = macAdress

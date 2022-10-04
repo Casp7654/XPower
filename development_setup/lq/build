@@ -9,7 +9,7 @@ echo -e "\nBuilding WebApi"
 docker build . --tag xpower-webapi --file "./resource/dockerfiles/webapi.Dockerfile"
 
 echo -e "\nBuilding IoT Handler"
-docker build . --tag xpower-iot_handler --file "./resource/dockerfiles/iot_handler.Dockerfile"
+#docker build . --tag xpower-iot_handler --file "./resource/dockerfiles/iot_handler.Dockerfile"
 
 echo -e "\nBuilding Hosted PWA"
 docker build . --tag xpower-hosted_pwa --file "./resource/dockerfiles/hosted_pwa.Dockerfile"

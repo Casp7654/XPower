@@ -18,7 +18,8 @@ export class HubConnServiceService {
 
       return this.ble
         .discover$({
-          acceptAllDevices: true,
+          acceptAllDevices: false,
+          filters: [{services: [HubConnServiceService.GATT_PRIMARY_SERVICE]}],
           optionalServices: [HubConnServiceService.GATT_PRIMARY_SERVICE],
         }).pipe(
           mergeMap(gatt => {
@@ -27,8 +28,7 @@ export class HubConnServiceService {
               HubConnServiceService.GATT_PRIMARY_SERVICE
             );
           })).pipe(
-            mergeMap(primaryService => {             
-             
+            mergeMap(primaryService => {
             return this.ble.getCharacteristic$(primaryService,  HubConnServiceService.GATT_CHARACTERISTIC_CONNECTION); 
           })).pipe(
             mergeMap(characteristic => {

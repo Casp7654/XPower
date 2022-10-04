@@ -5,9 +5,6 @@ mkdir resource\volumes\iot\backups
 echo "Building WebApi"
 docker build . --tag xpower-webapi --file "%cd%\resource\dockerfiles\webapi.Dockerfile"
 
-echo "Building IoT Handler"
-docker build . --tag xpower-iot_handler --file "%cd%\resource\dockerfiles\iot_handler.Dockerfile"
-
 echo "Building Hosted PWA"
 docker build . --tag xpower-hosted_pwa --file "%cd%\resource\dockerfiles\hosted_pwa.Dockerfile"
 

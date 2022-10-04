@@ -1,5 +1,5 @@
 <!-- Remove 1 when testing colors -->
-<div class="container" [ngStyle]="{'display' : connectedField}">
+<div class="container" [ngStyle]="{'display' : getStyle()}">
   <form class="formContainer" [formGroup]="credentials" (ngSubmit)="sendinput()">
     <mat-form-field class="custom-button"
     [hideRequiredMarker]="credentials.value.hideRequired"
@@ -22,4 +22,4 @@
 </form>
 </div>
 
-<button (click)="connect()" id="ConnectButton" mat-button color="primary" [ngStyle]="{'display' : !connectedField}">Søg igen</button>
+<button (click)="connect()" id="ConnectButton" mat-button color="primary" [ngStyle]="{'display' : !getStyle()}">Søg igen</button>

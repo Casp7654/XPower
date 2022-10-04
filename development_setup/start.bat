@@ -1,6 +1,32 @@
-docker run --rm -itd --name xpower-webapi --network xpower-cloud --ip 172.32.0.2 --mount type=bind,src="%cd%\resource\volumes\webapi\backups",dst=/root/backups --mount type=bind,src="%cd%\resource\winlnk\webapi",dst=/root/source/webapi xpower-webapi
-docker run --rm -itd --name xpower-iot_handler --network xpower-cloud --ip 172.32.0.3 --mount type=bind,src="%cd%\resource\winlnk\handler",dst=/root/source/handler xpower-iot_handler
-docker run --rm -itd --name xpower-pwa --network xpower-cloud --ip 172.32.0.4 --mount type=bind,src="%cd%\resource\winlnk/pwa",dst=/root/source/pwa xpower-hosted_pwa
-docker run --rm -itd --name xpower-hub1 --network xpower-home --ip 172.64.0.254 --mount type=bind,src="%cd%\resource\volumes/hub/backups",dst=/root/backups --mount type=bind,src="%cd%\resource\winlnk\hub",dst=/root/source/hub xpower-hub
-docker run --rm -itd --name xpower-iot1 --network xpower-home --mount type=bind,src="%cd%\resource\volumes/iot/backups",dst=/root/backups --mount type=bind,src="%cd%\resource\winlnk\iot",dst=/root/source/iot xpower-iot
-docker run --rm -itd --name xpower-iot2 --network xpower-home --mount type=bind,src="%cd%\resource\volumes/iot/backups",dst=/root/backups --mount type=bind,src="%cd%\resource\winlnk\iot",dst=/root/source/iot xpower-iot
+echo -e "\nStarting HUB Container"
+    docker run --rm -itd ^
+        --network xpower-home --ip 172.64.0.254 ^
+        --mount type=bind,src="%cd%/../source/hub/src",dst=/root/source ^
+        --mount type=bind,src="%cd%/resource/volumes/hub/backups",dst=/root/backups ^
+        --name xpower-hub ^
+        -p 1883:1883/tcp ^
+        xpower-hub
+
+echo -e "\nStarting web api Container"
+docker run --rm -itd ^
+        --network xpower-cloud --ip 172.32.0.2 ^
+        --mount type=bind,src="%cd%/resource/volumes/webapi/backups",dst=/root/backups ^
+        --mount type=bind,src="%cd%/../source/cloudserver/webapi/XPowerApi/XPowerApi",dst=/root/source ^
+        --name xpower-webapi ^
+        -p 5083:443 ^
+        xpower-webapi
+
+echo -e "\nStarting Hosted PWA Container"
+    docker run --rm -itd ^
+        --network xpower-cloud --ip 172.32.0.4 ^
+        --mount type=bind,src="%cd%/../source/webclient/XPower_WebClient",dst=/root/source ^
+        --name xpower-hosted_pwa ^
+        -p 8080:80 ^
+        xpower-hosted_pwa
+
+echo -e "\nStarting IoT Device Container"
+    docker run --rm -itd ^
+    --network xpower-home ^
+        --mount type=bind,src="%cd%/../source/IoTClient",dst=/root/source ^
+        --name xpower-iot1 ^
+        xpower-iot

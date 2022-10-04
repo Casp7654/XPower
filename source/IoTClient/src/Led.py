@@ -4,7 +4,12 @@ import os
 class Led:
     def __init__(self, gpio : int) -> None:
         """Constructor for led"""
-        self.set_gpio(gpio)
+        try:
+            self.set_gpio(gpio)
+        except:
+            self.__pin = gpio
+            self.__turned_on = False
+            
 
     def set_gpio(self, gpio : int) -> None:
         """Sets the gpio pin number and turns it off
@@ -34,13 +39,16 @@ class Led:
             turn_on (bool): The new state
         """
         if os.name != "posix": return
-        
-        if turn_on:
-            self.__gpio.on()
-        else:
-            self.__gpio.off()
-
         self.__turned_on = turn_on
+        
+        try:
+            if turn_on:
+                self.__gpio.on()
+            else:
+                self.__gpio.off()
+        except:
+            return
+
 
     def get_state(self) -> bool:
         """ Returns:

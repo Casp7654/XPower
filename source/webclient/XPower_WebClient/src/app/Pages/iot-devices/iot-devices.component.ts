@@ -25,10 +25,12 @@ export class IotDevicesComponent implements OnInit {
   toggle = false;
 
   constructor(private iot_service: IoTService,
-    private socketDeviceService: SocketDeviceService) 
+    private socketDeviceService: SocketDeviceService)
   {
     this.iot_service.GetSocketDevicesFromHub("");
     this.devices = this.iot_service.GetFilteredDevices(SocketDevice);
+    this.iot_service.observableDevices$.subscribe(
+      (value) => this.devices = value);
     this.changeColumnsFromWidth(window.innerWidth);
   }
 
@@ -47,9 +49,9 @@ export class IotDevicesComponent implements OnInit {
   */
   OnToggleDeviceClicked(device : SocketDevice): void {
     if (this.toggle)
-      this.socketDeviceService.TurnOff("Rene");
+      this.socketDeviceService.TurnOff(device.name);
     else
-      this.socketDeviceService.TurnOn("Rene");
+      this.socketDeviceService.TurnOn(device.name);
 
     this.toggle = !this.toggle;
   }

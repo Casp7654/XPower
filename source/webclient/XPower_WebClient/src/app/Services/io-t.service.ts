@@ -7,6 +7,7 @@ import { DeviceStatus } from '../Models/Dtos/DeviceStatus';
 import { DeviceType } from '../Models/Dtos/DeviceType';
 import { SocketDeviceStatus } from '../Models/Dtos/SocketDeviceStatus';
 import { DeviceStatusResponse } from '../Models/Dtos/DeviceStatusResponse';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import { DeviceStatusResponse } from '../Models/Dtos/DeviceStatusResponse';
 export class IoTService {
 
   private devices: Array<IoTDevice> = new Array<IoTDevice>();
+  public observableDevices$: Observable<SocketDevice[]> = of(this.devices as Array<SocketDevice>);
 
   constructor(private mqttService: MqttClientService) {
     mqttService.Subscribe("StatusResponse/all", (msg: string) => this.onIoTStatusResponse(msg));
