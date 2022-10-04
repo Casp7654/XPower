@@ -45,7 +45,7 @@ export class RegisterUserComponent implements OnInit {
     }
     )
   }
-
+  // Create a user from values of credentials form
   formToUser() : User
   {
     return new User(
