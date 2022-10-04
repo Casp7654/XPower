@@ -6,7 +6,6 @@ using XPowerApi.Models.UserModels;
 
 namespace XPowerApi.Controllers
 {
-    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserLoginController : Controller
