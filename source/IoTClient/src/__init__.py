@@ -4,21 +4,26 @@ from ClientManager import ClientManager
 from ConsoleLogger import ConsoleLogger
 from BasePage import BasePage
 from LoggingPage import LoggingPage
+from StatusManager import StatusManager
+from StatusPage import StatusPage
 
 ## Main
 def main():
     logger = ConsoleLogger("ClientLogger")
     clientManager = ClientManager("clients.json", logger)
-    
+    statusManager = StatusManager(logger)
+
     devPage = DevicePage(clientManager)
+    statusPage = StatusPage(statusManager)
     loggerPage = LoggingPage(logger)
 
     BasePage.register_pages({
         "device_page": devPage,
+        "status_page" : statusPage,
         "logging_page": loggerPage
     })
 
-    BasePage.change_page("device_page")
+    BasePage.change_page("status_page")
 
     while(1):
         page = BasePage.get_page()

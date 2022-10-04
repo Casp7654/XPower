@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { HubDevice } from 'src/app/Models/HubDevice';
 
 import { HubComponent } from './hub.component';
@@ -11,15 +14,22 @@ describe('HubComponent', () => {
     mac: "macAddr"
   };
   let fixture: ComponentFixture<HubComponent>;
+  let expectedDevice = new HubDevice();
+
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HubComponent ]
+      declarations: [ HubComponent ],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatListModule ]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(HubComponent);
     component = fixture.componentInstance;
-    component.device = new HubDevice();
+    component.device = expectedDevice;
     fixture.detectChanges();
   });
 
@@ -40,24 +50,19 @@ describe('HubComponent', () => {
     .toEqual(1);
   });
 
-  it('should display name for hub', () => {
-
-    component.device.name = expectedDevice.name;
-    fixture.detectChanges();
+  it('should have device name rendered', () => {
 
     const nativeElements: HTMLElement = fixture.nativeElement;
-    
+
     expect(nativeElements.textContent)
     .toContain(expectedDevice.name);
   });
 
-  it('should display mac address for hub', () => {
+  it('should have device mac rendered', () => {
 
-    component.device.mac_address = expectedDevice.mac;
-    fixture.detectChanges();
     const nativeElements: HTMLElement = fixture.nativeElement;
 
     expect(nativeElements.textContent)
-    .toContain(expectedDevice.mac);
+    .toContain(expectedDevice.mac_address);
   });
 });

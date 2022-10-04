@@ -1,0 +1,8 @@
+curl -X POST \
+	-u "root:root" \
+	-H "ns: xpower" \
+	-H "db: webapi" \
+	-H "Content-Type: application/json" \
+	-d "$1" \
+	http://172.32.0.2:8000/sql
+echo ""
