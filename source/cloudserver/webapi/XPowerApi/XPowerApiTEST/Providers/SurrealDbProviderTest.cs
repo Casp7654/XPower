@@ -26,17 +26,17 @@ namespace XPowerApiTEST.Providers
         public async Task MakeRawResult_ShouldReturnSurrealDbResultObjectWithData()
         {
             //Arrange
-            var list = new List<SurrealDbResult>() {new SurrealDbResult()
+            var data = new List<SurrealDbResult>() {new SurrealDbResult()
             {
                 time = DateTime.Now.ToString(),
                 status = "Ok",
                 result = new List<object>() { "" }
             }};
-            var expected = JsonSerializer.Serialize(list.First());
+            var expected = JsonSerializer.Serialize(data.First());
             string actual;
 
             HttpResponseMessage responseMessage = new(HttpStatusCode.OK);
-            responseMessage.Content = new StringContent(JsonSerializer.Serialize(list));
+            responseMessage.Content = new StringContent(JsonSerializer.Serialize(data));
 
             //Act
             _handler.Protected()
