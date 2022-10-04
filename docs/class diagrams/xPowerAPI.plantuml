@@ -1,5 +1,5 @@
 @startuml API
-left to right direction
+top to bottom direction
 UserLoginController o-- IUserManager
 UserLoginController --> UserLogin
 class UserLoginController{
@@ -93,12 +93,40 @@ interface IUserManager{
     +GetUserCredentialsByUsername(username : string) : Task<UserCredentials>
     +GetNewUserToken(user : UserLogin) : Task<string>
 }
+
+UserManager ..|> IUserManager
+UserManager o-- IUserProvider
+UserManager o-- ITokenManager
+UserManager o-- IPasswordHasher
+class UserManager{
+    -_userProvider : IUserProvider
+    -_tokenManager{readonly} : ITokenManager<UserToken>
+    -_passwordHasher : IPasswordHasher
+    +UserManager(userProvider : IUserProvider, passwordHasher : IPasswordHasher, tokenManager : ITokenManager<UserToken>)
+    -ValidateCredentials(validUser : UserCredentials, user UserLogin) : bool
+    -MatchPassword(validUser : UserCredentials, user UserLogin) : bool
+}
+IUserProvider --> UserDb
+interface IUserProvider{
+    +CreateUser(dataArray : Dictionary<string, string>) : Task<UserDb>
+    +GetUserById(id : int) : Task<UserDb>
+    +GetUserByUsername(username : string) : Task<UserDb>
+}
+
 ITokenManager --> User
 ITokenManager --> TToken
-interface ITokenManager {
+interface ITokenManager<TToken> {
     +GenerateToken(user User) : Task<TToken>
     +ValidateToken(token : string) : Task<bool>
     +FromTokenString(token : string) : Task <TToken>
+}
+TokenManager ..|> ITokenManager
+TokenManager --> UserToken
+class TokenManager<UserToken> {
+    -_configuration{readonly} : IConfiguration
+    -_secret{readonly} : string
+    +TokenManager(configuration : IConfiguration)
+    +GetPrincipal(token : string) : ClaimsPrincipal
 }
 
 IHubManager --> HubCreate
@@ -109,6 +137,22 @@ interface IHubManager{
     +GetHubsByHomeId(homeId : int) : Task<List<Hub>>
     +GetHubsByUserId(userId : int) : Task<List<Hub>>
 }
+
+HubManager ..|> IHubManager
+HubManager o-- IHubProvider
+class HubManager {
+    -_hubProvider{readonly} : IHubProvider
+    +HubManager(hubProvider : IHubProvider)
+}
+
+IHubProvider --> HubDb
+interface IHubProvider{
+    +CreateHub(dataArray : Dictionary<string,string>) : Task<HubDb>
+    +GetHubById(id : int) : Task<HubDb>
+    +GetHubsByHomeId(homeId : int) : Task<HubDb>
+    +GetHubsByUserId(userId : int) : Task<HubDb>
+}
+
 IHomeManager --> HomeCreate
 IHomeManager --> Home
 IHomeManager --> RelateObject
@@ -118,11 +162,65 @@ interface IHomeManager{
     +RelateUserToHome(userId : int, homeId : int) : Task<RelateObject>
 }
 
+
+IHomeProvider --> HomeDb
+IHomeProvider --> RelateObject
+interface IHomeProvider{
+    +CreateHome(dataArray : Dictionary<string, string>) : Task<HomeDb>
+    +GetHomeById(id : int) : Task<HomeDb>
+    +RelateUserToHome(userId : int, homeId : int) : Task<RelateObject>
+}
+HomeProvider o-- ISurrealDbProvider
+HomeProvider ..|> IHomeProvider
+class HomeProvider{
+    -_dbProvider : ISurrealDbProvider
+    +HomeProvider(dbProvider : ISurrealDbProvider)
+}
+
+HubProvider o-- ISurrealDbProvider
+HubProvider ..|> IHubProvider
+class HubProvider{
+    -_dbProvider : ISurrealDbProvider
+    +HubProvider(dbProvider : ISurrealDbProvider)
+}
+UserProvider o-- ISurrealDbProvider
+UserProvider ..|> IUserProvider
+class UserProvider{
+    -_dbProvider : ISurrealDbProvider
+    +UserProvider(dbProvider : ISurrealDbProvider)
+}
+HomeManager o-- IHomeProvider
+HomeManager ..|> IHomeManager
+class HomeManager{
+    -_homeProvider : IHomeProvider
+    +HomeManager(homeProvider : IHomeProvider)
+}
+
+interface IPasswordHasher{
+    +GenerateSalt() : byte[]
+    +SaltToString(salt : byte[]) : string
+    +HashPassword(password : string, salt : byte[]) : string
+}
+ISurrealDbProvider --> SurrealDbResult
+ISurrealDbProvider --> RelateObject
+interface ISurrealDbProvider{
+    +MakeRawResult(sqlString : string) : Task<SurrealDbResult>
+    +Create<T>(tableName : string, dataArray : Dictionary<string, string>) where T : new()
+    +Relate(fromId : string, toId : string, byName : string) : Task<RelateObject>
+    +GetNextId(tableName : string) : Task<int>
+    +GetOneById<T>(tableName : string, id : int) : Task<T>
+    +GetRelation(subjectId : string, relationName : string, alias : string) : Task<RelateObject>
+    +GetOneFromInsideAnother<T>(tableName : string, baseTable : string, targetId : string) : Task<List<T>>
+    +GetOneFromInsideARelation<T>(tableName : string, baseTable : string, relationTable : string, targetId : string) : Task<List<T>>
+    +GetOneByField<T>(tableName : string, field : string, value : string) : Task<T>
+}
+
 class UserLogin
 {
     +Username : string
     +Password : string
 }
+
 UserToken --|> User
 class UserToken{
     +Token : string
@@ -135,6 +233,7 @@ class User {
     +FirstName : string
     +LastName : string
 }
+
 UserCredentials --|> User
 class UserCredentials{
     +Salt : string
@@ -148,6 +247,20 @@ class UserCreate{
     +FirstName : string
     +LastName : string
 }
+UserDb o--> User
+UserDb o--> UserCredentials
+class UserDb{
+    +id : string
+    +email : string
+    +firstname : string
+    +lastname : string
+    +username : string
+    +HashedPassword : string
+    +salt : string
+    +ConvertToUser() : User
+    +ConvertToUserCredentials() : UserCredentials
+}
+
 class Hub {
     +Id : int
     +Name: string
@@ -163,8 +276,24 @@ class HubCreate{
     +PrivateAddress : string
     +PublicAddress : string
 }
+HubDb o--> Hub
+class HubDb{
+    +id : string
+    +name : string
+    +mac : string
+    +home : string
+    +private_addr : string
+    +public_addr : string
+    +ConverToHub() : Hub
+}
 class HomeCreate{
     +Name: string
+}
+HomeDb o--> Home
+class HomeDb{
+    +id : string
+    +name : string
+    +ConvertToHome() : Home
 }
 class Home{
     +Id : int
@@ -176,5 +305,9 @@ class RelateObject{
     +Out : string
     +RelateObject(Id : string, In : string, Out : string)
 }
-
+class SurrealDbResult{
+    +time : string
+    +status : string
+    +result : List<object>
+}
 @enduml
