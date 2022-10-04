@@ -1,1 +1,1 @@
-cd /root/source/ && dotnet run
+cd /root/source/ && dotnet run --launch-profile "Docker"
