@@ -23,9 +23,9 @@ export class HeaderComponent implements OnInit {
     this.sidenavOpen.emit();
   };
 
-  // Remove localstorage token and user and move to default page
   public onLogout(): void {
     this.logoutservice.logoutUser();
     this.router.navigate([""]);
   }
+
 }

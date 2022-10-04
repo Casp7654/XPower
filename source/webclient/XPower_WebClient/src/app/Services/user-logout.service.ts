@@ -7,10 +7,10 @@ export class UserLogoutService {
 
   constructor() { }
 
-  // Remove local storage data for that user
   logoutUser():boolean {
-    localStorage.removeItem("Token");
-    localStorage.removeItem("User");
+    //localStorage.clear();
+    localStorage.removeItem("xpowerToken");
+    localStorage.removeItem("xpowerUser");
     return true;
   }
 }
