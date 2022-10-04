@@ -13,16 +13,19 @@ namespace XPowerApi.Providers
             _dbProvider = dbProvider;
         }
 
+        /// <inheritDoc />
         public async Task<HomeDb> CreateHome(Dictionary<string, string> dataArray)
         {
             return (await _dbProvider.Create<HomeDb>("home", dataArray));
         }
 
+        /// <inheritDoc />
         public async Task<HomeDb> GetHomeById(int id)
         {
             return (await _dbProvider.GetOneById<HomeDb>("home", id));
         }
-
+        
+        /// <inheritDoc />
         public async Task<RelateObject> RelateUserToHome(int userId, int homeId)
         {
             return (await _dbProvider.Relate($"user:{userId}", $"home:{homeId}", "homeusers"));

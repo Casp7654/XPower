@@ -13,7 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+// Add swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -42,7 +44,7 @@ builder.Services.AddSwaggerGen(c =>
         });
 });
 
-
+// Add scoped services.
 builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<IHomeManager, HomeManager>();
 builder.Services.AddScoped<IHubManager, HubManager>();
@@ -53,6 +55,7 @@ builder.Services.AddScoped<IHubProvider, HubProvider>();
 builder.Services.AddScoped<ISurrealDbProvider, SurrealDbProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
+// Add authentication for bearer tokens.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.RequireHttpsMetadata = false;
@@ -68,8 +71,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-//builder.Services.AddHttpClient();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -79,6 +80,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Add cors.
 app.UseCors(policyBuilder =>
 {
     policyBuilder
@@ -87,6 +89,7 @@ app.UseCors(policyBuilder =>
         .AllowAnyHeader();
 });
 
+// Let application use controlls, authentication, authorization and redirects.
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
