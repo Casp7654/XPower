@@ -14,7 +14,14 @@ export class UserLoginService {
 
   constructor(private http: HttpClient) { }
 
-  ValidateLoginUser(userLogin: UserLogin) {
-    return this.http.post<UserLogin>(`${environment.apiServer.url}api/user/Login`,userLogin);
+  // Login User
+  ValidateLoginUser(userLogin: UserLogin): Observable<UserToken> {
+    return this.http.post<UserToken>(`${environment.apiServer.url}api/user/Login`, userLogin);
+  }
+
+  // Save user Login and user in local storage
+  saveLoggedinUser(loggedinUser: UserToken) {
+    // save user login in local storage
+    localStorage.setItem("Token", loggedinUser.token);
   }
 }

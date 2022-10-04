@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterUserComponent implements OnInit {
   credentials: FormGroup;
-  
+
   constructor(private router: Router, public userSerrvice : UserRegisterService, fb: FormBuilder)
   {
       this.credentials = fb.group({
@@ -28,9 +28,9 @@ export class RegisterUserComponent implements OnInit {
 
   onSubmit(){
     const user = this.formToUser();
-    
+
     this.userSerrvice.createUser(user).subscribe(createdUser => {
-      
+
       // Save user data
       this.userSerrvice.saveCreatedUser(createdUser);
 
@@ -56,7 +56,9 @@ export class RegisterUserComponent implements OnInit {
       this.credentials.value.lastname
     );
   }
-  
+  onLogin(){
+    this.router.navigate(["/login"]);
+  }
   ngOnInit(): void {
   }
 
