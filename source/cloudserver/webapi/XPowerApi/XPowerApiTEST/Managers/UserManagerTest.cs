@@ -129,7 +129,6 @@ namespace XPowerApiTEST.Managers
             //Arrange
             byte[] salt = _passwordHasher.Object.GenerateSalt();
             string hashed_password = _passwordHasher.Object.HashPassword("SecretSecret", salt);
-            string expected = "Token123";
             UserDb userDb = new UserDb()
             {
                 id = "user:1",
@@ -154,11 +153,12 @@ namespace XPowerApiTEST.Managers
             _tokenManager.Setup(s => s.GenerateToken(It.IsAny<UserCredentials>())).ReturnsAsync(() => userToken);
             _userProvider.Setup(s => s.GetUserByUsername(userLogin.Username))
                 .ReturnsAsync(() => userDb);
-            string actual = await _subject.GetNewUserToken(userLogin);
+            var actual = await _subject.GetNewUserToken(userLogin);
 
             //Assert
-            Assert.NotEmpty(actual);
-            Assert.True(actual == expected);
+            Assert.NotNull(actual);
+            Assert.IsType<UserToken>(actual);
+            Assert.True((actual as UserToken) == userToken);
         }
 
         [Fact]
@@ -192,10 +192,12 @@ namespace XPowerApiTEST.Managers
             _tokenManager.Setup(s => s.GenerateToken(It.IsAny<UserCredentials>())).ReturnsAsync(() => userToken);
             _userProvider.Setup(s => s.GetUserByUsername(userLogin.Username))
                 .ReturnsAsync(() => userDb);
-            string actual = await _subject.GetNewUserToken(userLogin);
+            var actual = await _subject.GetNewUserToken(userLogin);
 
             //Assert
-            Assert.True(string.IsNullOrEmpty(actual));
+            Assert.NotNull(actual);
+            Assert.IsType<UserToken>(actual);
+            Assert.True(string.IsNullOrEmpty((actual as UserToken).Token));
         }
 
         [Fact]
@@ -221,17 +223,19 @@ namespace XPowerApiTEST.Managers
             };
             UserToken userToken = new UserToken()
             {
-                Token = "Token123"
+                Token = ""
             };
 
             //Act
             _tokenManager.Setup(s => s.GenerateToken(It.IsAny<UserCredentials>())).ReturnsAsync(() => userToken);
-            _userProvider.Setup(s => s.GetUserByUsername(userDb.username))
+            _userProvider.Setup(s => s.GetUserByUsername(userLogin.Username))
                 .ReturnsAsync(() => userDb);
             var actual = await _subject.GetNewUserToken(userLogin);
 
             //Assert
-            Assert.True(string.IsNullOrEmpty(actual));
+            Assert.NotNull(actual);
+            Assert.IsType<UserToken>(actual);
+            Assert.True(string.IsNullOrEmpty((actual as UserToken).Token));
         }
     }
 }
