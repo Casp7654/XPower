@@ -28,8 +28,7 @@ export class HubConnServiceService {
               HubConnServiceService.GATT_PRIMARY_SERVICE
             );
           })).pipe(
-            mergeMap(primaryService => {             
-             
+            mergeMap(primaryService => {
             return this.ble.getCharacteristic$(primaryService,  HubConnServiceService.GATT_CHARACTERISTIC_CONNECTION); 
           })).pipe(
             mergeMap(characteristic => {

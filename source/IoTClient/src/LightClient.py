@@ -1,7 +1,12 @@
 from __future__ import annotations
+from os import stat
 import paho.mqtt.client as mqtt
+from Device import Device
+from DeviceStatusResponse import DeviceStatusResponse
 from Led import Led
 import json
+from SocketData import SocketData
+from StatusType import DeviceType, StatusType
           
 
 class LightClient:
@@ -15,14 +20,14 @@ class LightClient:
         self.__client = mqtt.Client(client_id=self.__client_id, clean_session=True, userdata=None, protocol=mqtt.MQTTv311, transport="tcp")
         self.__client.on_connect = self.__on_connect
         self.__client.on_message = self.__on_message
-        self.__topic_name = f"Led/{self.__client_id}"
-        self.__topic_group_name = "Led/All"
         self.__is_running = False
         self.__gpio = Led(0)
+        self.__device = Device(self.__client_id, StatusType.TurnOff, DeviceType.Socket, "MAC:ASD:GHJ:LKJ")
 
         self.on_connected = None
         self.on_subscribed = None
         self.on_message_received = None
+        self.on_publish_message = None
 
     def __on_connect(self, client : mqtt.Client, userdata : any, flags : int, rc : int) -> None:
         """Called when the client connects to the broker
@@ -36,8 +41,9 @@ class LightClient:
         if (self.on_connected):
             self.on_connected(self.__client_id, self.__ip, self.__port)
 
-        self.__subscribe(self.__topic_name)
-        self.__subscribe(self.__topic_group_name)
+        self.__subscribe(f"Led/{self.__client_id}")
+        self.__subscribe("Led/All")
+        self.__subscribe("StatusRequest/all")
 
     def __subscribe(self, topic_name : str) -> None:
         """Subscribes to the given topic name"""
@@ -54,15 +60,53 @@ class LightClient:
             userdata (any): The data which is defined by the user before going into the method
             msg (mqtt.MQTTMessage): The message recieved
         """
-        appData = json.loads(msg.payload)
+        if "Led" in msg.topic:
+            appData = json.loads(msg.payload)
+            if appData["cmd"] == "on":
+                self.__gpio.set_state(True)
+            elif appData["cmd"] == "off":
+                self.__gpio.set_state(False)
 
-        if appData["cmd"] == "on":
-            self.__gpio.set_state(True)
-        elif appData["cmd"] == "off":
-            self.__gpio.set_state(False)
+        self.publish_status()
 
         if (self.on_message_received):
             self.on_message_received(self.__client_id, msg.topic, msg.payload)
+    
+    def __on_publish(self, topic, message):
+        """Called when the client publishes a message
+
+        Args:
+            client (_type_): the client publishing
+            userdata (_type_): the user defined data
+            mid (_type_): _description_
+        """
+        if self.on_publish_message:
+            self.on_publish_message(self.__client_id, topic, message)
+
+    def publish_status(self):
+        """Publishes the current status of the device to the topic StatusResponse/All
+        """
+        socketData = SocketData(self.__gpio.get_state())
+        statusDevice : DeviceStatusResponse = DeviceStatusResponse(self.__device.__dict__, socketData.__dict__)
+        self.__on_publish("test", json.dumps(socketData.__dict__))
+
+        payload = []   
+        payload.append(statusDevice.__dict__)
+        
+        jsonPayload = json.dumps(payload)        
+        self.__client.publish(f"StatusResponse/all", jsonPayload)
+        self.__on_publish("StatusResponse/all", jsonPayload)
+
+    def set_status(self, status : StatusType):
+        """Sets the status of the device.
+
+        Args:
+            status (StatusType): The new status of the device
+        """
+        self.__device.StatusId = status
+    
+    def get_status(self) -> StatusType:
+        return self.__device.StatusId
 
     def set_server_info(self, ip : str, port : int) -> None:
         """Sets the server info for the client, for settings to be in effect. stop then start the server.
@@ -125,7 +169,8 @@ class LightClient:
         """ Connects to the server, then starts a new thread for looping network data."""
         self.__client.connect(self.__ip, int(self.__port), self.__keep_alive)
         self.__client.loop_start()
-        self.__is_running = True 
+        self.publish_status()
+        self.__is_running = True
 
     def stop(self) -> None:
         """Stops the current client, by disconnecting from the server."""

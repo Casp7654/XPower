@@ -2,6 +2,8 @@ from BasePage import BasePage, backcolors
 from ClientManager import ClientManager
 from readchar import key
 
+from StatusType import StatusType
+
 class DevicePage(BasePage):
     def __init__(self, clientManager : ClientManager) -> None:
         """The constructor of the device page.
@@ -20,11 +22,17 @@ class DevicePage(BasePage):
         gpio = input("gpio: ")
         self.__clientManager.add_client(name, server, port, gpio)
 
+    def __change_status(self) -> None:
+        statusId = input("New status: ")
+        status = StatusType(int(statusId))
+        self.__clientManager.set_status(self.__cursor_pos, status)
+
     def _show_controls(self) -> None:
         """Ui to show controls."""
         print("W S - Up / Down in selection")
         print("Space - Turn On / Off")
         print("A D - Increase / Decrease pin")
+        print("K - Change status")
         print("Z - Create new client")
         print("O - Removes selected client")
         print("L - Go to logging")
@@ -33,7 +41,7 @@ class DevicePage(BasePage):
     def _show_page(self) -> None:
         """Ui for The main page content """
         clients = self.__clientManager.get_clients()
-        print("[Running] [Name] [Pin]")
+        print("[Running] [Name] [Pin] [Status]")
         for idx, c in enumerate(clients):
             dev_str = self.__clientManager.client_status(idx)
             if (idx == self.__cursor_pos):
@@ -63,3 +71,5 @@ class DevicePage(BasePage):
             self.__clientManager.increase_client_gpio(self.__cursor_pos)
         elif k == "l":
             BasePage.change_page("logging_page")
+        elif k == "k":
+            self.__change_status()

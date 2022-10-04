@@ -1,6 +1,7 @@
 from LightClient import LightClient
 from LightClientJson import LightClientJson
 from ConsoleLogger import ConsoleLogger
+from StatusType import StatusType
 
 class ClientManager:
     def __init__(self, clients_file : str, logger : ConsoleLogger) -> None:
@@ -32,6 +33,7 @@ class ClientManager:
         client.on_connected = lambda id, ip, port: self.__logger.info(f"{id} -> Connected to {ip}:{port}")
         client.on_subscribed = lambda id, topic: self.__logger.info(f"{id} -> subscribed to {topic}")
         client.on_message_received = lambda id, topic, payload: self.__logger.info(f"{id} -> received message {topic}:{payload}")
+        client.on_publish_message = lambda id, topic, payload: self.__logger.info(f"{id} -> published message {topic}:{payload}")
 
     def add_client(self, id : str, ip : str, port : int, gpio : int) -> None:
         """Adds a client to the list of current clients, and saves the clients.
@@ -66,6 +68,21 @@ class ClientManager:
             list[LightClient]: Returns all the current clients
         """
         return self.__clients
+
+    def set_status(self, index: int, status : StatusType):
+        """Sets new status for device and publishes the new result
+
+        Args:
+            index (int): The client index to change
+            status (StatusType): The new status for the device
+        """
+        if index < 0 or index >= len(self.__clients): return
+        cur = self.__clients[index]
+        cur.set_status(status)
+        old_val = cur.get_status()
+        self.__logger.info(f"{cur.get_device_id()} -> status changed from {old_val}:{status}")
+        cur.publish_status()
+        self.__save_clients()
 
     def set_client_gpio(self, index : int, gpio : int) -> None:
         """Sets the clients gpio at the given index 
@@ -126,8 +143,4 @@ class ClientManager:
         """
         if index < 0 or index >= len(self.__clients): return ''
         c = self.__clients[index]
-        return f'[{c.get_running()}] [{c.get_device_id()}] [{c.get_gpio()}]'
-
-
-    
-
+        return f'[{c.get_running()}] [{c.get_device_id()}] [{c.get_gpio()}] [{c.get_status().name}]'

@@ -23,7 +23,7 @@ def main():
         "logging_page": loggerPage
     })
 
-    BasePage.change_page("status_page")
+    BasePage.change_page("device_page")
 
     while(1):
         page = BasePage.get_page()

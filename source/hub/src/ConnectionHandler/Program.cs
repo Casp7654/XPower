@@ -17,4 +17,5 @@ var actions = new List<IMessageAction> {
 var serverController = new ServerController(actions, server);
 await server.StartAsync();
 
+System.Console.WriteLine("Running hub...");
 Console.ReadKey();

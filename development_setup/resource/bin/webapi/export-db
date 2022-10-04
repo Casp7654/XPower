@@ -1,6 +1,6 @@
 if [ ! "$1" == "" ]; then
     echo -e "\nExporting NS:xpower,DB:webapi > $(pwd)/backups/$1.bak"
-    surreal export --conn http://172.32.0.2:8000 --user root --pass root --ns xpower --db webapi $(pwd)/backups/$1.bak && echo "...Done!" || echo "$!ERR¡"
+    surreal export --conn http://127.0.0.1:8000 --user root --pass root --ns xpower --db webapi $(pwd)/backups/$1.bak && echo "...Done!" || echo "$!ERR¡"
 else
     echo "please provide name for the OUTPUT FILE as \$1"
 fi
