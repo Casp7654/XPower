@@ -10,7 +10,7 @@ export const environment = {
     path: "/mqtt"
   },
   apiServer : {
-    url: "https://127.0.0.1:5083/"
+    url: "https://api.xpower.nordnetic.dk/"
   }
 };
 
