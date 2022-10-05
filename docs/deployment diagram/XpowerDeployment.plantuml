@@ -1,0 +1,93 @@
+@startuml Xpower Deployment Diagram
+
+cloud "XPower Net" #line:grey;line.dotted {
+
+    node "XPower CloudServer" #line:grey;line.dotted {
+
+        node apache2 [
+        <b>Webserver
+        <i><<Server: Apache2>>
+        ....
+        <b>Endpoints:
+        * [<b>PWA</b>]: xpower.nordnetic.dk
+        * [<b>RestApi</b>]: api.xpower.nordnetic.dk
+        ]
+
+        node pwa [
+        <b>Pwa</b> <i>(Hosted)
+        <i><<Application: Angular>>
+        ....
+        <b>Endpoint:
+        * xpower.nordnetic.dk
+        ]
+
+        package Proxy {
+            node dotrest [
+            <b>RestApi
+            <i><<Server: systemd service>>
+            <i><<Environment: dotnet6.0>>
+            ....
+            <b>Endpoint:
+            * %IP_ADDR%
+            ]
+        }
+
+        database ds [
+        <b>Database
+        <i><<Server: SurrealDB>>
+        ----
+        ----
+        ]
+
+    }
+}
+
+card "User Home Net" #line:grey;line.dotted {
+
+
+    node App [
+    <b>Pwa</b> <i>(Installed)
+    <i><<Application: Angular>>
+    <b>Protocols:
+    * Mqtt
+    * Https
+    * Wss
+    ]
+
+    node Hub #line:grey;line.dotted {
+        node hubfac #line:grey;line.dotted  [
+        <b>Initializaiton
+        <i>factory reset
+        <i><<Environment: Python3>>
+        ]
+        node dotbroker [
+        <b>MqttBroker
+        <i><<Environment: dotnet6.0>>
+        ]
+    }
+
+    node "IoT Device" as iot #line:grey;line.dotted  {
+
+        node iothon #line:grey;line.dotted  [
+        <b>MqttClient
+        <b><i>Not Implemented yet
+        <i><<Environment: python>>
+        ]
+    }
+
+}
+
+'dotbroker -[hidden]- hubfac : " "
+
+App <--> dotbroker : Mqtt over ws://
+App ~right~> hubfac : Init over Bluetooth
+App <-left-> apache2 : Post Reuqest over https2://
+
+dotbroker <-left-> iothon : Mqtt over mqtt://
+
+apache2 <-[dotted]down-> pwa : [xpower.nordnetic.dk]
+apache2 <-[dotted]down-> dotrest : [api.xpower.nordnetic.dk]
+dotrest <-down-> ds : Post Request over http://
+
+
+@enduml
