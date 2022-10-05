@@ -49,6 +49,7 @@
 <br>  
 
 <button type="submit" [disabled]="!credentials.valid" id="submitBtn" ng-disabled="credentials.$invalid" mat-button color="primary">Opret bruger</button>
-  
+<button (click)="onLogin()" type="button" id="loginBtn" mat-button color="primary">Allerede bruger?</button>
+
 </form>
 </div>

@@ -13,6 +13,7 @@ namespace XPowerApi.Managers
             _homeProvider = homeProvider;
         }
 
+        /// <inheridDoc />
         public async Task<Home> CreateHome(HomeCreate homeCreate, int userId)
         {
             // Convert Home to DB Object
@@ -23,11 +24,14 @@ namespace XPowerApi.Managers
             return home;
         }
 
+
+        /// <inheridDoc />
         public async Task<Home> GetHomeById(int id)
         {
             return (await _homeProvider.GetHomeById(id)).ConvertToHome();
         }
 
+        /// <inheridDoc />
         public async Task<RelateObject> RelateUserToHome(int userId, int homeId)
         {
             return (await _homeProvider.RelateUserToHome(userId, homeId));

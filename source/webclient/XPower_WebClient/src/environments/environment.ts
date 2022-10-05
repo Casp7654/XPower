@@ -7,10 +7,11 @@ export const environment = {
   mqttClientSettings: {
     url: "broker.emqx.io",
     port: 8083,
-    path: "/mqtt"
+    path: "/mqtt",
+    protocol: "ws"
   },
   apiServer : {
-    url: "https://127.0.0.1:5083/"
+    url: "https://api.xpower.nordnetic.dk/"
   }
 };
 

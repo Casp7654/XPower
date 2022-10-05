@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using System.Collections.Immutable;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,6 +19,7 @@ namespace XPowerApi.Managers
             _secret = _configuration["JWT:Key"];
         }
 
+        /// <inheridDoc />
         public Task<UserToken> FromTokenString(string token)
         {
             var principal = GetPrincipal(token);
@@ -46,6 +48,7 @@ namespace XPowerApi.Managers
             return Task.Run(() => userToken);
         }
 
+        /// <inheridDoc />
         public Task<UserToken> GenerateToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
@@ -53,11 +56,11 @@ namespace XPowerApi.Managers
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.GivenName, user.Firstname),
-                new Claim(ClaimTypes.Surname, user.Lastname),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim("id", user.Id.ToString()),
+                new Claim("username", user.UserName),
+                new Claim("firstname", user.Firstname),
+                new Claim("lastname", user.Lastname),
+                new Claim("email", user.Email)
             };
 
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
@@ -78,6 +81,7 @@ namespace XPowerApi.Managers
             return Task.Run(() => t);
         }
 
+        /// <inheridDoc />
         public ClaimsPrincipal GetPrincipal(string token)
         {
             try
@@ -86,13 +90,15 @@ namespace XPowerApi.Managers
                 JwtSecurityToken jwtToken = (JwtSecurityToken)tokenHandler.ReadToken(token);
                 if (jwtToken == null)
                     return null;
-                byte[] key = Convert.FromBase64String(_secret);
+                byte[] key = Encoding.UTF8.GetBytes(_secret);
                 TokenValidationParameters parameters = new TokenValidationParameters()
                 {
                     RequireExpirationTime = true,
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidAudience = _configuration["Jwt:Audience"],
+                    ValidIssuer = _configuration["Jwt:Issuer"],
                 };
                 SecurityToken securityToken;
                 ClaimsPrincipal principal = tokenHandler.ValidateToken(token,
@@ -106,6 +112,7 @@ namespace XPowerApi.Managers
         }
 
 
+        /// <inheridDoc />
         public async Task<bool> ValidateToken(string token)
         {
             string username = null;
@@ -125,8 +132,8 @@ namespace XPowerApi.Managers
                 return await Task.Run(() => false);
             }
 
-            Claim usernameClaim = identity.FindFirst(ClaimTypes.Name);
-            Claim userIdClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
+            Claim usernameClaim = identity.FindFirst("username");
+            Claim userIdClaim = identity.FindFirst("id");
             username = usernameClaim.Value;
             id = Convert.ToInt32(userIdClaim.Value);
 

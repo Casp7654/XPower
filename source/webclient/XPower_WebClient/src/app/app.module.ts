@@ -28,6 +28,9 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
 import { RegisterUserComponent } from './Pages/register-user/register-user.component';
+import { LoginUserComponent } from './Pages/login-user/login-user.component';
+
+import { AuthguardService } from './Services/authguard.service';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'broker.emqx.io',
@@ -45,7 +48,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     SidenavListComponent,
     HubDevicesComponent,
     HubComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    LoginUserComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   providers: [
     BrowserWebBluetooth,
     FormBuilder,
-    HttpClient
+    HttpClient,
+    AuthguardService
   ],
   bootstrap: [AppComponent]
 })

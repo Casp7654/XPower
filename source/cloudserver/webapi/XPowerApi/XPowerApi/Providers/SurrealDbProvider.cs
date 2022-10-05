@@ -1,25 +1,30 @@
 using System.Text.Json;
 using XPowerApi.Interfaces;
 using XPowerApi.DbModels.SurrealDbModels;
-using System.Threading.Tasks;
 
 namespace XPowerApi.Providers
 {
     public class SurrealDbProvider : ISurrealDbProvider
     {
-        public SurrealDbHttpClient HttpClient;
+        private readonly HttpClient _HttpClient;
 
         public SurrealDbProvider(IConfiguration configuration)
         {
-            HttpClient = new SurrealDbHttpClient(configuration);
+            _HttpClient = new SurrealDbHttpClient(configuration);
         }
 
+        public SurrealDbProvider(HttpClient httpClient)
+        {
+            _HttpClient = httpClient;
+        }
+
+        /// <inheritDoc />
         public async Task<SurrealDbResult> MakeRawResult(string sqlString)
         {
             // Create RequestMessage
             SurrealDbHttpRequestMessage request = new SurrealDbHttpRequestMessage(sqlString);
             // Get Response
-            HttpResponseMessage response = await HttpClient.SendAsync(request);
+            HttpResponseMessage response = await _HttpClient.SendAsync(request);
             string jsonData = await response.Content.ReadAsStringAsync();
             // ERR
             if (!response.IsSuccessStatusCode)
@@ -27,9 +32,10 @@ namespace XPowerApi.Providers
             // UnPack Result
             List<SurrealDbResult> dbResult = JsonSerializer.Deserialize<List<SurrealDbResult>>(jsonData)!;
 
-            return dbResult[0];
+            return dbResult.FirstOrDefault();
         }
 
+        /// <inheritDoc />
         public async Task<T> Create<T>(string tableName, Dictionary<string, string> dataArray) where T : new()
         {
             // Get Next id in table
@@ -55,6 +61,7 @@ namespace XPowerApi.Providers
             return t;
         }
 
+        /// <inheritDoc />
         public async Task<RelateObject> Relate(string fromId, string toId, string byName)
         {
             string sqlString = $"relate {fromId}->{byName}->{toId};";
@@ -64,6 +71,7 @@ namespace XPowerApi.Providers
             return relateObject;
         }
 
+        /// <inheritDoc />
         public async Task<int> GetNextId(string tableName)
         {
             int id = 1;
@@ -81,6 +89,7 @@ namespace XPowerApi.Providers
             return id;
         }
 
+        /// <inheritDoc />
         public async Task<T> GetOneById<T>(string tableName, int id)
         {
             string sqlString = $"select * from {tableName} where id = {tableName}:{id} limit 1;";
@@ -89,6 +98,7 @@ namespace XPowerApi.Providers
             return t;
         }
 
+        /// <inheritDoc />
         public async Task<RelateObject> GetRelation(string subjectId, string relationName, string alias = "")
         {
             string sqlString = $"select ->{relationName} ";
@@ -101,6 +111,7 @@ namespace XPowerApi.Providers
             return relateObject;
         }
 
+        /// <inheritDoc />
         public async Task<List<T>> GetOneFromInsideAnother<T>(string tableName, string baseTable, string targetId)
         {
             string sqlString = $"select * from ${tableName} where ${baseTable} inside (select id from ${targetId});";
@@ -109,6 +120,7 @@ namespace XPowerApi.Providers
             return objectList;
         }
 
+        /// <inheritDoc />
         public async Task<List<T>> GetOneFromInsideARelation<T>(string tableName, string baseTable, string relationTable, string targetId)
         {
             string sqlString =
@@ -117,9 +129,11 @@ namespace XPowerApi.Providers
             List<T> objectList = JsonSerializer.Deserialize<List<T>>(JsonSerializer.Serialize(dbResult.result[0]))!;
             return objectList;
         }
+
+        /// <inheritDoc />
         public async Task<T> GetOneByField<T>(string tableName, string field, string value)
         {
-            string sqlString = $"select * from {tableName} where {field} = {value} limit 1;";
+            string sqlString = $"select * from {tableName} where {field} = \"{value}\" limit 1;";
             SurrealDbResult dbResult = await MakeRawResult(sqlString);
             T t = JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(dbResult.result[0]))!;
             return t;

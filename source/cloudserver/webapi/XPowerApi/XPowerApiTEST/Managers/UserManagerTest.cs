@@ -29,7 +29,7 @@ namespace XPowerApiTEST.Managers
                 firstname = "Peter",
                 lastname = "Parker",
                 username = "PeterParker",
-                hashedPassword = "SecretPassword",
+                hashed_password = "SecretPassword",
                 salt = "abcdefg",
                 email = "peter@email.com"
             };
@@ -88,7 +88,7 @@ namespace XPowerApiTEST.Managers
         }
 
         [Fact]
-        public async void GetUserById_ShouldReturnHubObject()
+        public async void GetUserById_ShouldReturnUserObject()
         {
             //Arrange
             int userId = 1;
@@ -127,9 +127,8 @@ namespace XPowerApiTEST.Managers
         public async Task GetNewUserToken_ShouldReturnNewToken()
         {
             //Arrange
-            byte[] salt = SecuritySupport.GenerateSalt();
-            string hashed_password = SecuritySupport.HashPassword("SecretSecret", salt);
-            string expected = "Token123";
+            byte[] salt = _passwordHasher.Object.GenerateSalt();
+            string hashed_password = _passwordHasher.Object.HashPassword("SecretSecret", salt);
             UserDb userDb = new UserDb()
             {
                 id = "user:1",
@@ -138,7 +137,7 @@ namespace XPowerApiTEST.Managers
                 username = "PeterParker",
                 email = "peter@email.com",
                 salt = Convert.ToBase64String(salt),
-                hashedPassword = hashed_password
+                hashed_password = hashed_password
             };
             UserLogin userLogin = new UserLogin()
             {
@@ -154,19 +153,21 @@ namespace XPowerApiTEST.Managers
             _tokenManager.Setup(s => s.GenerateToken(It.IsAny<UserCredentials>())).ReturnsAsync(() => userToken);
             _userProvider.Setup(s => s.GetUserByUsername(userLogin.Username))
                 .ReturnsAsync(() => userDb);
-            string actual = await _subject.GetNewUserToken(userLogin);
+            var actual = await _subject.GetNewUserToken(userLogin);
 
             //Assert
-            Assert.NotEmpty(actual);
-            Assert.True(actual == expected);
+            Assert.NotNull(actual);
+            Assert.IsType<UserToken>(actual);
+            Assert.True((actual as UserToken) == userToken);
         }
 
         [Fact]
         public async Task GetNewUserToken_ShouldReturnNullOrEmptyStringWhenPasswordIsWrong()
         {
             //Arrange
-            byte[] salt = SecuritySupport.GenerateSalt();
-            string hashed_password = SecuritySupport.HashPassword("SecretSecret", salt);
+            PasswordHasher passwordHasher = new();
+            byte[] salt = passwordHasher.GenerateSalt();
+            string hashed_password = passwordHasher.HashPassword("SecretSecret", salt);
             UserDb userDb = new UserDb()
             {
                 id = "user:1",
@@ -175,12 +176,12 @@ namespace XPowerApiTEST.Managers
                 username = "PeterParker",
                 email = "peter@email.com",
                 salt = Convert.ToBase64String(salt),
-                hashedPassword = hashed_password
+                hashed_password = hashed_password
             };
             UserLogin userLogin = new UserLogin()
             {
                 Username = "PeterParker",
-                Password = "SecretSecret1"
+                Password = "secretsuperPassword"
             };
             UserToken userToken = new UserToken()
             {
@@ -191,18 +192,20 @@ namespace XPowerApiTEST.Managers
             _tokenManager.Setup(s => s.GenerateToken(It.IsAny<UserCredentials>())).ReturnsAsync(() => userToken);
             _userProvider.Setup(s => s.GetUserByUsername(userLogin.Username))
                 .ReturnsAsync(() => userDb);
-            string actual = await _subject.GetNewUserToken(userLogin);
+            var actual = await _subject.GetNewUserToken(userLogin);
 
             //Assert
-            Assert.True(string.IsNullOrEmpty(actual));
+            Assert.NotNull(actual);
+            Assert.IsType<UserToken>(actual);
+            Assert.True(string.IsNullOrEmpty((actual as UserToken).Token));
         }
 
         [Fact]
         public async Task GetNewUserToken_ShouldReturnNullOrEmptyStringWhenUsernameIsWrong()
         {
             //Arrange
-            byte[] salt = SecuritySupport.GenerateSalt();
-            string hashed_password = SecuritySupport.HashPassword("SecretSecret", salt);
+            byte[] salt = _passwordHasher.Object.GenerateSalt();
+            string hashed_password = _passwordHasher.Object.HashPassword("SecretSecret", salt);
             UserDb userDb = new UserDb()
             {
                 id = "user:1",
@@ -211,7 +214,7 @@ namespace XPowerApiTEST.Managers
                 username = "PeterParker",
                 email = "peter@email.com",
                 salt = Convert.ToBase64String(salt),
-                hashedPassword = hashed_password
+                hashed_password = hashed_password
             };
             UserLogin userLogin = new UserLogin()
             {
@@ -220,17 +223,19 @@ namespace XPowerApiTEST.Managers
             };
             UserToken userToken = new UserToken()
             {
-                Token = "Token123"
+                Token = ""
             };
 
             //Act
             _tokenManager.Setup(s => s.GenerateToken(It.IsAny<UserCredentials>())).ReturnsAsync(() => userToken);
-            _userProvider.Setup(s => s.GetUserByUsername(userDb.username))
+            _userProvider.Setup(s => s.GetUserByUsername(userLogin.Username))
                 .ReturnsAsync(() => userDb);
             var actual = await _subject.GetNewUserToken(userLogin);
 
             //Assert
-            Assert.True(string.IsNullOrEmpty(actual));
+            Assert.NotNull(actual);
+            Assert.IsType<UserToken>(actual);
+            Assert.True(string.IsNullOrEmpty((actual as UserToken).Token));
         }
     }
 }
