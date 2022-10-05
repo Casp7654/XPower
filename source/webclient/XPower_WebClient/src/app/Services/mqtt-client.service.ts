@@ -44,7 +44,7 @@ export class MqttClientService {
       hostname: settings.url,
       port: settings.port,
       path: settings.path,
-      protocol: "wss"
+      protocol: (settings.protocol as "ws" | "wss" | undefined) ,
     };
   }
 }
