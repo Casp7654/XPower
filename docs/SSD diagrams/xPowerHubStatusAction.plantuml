@@ -2,8 +2,8 @@
 title Send Status from hub
 
 ServerController -> IStatusMessageActions: Execute
-IStatusMessageActions -> IDeviceManager: Get connected devices
-IDeviceManager -> IStatusMessageActions: Return connected devices
-IStatusMessageActions -> ServerController: Publish connected devices
+IStatusMessageActions -> IDeviceManager: Get offline devices
+IDeviceManager -> IStatusMessageActions: Return offline devices
+IStatusMessageActions -> ServerController: Publish offline devices
 
 @enduml
