@@ -11,7 +11,7 @@ export const environment = {
     protocol: "ws"
   },
   apiServer : {
-    url: "https://api.xpower.nordnetic.dk/"
+    url: "https://localhost:5083/"
   }
 };
 
