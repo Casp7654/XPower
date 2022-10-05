@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   mqttClientSettings: {
 	  url:"broker.emqx.io",
-	  port:8884,
+	  port:8084,
 	  path:"/mqtt",
     protocol: "wss"
   },
