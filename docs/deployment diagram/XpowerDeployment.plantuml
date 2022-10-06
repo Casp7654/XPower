@@ -2,7 +2,7 @@
 
 cloud "XPower Net" #line:grey;line.dotted {
 
-    node "XPower CloudServer" #line:grey;line.dotted {
+    node "XPower CloudServer"  {
 
         node apache2 [
         <b>Webserver
@@ -42,7 +42,7 @@ cloud "XPower Net" #line:grey;line.dotted {
     }
 }
 
-card "User Home Net" #line:grey;line.dotted {
+card "User Home Net" {
 
 
     node App [
@@ -79,9 +79,9 @@ card "User Home Net" #line:grey;line.dotted {
 
 'dotbroker -[hidden]- hubfac : " "
 
-App <--> dotbroker : Mqtt over ws://
-App ~right~> hubfac : Init over Bluetooth
-App <-left-> apache2 : Post Reuqest over https2://
+App <--> dotbroker : Mqtt over wss://
+App ~right~> hubfac : Init over Bluetooth  |
+App <-left-> apache2 : Post Request over https2://
 
 dotbroker <-left-> iothon : Mqtt over mqtt://
 
