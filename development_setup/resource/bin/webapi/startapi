@@ -1,1 +1,1 @@
-dotnet run --project /root/source/ --launch-profile "Docker"
+dotnet run --project /root/source/ --launch-profile Docker
