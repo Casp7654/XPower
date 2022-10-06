@@ -1,0 +1,36 @@
+@startuml project layers
+
+left to right direction
+'top to bottom direction
+
+package Controllers {
+    object HomeController
+    object HomeCreationController
+    object HubController
+    object HubCreationController
+    object UserController
+    object UserCreationController
+    object UserLoginController
+    object UserTokenController
+}
+
+package Managers {
+    object HomeManager
+    object Hubmanager
+    object TokenManager
+    object UserManager
+}
+
+package IntegrationServices/Providers as int {
+    object HomeProvider
+    object HubProvider
+    object SurrealDbProvider
+    object UserProvider
+}
+
+Controllers <--> Managers
+Managers <--> int
+
+
+
+@enduml

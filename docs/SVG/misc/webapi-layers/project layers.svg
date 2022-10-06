@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="528px" preserveAspectRatio="none" style="width:1033px;height:528px;background:#FFFFFF;" version="1.1" viewBox="0 0 1033 528" width="1033px" zoomAndPan="magnify"><defs/><g><!--MD5=[ed1d20ea533a2a0e7df5ba3c35e56ced]
+cluster Controllers--><g id="cluster_Controllers"><path d="M8.5,6 L88.5,6 A3.75,3.75 0 0 1 91,8.5 L98,29.6094 L641.5,29.6094 A2.5,2.5 0 0 1 644,32.1094 L644,274.5 A2.5,2.5 0 0 1 641.5,277 L8.5,277 A2.5,2.5 0 0 1 6,274.5 L6,8.5 A2.5,2.5 0 0 1 8.5,6 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="98" y1="29.6094" y2="29.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="79" x="10" y="22.5332">Controllers</text></g><!--MD5=[b9fe149db68a553ea5ee282a62e2a2cd]
+cluster Managers--><g id="cluster_Managers"><path d="M261,317 L332,317 A3.75,3.75 0 0 1 334.5,319.5 L341.5,340.6094 L624,340.6094 A2.5,2.5 0 0 1 626.5,343.1094 L626.5,512.5 A2.5,2.5 0 0 1 624,515 L261,515 A2.5,2.5 0 0 1 258.5,512.5 L258.5,319.5 A2.5,2.5 0 0 1 261,317 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="258.5" x2="341.5" y1="340.6094" y2="340.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="70" x="262.5" y="333.5332">Managers</text></g><!--MD5=[dd4763026ae639369889d551b86c8700]
+cluster int--><g id="cluster_int"><path d="M686.5,203 L899.5,203 A3.75,3.75 0 0 1 902,205.5 L909,226.6094 L1023.5,226.6094 A2.5,2.5 0 0 1 1026,229.1094 L1026,398.5 A2.5,2.5 0 0 1 1023.5,401 L686.5,401 A2.5,2.5 0 0 1 684,398.5 L684,205.5 A2.5,2.5 0 0 1 686.5,203 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="684" x2="909" y1="226.6094" y2="226.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="212" x="688" y="219.5332">IntegrationServices/Providers</text></g><g id="elem_HomeController"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="112" x="57" y="123"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="98" x="64" y="139.5332">HomeController</text><line style="stroke:#181818;stroke-width:0.5;" x1="58" x2="168" y1="144.6094" y2="144.6094"/></g><g id="elem_HomeCreationController"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="166" x="30" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="152" x="37" y="66.5332">HomeCreationController</text><line style="stroke:#181818;stroke-width:0.5;" x1="31" x2="195" y1="71.6094" y2="71.6094"/></g><g id="elem_HubController"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="101" x="62.5" y="196"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="69.5" y="212.5332">HubController</text><line style="stroke:#181818;stroke-width:0.5;" x1="63.5" x2="162.5" y1="217.6094" y2="217.6094"/></g><g id="elem_HubCreationController"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="155" x="258" y="196"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="141" x="265" y="212.5332">HubCreationController</text><line style="stroke:#181818;stroke-width:0.5;" x1="259" x2="412" y1="217.6094" y2="217.6094"/></g><g id="elem_UserController"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="105" x="283" y="123"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="91" x="290" y="139.5332">UserController</text><line style="stroke:#181818;stroke-width:0.5;" x1="284" x2="387" y1="144.6094" y2="144.6094"/></g><g id="elem_UserCreationController"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="159" x="256" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="145" x="263" y="66.5332">UserCreationController</text><line style="stroke:#181818;stroke-width:0.5;" x1="257" x2="414" y1="71.6094" y2="71.6094"/></g><g id="elem_UserLoginController"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="140" x="477.5" y="196"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126" x="484.5" y="212.5332">UserLoginController</text><line style="stroke:#181818;stroke-width:0.5;" x1="478.5" x2="616.5" y1="217.6094" y2="217.6094"/></g><g id="elem_UserTokenController"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="145" x="475" y="123"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="131" x="482" y="139.5332">UserTokenController</text><line style="stroke:#181818;stroke-width:0.5;" x1="476" x2="619" y1="144.6094" y2="144.6094"/></g><g id="elem_HomeManager"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="106" x="282.5" y="434"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92" x="289.5" y="450.5332">HomeManager</text><line style="stroke:#181818;stroke-width:0.5;" x1="283.5" x2="387.5" y1="455.6094" y2="455.6094"/></g><g id="elem_Hubmanager"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="95" x="288" y="361"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="81" x="295" y="377.5332">Hubmanager</text><line style="stroke:#181818;stroke-width:0.5;" x1="289" x2="382" y1="382.6094" y2="382.6094"/></g><g id="elem_TokenManager"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="110" x="492.5" y="434"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="96" x="499.5" y="450.5332">TokenManager</text><line style="stroke:#181818;stroke-width:0.5;" x1="493.5" x2="601.5" y1="455.6094" y2="455.6094"/></g><g id="elem_UserManager"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="99" x="498" y="361"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85" x="505" y="377.5332">UserManager</text><line style="stroke:#181818;stroke-width:0.5;" x1="499" x2="596" y1="382.6094" y2="382.6094"/></g><g id="elem_HomeProvider"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="103" x="708" y="320"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89" x="715" y="336.5332">HomeProvider</text><line style="stroke:#181818;stroke-width:0.5;" x1="709" x2="810" y1="341.6094" y2="341.6094"/></g><g id="elem_HubProvider"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="92" x="713.5" y="247"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="78" x="720.5" y="263.5332">HubProvider</text><line style="stroke:#181818;stroke-width:0.5;" x1="714.5" x2="804.5" y1="268.6094" y2="268.6094"/></g><g id="elem_SurrealDbProvider"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="131" x="871" y="320"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="117" x="878" y="336.5332">SurrealDbProvider</text><line style="stroke:#181818;stroke-width:0.5;" x1="872" x2="1001" y1="341.6094" y2="341.6094"/></g><g id="elem_UserProvider"><rect fill="#F1F1F1" height="37.6094" style="stroke:#181818;stroke-width:0.5;" width="96" x="888.5" y="247"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="82" x="895.5" y="263.5332">UserProvider</text><line style="stroke:#181818;stroke-width:0.5;" x1="889.5" x2="983.5" y1="268.6094" y2="268.6094"/></g><!--MD5=[4291f0c5d96e3f6f420dcb1c86568621]
+link Controllers to Managers--><g id="link_Controllers_Managers"><path d="M116.1713,277.1988 C117.4689,281.8594 119.3616,288.3347 121.8831,296.1763 C126.9262,311.8594 134.485,333.0075 144.83,356.0325 C165.52,402.0825 197.355,455.64 242.5,488 C246.6088,490.945 251.0714,493.4553 255.742,495.593 C256.3258,495.8602 256.9129,496.1216 257.503,496.3773 C257.798,496.5052 258.0937,496.6316 258.3902,496.7566 " fill="none" id="Controllers-Managers" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="258.3902,496.7566,251.6515,489.574,253.783,494.8139,248.5432,496.9455,258.3902,496.7566" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="116.1713,277.1988,114.7318,286.9419,117.5124,282.0156,122.4387,284.7962,116.1713,277.1988" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[69a35434c59bf5fff9372f8f922b61aa]
+link Managers to int--><g id="link_Managers_int"><path d="M392.6465,515.0915 C394.199,515.2569 395.7767,515.4206 397.3787,515.5821 C400.5827,515.9052 403.8838,516.2196 407.2747,516.5215 C420.8384,517.7289 435.8391,518.735 451.8088,519.2875 C515.6875,521.4975 595.07,516.45 660,488 C687.42,475.985 711.71,452.7825 729.3087,432.3163 C738.1081,422.0831 745.2347,412.5341 750.2433,405.4095 C750.8694,404.519 751.4623,403.6663 752.0214,402.8549 C752.3009,402.4492 752.5719,402.0538 752.8343,401.6692 C752.9655,401.4769 753.0946,401.2872 753.2215,401.1003 " fill="none" id="Managers-int" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="753.2215,401.1003,744.8566,406.2992,750.4128,405.2369,751.4751,410.7931,753.2215,401.1003" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="392.6465,515.0915,401.1722,520.0223,397.6184,515.6211,402.0196,512.0673,392.6465,515.0915" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[b1d08baff1af91a3e036c3b2e9d3101a]
+@startuml project layers
+
+left to right direction
+'top to bottom direction
+
+package Controllers {
+    object HomeController
+    object HomeCreationController
+    object HubController
+    object HubCreationController
+    object UserController
+    object UserCreationController
+    object UserLoginController
+    object UserTokenController
+}
+
+package Managers {
+    object HomeManager
+    object Hubmanager
+    object TokenManager
+    object UserManager
+}
+
+package IntegrationServices/Providers as int {
+    object HomeProvider
+    object HubProvider
+    object SurrealDbProvider
+    object UserProvider
+}
+
+Controllers <- -> Managers
+Managers <- -> int
+
+
+
+@enduml
+
+@startuml project layers
+
+left to right direction
+
+package Controllers {
+    object HomeController
+    object HomeCreationController
+    object HubController
+    object HubCreationController
+    object UserController
+    object UserCreationController
+    object UserLoginController
+    object UserTokenController
+}
+
+package Managers {
+    object HomeManager
+    object Hubmanager
+    object TokenManager
+    object UserManager
+}
+
+package IntegrationServices/Providers as int {
+    object HomeProvider
+    object HubProvider
+    object SurrealDbProvider
+    object UserProvider
+}
+
+Controllers <- -> Managers
+Managers <- -> int
+
+
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: en
+Country: US
+--></g></svg>
