@@ -35,7 +35,7 @@ class MqttClientService {
   -client: MqttService
 
   +Publish(target: string, data: string) : void
-  +Subscribe(target: string, onMessageFunc: (message : string) => void) : void
+  +Subscribe(target: string, onMessageFunc: (message : string) : void) : void
   -CreateOptions() : IMqttServiceOptions
 }
 
@@ -54,17 +54,17 @@ interface SocketDeviceRequestConverter {
 }
 
 class HubSearcherComponent{
-    ssid : string
-    passphrase : string
-    device : any
+    -ssid : string
+    -passphrase : string
+    -device : any
 
-    HubSearcherComponent(_zone: NgZone, _hubConnService: HubConnServiceService) : void
-    connected(value: BluetoothRemoteGATTCharacteristic) void
-    connect() : void
-    selectDevice() : void
-    sendinput() : void
-    onSsidKey(event : any) : void
-    onPassPhraseKey(event: any) : void
+    +HubSearcherComponent(_zone: NgZone, _hubConnService: HubConnServiceService) : void
+    +Connected(value: BluetoothRemoteGATTCharacteristic) void
+    +Connect() : void
+    +SelectDevice() : void
+    +Sendinput() : void
+    -OnSsidKey(event : any) : void
+    -OnPassPhraseKey(event: any) : void
 }
 
 class HubConnServiceService{
@@ -91,8 +91,40 @@ class UserToken{
 }
 
 class UserRegisterService{
-    +createUser(user : User) : UserToken
-    +saveCreatedUser(createdUser : UserToken) : void
+    +CreateUser(user : User) : UserToken
+    +SaveCreatedUser(createdUser : UserToken) : void
+}
+
+class AuthguardService {
+
+  AuthguardService(http: HttpClient)
+
+  +CanActivate(): bool
+
+  +HasToken() : bool
+
+}
+
+class HubService {
+
+  -hubDevices: List<HubDevice>
+
+  +GetHubDevicesFromGroup(group_idenfitifer: string) : void
+  +GetDevices() : List<HubDevice>
+  +GetFilteredDevices<T>(type:T) : List<T>
+}
+
+class UserLoginService {
+
+  +UserLoginService(private http: HttpClient)
+
+  +ValidateLoginUser(userLogin: UserLogin): Observable<UserToken>
+  +SaveLoggedinUser(loggedinUser: UserToken) : void
+}
+
+class UserLogoutService {
+
+  +logoutUser() : boolean
 }
 
 UserToken --|> User
@@ -103,5 +135,7 @@ SocketDeviceService *-- SocketDeviceRequestConverter
 SocketDeviceService o-- MqttClientService
 IoTService -- IoTDevice
 HubSearcherComponent *-- HubConnServiceService
+
+IoTService o-- MqttClientService
 
 @enduml
