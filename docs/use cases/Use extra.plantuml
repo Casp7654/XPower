@@ -1,0 +1,36 @@
+@startuml Use extra case
+left to right direction
+skinparam packageStyle rectangle
+
+:Klient: as cl
+:XPower Api: as api
+:Hub: as hub
+
+rectangle System {
+    usecase "Tilslut IoT til hub" as wuc2
+    usecase "Fjern IoT enhed fra hub" as wuc4
+    usecase "Sæt timer pr. enhed" as wuc5
+    usecase "Se overblik for IoT enhed" as wuc6
+    usecase "Sæt tænd / sluk ud fra forbrugsmønster" as wuc7
+    usecase "Tilføj hub under bruger" as wuc9
+    usecase "Få pris overblik for el-selskab" as wuc10
+}
+
+cl --> wuc2
+cl --> wuc4
+cl --> wuc5
+cl --> wuc6
+cl --> wuc7
+cl --> wuc9
+cl --> wuc10
+
+wuc10 -- api
+
+wuc2 -- hub
+wuc4 -- hub
+wuc5 -- hub
+wuc6 -- hub
+wuc7 -- hub
+wuc9 -- hub
+
+@enduml
