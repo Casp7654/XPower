@@ -48,9 +48,7 @@ namespace XPowerApiTEST.Controllers
             var actual = (await _subject.GetHomeById(homeId)).Result;
 
             //Assert
-            Assert.NotNull(actual);
-            Assert.IsType<BadRequestObjectResult>(actual!);
-            Assert.True((actual! as BadRequestObjectResult)!.StatusCode == 400);
+            Assert.True(False);
         }
     }
 }
